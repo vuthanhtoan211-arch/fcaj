@@ -154,7 +154,7 @@ Các hệ thống trên nằm ngoài AWS và không bị thay thế bởi nền 
 
 Ban Tổ chức xuất dữ liệu dưới dạng Excel hoặc CSV, sau đó truy cập Web Application để tải dữ liệu lên hệ thống.
 
-![Student Activity Management Platform Architecture](/images/student_activity_architecture.png)
+![Student Activity Management Platform Architecture](/images/2-Proposal/student_activity_architecture.png)
 
 *Luồng xử lý tổng quát*
 
