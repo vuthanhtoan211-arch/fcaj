@@ -6,9 +6,7 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Nội dung dưới đây trình bày đề xuất cho phiên bản MVP của dự án. Một số thông số kỹ thuật, chi phí và cấu hình AWS có thể được điều chỉnh trong quá trình triển khai và kiểm thử thực tế.
-{{% /notice %}}
+
 
 Tại phần này, nội dung trình bày đề xuất xây dựng hệ thống quản lý, đối soát và phân tích mức độ tham gia hoạt động của đoàn viên, sinh viên trên nền tảng AWS.
 
@@ -156,7 +154,7 @@ Các hệ thống trên nằm ngoài AWS và không bị thay thế bởi nền 
 
 Ban Tổ chức xuất dữ liệu dưới dạng Excel hoặc CSV, sau đó truy cập Web Application để tải dữ liệu lên hệ thống.
 
-![Student Activity Management Platform Architecture](/images/2-Proposal/student_activity_architecture.png)
+![Student Activity Management Platform Architecture](/images/student_activity_architecture.png)
 
 *Luồng xử lý tổng quát*
 
