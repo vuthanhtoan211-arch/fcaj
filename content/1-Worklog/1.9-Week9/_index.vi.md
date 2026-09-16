@@ -7,7 +7,7 @@ pre: "<b>1.9.</b>"
 ---
 
 
-### Mục tiêu tuần 9
+### Mục tiêu tuần 9:
 
 * Hoàn thiện tài liệu kỹ thuật của hệ thống.
 * Cập nhật và hoàn thiện sơ đồ kiến trúc AWS sau quá trình triển khai thực tế.
