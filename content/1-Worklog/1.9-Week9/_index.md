@@ -1,57 +1,141 @@
 ---
-title: "Week 9 Worklog"
-date: 2024-01-01
-weight: 1
+title: "Worklog Week 9"
+date: 2026-11-02
+weight: 9
 chapter: false
-pre: " <b> 1.9. </b> "
+pre: "<b>1.9.</b>"
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 9 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Complete the technical documentation of the system.
+* Update and finalize the AWS architecture diagram based on the implemented solution.
+* Complete the system API documentation.
+* Develop a User Guide for Organizers and Admin users.
+* Consolidate system testing results.
+* Document identified issues and their resolutions.
+* Prepare screenshots and system evidence for the internship report.
+* Prepare the system demonstration scenario.
+* Prepare Workshop materials explaining the architecture and system workflow.
+* Review the overall solution before completing the final internship documentation.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+
+### Tasks to be completed this week:
+
+| Day | Tasks | Start Date | Completion Date | Reference |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2 | - Review the overall architecture of the **Student Activity Management and Engagement Analytics Platform** <br> - Update the AWS Architecture Diagram based on the implemented system <br> - Review the major workflows: <br>&emsp; + Authentication <br>&emsp; + API & Business Logic <br>&emsp; + Realtime Attendance <br>&emsp; + File Processing <br>&emsp; + Reconciliation <br>&emsp; + Analytics <br> - Document the role of each AWS service used in the architecture | 02/11/2026 | 02/11/2026 | Project Proposal and AWS Architecture |
+| 3 | - Complete the API Documentation <br> - Document major API groups: <br>&emsp; + Authentication-related requests <br>&emsp; + Activity Management API <br>&emsp; + Registration API <br>&emsp; + Attendance API <br>&emsp; + Reconciliation API <br>&emsp; + Export API <br> - Document Method, Endpoint, Request, Response, and Error Cases <br> - Add sample requests and responses for important APIs <br> - Verify consistency between documentation and the implemented system | 03/11/2026 | 03/11/2026 | API Documentation and project source code |
+| 4 | - Develop the User Guide for Youth Union Staff / Organizers and Admin users <br> - Document key operations: <br>&emsp; + Sign in <br>&emsp; + Create and manage activities <br>&emsp; + Import Registration data <br>&emsp; + Import Evidence data <br>&emsp; + Perform realtime Check-in/Check-out <br>&emsp; + Review Reconciliation results <br>&emsp; + Confirm Participation Results <br>&emsp; + Export results <br>&emsp; + View the Analytics Dashboard <br> - Capture screenshots of major system functions | 04/11/2026 | 04/11/2026 | Web Application and project documentation |
+| 5 | - Consolidate the system Test Report <br> - Document results from: <br>&emsp; + Functional Testing <br>&emsp; + Authentication & Authorization Testing <br>&emsp; + Realtime Check-in/Check-out Testing <br>&emsp; + Data Validation Testing <br>&emsp; + Integration Testing <br>&emsp; + User Acceptance Testing <br> - Document identified issues, root causes, and resolutions <br> - Record remaining limitations of the MVP | 05/11/2026 | 05/11/2026 | Test Cases, CloudWatch Logs, and Test Report |
+| 6 | - Prepare the system Demo scenario <br> - Develop an end-to-end Demo Flow <br>&emsp; + Login <br>&emsp; + Create Activity <br>&emsp; + Import Registration <br>&emsp; + Realtime Check-in/Check-out <br>&emsp; + Import Evidence <br>&emsp; + Reconciliation <br>&emsp; + Confirm Participation <br>&emsp; + Export Results <br>&emsp; + View Analytics Dashboard <br> - Prepare Workshop content explaining the AWS architecture and services <br> - Perform a final system review before the Demo | 06/11/2026 | 06/11/2026 | Project documentation and AWS Documentation |
 
 
-### Week 9 Achievements:
+### Expected Outcomes for Week 9:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed the technical architecture documentation for the **Student Activity Management and Engagement Analytics Platform**.
 
-* Successfully created and configured an AWS Free Tier account.
+* Updated the AWS Architecture Diagram to accurately represent the implemented solution.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Documented the responsibilities of:
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+  * AWS Amplify.
+  * Amazon Cognito.
+  * Amazon API Gateway.
+  * AWS Lambda.
+  * Amazon DynamoDB.
+  * Amazon S3.
+  * AWS Glue.
+  * Amazon Athena.
+  * Amazon QuickSight.
+  * AWS IAM.
+  * Amazon CloudWatch.
 
-* Used AWS CLI to perform basic operations such as:
+* Completed documentation for major system workflows:
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+  * Authentication Flow.
+  * Activity Management Flow.
+  * Registration Import Flow.
+  * Evidence Processing Flow.
+  * Realtime Check-in/Check-out Flow.
+  * Reconciliation Flow.
+  * Export Flow.
+  * Analytics Flow.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Completed the API Documentation for the main API groups.
+
+* Documented the following information for each major API:
+
+  * HTTP Method.
+  * Endpoint.
+  * Authentication requirement.
+  * Request parameters/body.
+  * Response structure.
+  * Error responses.
+  * Usage examples.
+
+* Completed the User Guide for:
+
+  * Youth Union Staff / Organizer.
+  * Admin / Management.
+
+* Documented the complete operational workflow:
+
+  * Login.
+  * Activity Management.
+  * Registration Import.
+  * Evidence Import.
+  * Realtime Attendance.
+  * Reconciliation.
+  * Participation Confirmation.
+  * Export Results.
+  * Analytics Dashboard.
+
+* Collected screenshots of important system functions for:
+
+  * Internship Report.
+  * Proposal.
+  * Workshop.
+  * Demo Presentation.
+
+* Completed the system Test Report.
+
+* Consolidated results from:
+
+  * Functional Testing.
+  * Authentication Testing.
+  * Authorization Testing.
+  * Data Validation Testing.
+  * Realtime Attendance Testing.
+  * Integration Testing.
+  * User Acceptance Testing.
+
+* Prepared a test summary containing:
+
+  * Test Case.
+  * Expected Result.
+  * Actual Result.
+  * Status.
+  * Issues.
+  * Resolution.
+
+* Documented the limitations of the MVP and possible future improvements.
+
+* Prepared the complete demonstration flow:
+
+  **Login → Create Activity → Import Registration → Realtime Check-in/Check-out → Import Evidence → Reconciliation → Confirm Participation → Export Results → Analytics Dashboard**
+
+* Prepared Workshop materials covering:
+
+  * Business problem.
+  * System architecture.
+  * AWS services.
+  * Data flow.
+  * Realtime Attendance.
+  * Data Processing.
+  * Analytics Dashboard.
+  * Security & Monitoring.
+  * Project results.
+
+* Prepared the system and documentation for the final internship report, Workshop, and project demonstration.
