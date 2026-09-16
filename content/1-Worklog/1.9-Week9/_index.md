@@ -7,7 +7,7 @@ pre: "<b>1.9.</b>"
 ---
 
 
-### Week 9 Objectives:
+### Week 9 Objectives
 
 * Complete the technical documentation of the system.
 * Update and finalize the AWS architecture diagram based on the implemented solution.
