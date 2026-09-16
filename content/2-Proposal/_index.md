@@ -6,9 +6,6 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** This proposal describes the Minimum Viable Product (MVP) version of the project. Some technical configurations, AWS service settings, and estimated costs may be adjusted during implementation and testing.
-{{% /notice %}}
 
 This section presents the proposal for developing a cloud-based platform to manage, reconcile, and analyze student participation in Youth Union activities using AWS services.
 
