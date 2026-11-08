@@ -1,0 +1,110 @@
+
+# ==========================================
+# STUDENT ACTIVITY PLATFORM - GITIGNORE
+# ==========================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+backend/.venv/
+
+# React / Vite
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.vite/
+*.tsbuildinfo
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.credentials
+
+# Local SQLite databases
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Application data
+backend/data/
+backend/uploads/
+
+# AWS local credentials and configuration
+.aws/
+aws_credentials/
+credentials.csv
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+*.auto.tfvars
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Local testing artifacts
+test-results/
+playwright-report/
+coverage/
+
+
+# ==========================================
+# LOCAL DEVELOPMENT BACKUPS
+# ==========================================
+
+backend/backups/
+*.backup.py
+*.backup.jsx
+*.backup.js
+*.backup.txt
+*.encoding-backup
+
+# Temporary patch scripts
+/fix_*.py
+/patch_*.py
+
+# Test datasets pending privacy review
+/sample-data/
+
+# Local sample input
+/backend/registration_pilot_test.csv
