@@ -6,114 +6,176 @@ chapter: false
 pre: "<b>1.5.</b>"
 ---
 
-
 ### Mục tiêu tuần 5:
 
-* Xây dựng giao diện Web cho hệ thống Student Activity Management and Engagement Analytics Platform.
-* Triển khai cơ chế xác thực người dùng bằng Amazon Cognito.
-* Phân quyền người dùng cho Youth Union Staff và Admin.
-* Kết nối Frontend với REST API đã triển khai trên Amazon API Gateway.
-* Xây dựng giao diện quản lý hoạt động và dữ liệu sinh viên.
-* Xây dựng giao diện hỗ trợ Check-in/Check-out realtime.
-* Xây dựng giao diện theo dõi kết quả đối soát.
-* Triển khai Frontend lên AWS Amplify.
-* Kiểm thử luồng đăng nhập, gọi API và hiển thị dữ liệu trên giao diện.
-
+* Bắt đầu phát triển giao diện Web cho hệ thống **Student Activity Management & Engagement Analytics Platform**.
+* Tìm hiểu React, Vite và phương pháp xây dựng Single Page Application (SPA).
+* Thiết kế cấu trúc Frontend theo hướng component-based, dễ quản lý và mở rộng.
+* Xây dựng giao diện đăng nhập và hệ thống điều hướng phù hợp với từng vai trò người dùng.
+* Phát triển cơ chế Authentication và Authorization thông qua FastAPI Backend.
+* Hoàn thiện mô hình phân quyền gồm hai vai trò chính là **ADMIN** và **STUDENT**.
+* Xây dựng cơ chế quản lý phiên đăng nhập, xác thực bằng Bearer Token và bảo vệ các API.
+* Phát triển giao diện quản lý hoạt động, thông tin cá nhân và tài khoản sinh viên.
+* Xây dựng giao diện phục vụ Attendance và Reconciliation.
+* Kết nối Frontend React với các REST API của FastAPI.
+* Kiểm thử các tình huống đăng nhập, phân quyền, quản lý tài khoản và gọi API.
+* Tối ưu giao diện, khả năng xử lý lỗi và trải nghiệm người dùng trong môi trường local.
 
 ### Các công việc cần triển khai trong tuần này:
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2 | - Thiết kế cấu trúc giao diện Web cho hệ thống <br> - Xác định các trang chính: <br>&emsp; + Login <br>&emsp; + Dashboard <br>&emsp; + Activities <br>&emsp; + Students / Registrations <br>&emsp; + Attendance <br>&emsp; + Reconciliation <br> - Khởi tạo Frontend bằng React hoặc Next.js <br> - Tổ chức cấu trúc component và routing | 05/10/2026 | 05/10/2026 | Tài liệu Proposal và tài liệu thiết kế hệ thống |
-| 3 | - Tạo và cấu hình Amazon Cognito <br> - Tạo User Pool phục vụ Authentication <br> - Cấu hình tài khoản cho các nhóm người dùng <br>&emsp; + Youth Union Staff / Organizer <br>&emsp; + Admin / Management <br> - Tích hợp chức năng Sign in / Sign out vào Frontend <br> - Xử lý JWT Token sau khi đăng nhập <br> - Kiểm thử các trường hợp đăng nhập hợp lệ và không hợp lệ | 06/10/2026 | 06/10/2026 | <https://docs.aws.amazon.com/cognito/> |
-| 4 | - Kết nối Frontend với Amazon API Gateway <br> - Cấu hình gửi JWT Token trong API request <br> - Xây dựng giao diện quản lý hoạt động <br>&emsp; + Xem danh sách hoạt động <br>&emsp; + Xem thông tin chi tiết <br>&emsp; + Tạo/cập nhật hoạt động theo quyền người dùng <br> - Xây dựng giao diện hiển thị danh sách sinh viên đăng ký <br> - Kiểm tra dữ liệu trả về từ Lambda và DynamoDB | 07/10/2026 | 07/10/2026 | <https://docs.aws.amazon.com/apigateway/> |
-| 5 | - Xây dựng giao diện Attendance cho Check-in/Check-out realtime <br> - Mô phỏng thao tác quét QR trên giao diện <br>&emsp; + Nhận MSSV / QR data <br>&emsp; + Gửi request Check-in hoặc Check-out <br>&emsp; + Hiển thị kết quả ngay sau khi API phản hồi <br> - Hiển thị thông báo cho các trường hợp: <br>&emsp; + Check-in thành công <br>&emsp; + Check-out thành công <br>&emsp; + Sinh viên chưa đăng ký <br>&emsp; + Quét trùng <br>&emsp; + Dữ liệu không hợp lệ <br> - Xây dựng giao diện xem trạng thái Attendance | 08/10/2026 | 08/10/2026 | Tài liệu Proposal và API Documentation |
-| 6 | - Xây dựng giao diện Reconciliation <br>&emsp; + Hiển thị Registration <br>&emsp; + Check-in <br>&emsp; + Check-out <br>&emsp; + Evidence <br>&emsp; + Participation Status <br> - Cho phép Ban tổ chức kiểm tra các trường hợp NEEDS_REVIEW <br> - Kiểm thử toàn bộ luồng Frontend → API Gateway → Lambda → DynamoDB <br> - Triển khai Web Application lên AWS Amplify <br> - Kiểm tra truy cập hệ thống qua HTTPS <br> - Kiểm tra và sửa lỗi giao diện/API sau khi triển khai | 09/10/2026 | 09/10/2026 | <https://docs.aws.amazon.com/amplify/> |
+| --- | --- | --- | --- | --- |
+| Thứ 2 | - Nghiên cứu React và Vite để xây dựng ứng dụng Web. <br> - Khởi tạo cấu trúc thư mục Frontend trong dự án `student-activity-platform`. <br> - Tìm hiểu JSX, Component, Props, State và React Hooks. <br> - Xây dựng cấu trúc thư mục `src/components`, `src/pages` và `src/services`. <br> - Thiết kế giao diện tổng thể gồm Sidebar, Header, khu vực nội dung và hệ thống điều hướng. <br> - Xác định các trang chính như Login, Dashboard, Activities, Attendance, Reconciliation và Profile. <br> - Kiểm tra khả năng chạy Frontend bằng Vite Development Server. | 05/10/2026 | 05/10/2026 | https://react.dev/ <br> https://vite.dev/ |
+| Thứ 3 | - Phát triển giao diện đăng nhập và thiết kế quy trình Authentication. <br> - Kết nối form đăng nhập với FastAPI thông qua endpoint `/auth/login`. <br> - Xây dựng cơ chế lưu và sử dụng Bearer Token trong các API request. <br> - Nghiên cứu cơ chế xác minh phiên bằng `/auth/me` và đăng xuất bằng `/auth/logout`. <br> - Phân biệt trạng thái đăng nhập, phiên hết hạn và thông tin xác thực không hợp lệ. <br> - Xây dựng cơ chế điều hướng sau đăng nhập theo vai trò ADMIN/STUDENT. <br> - Kiểm thử đăng nhập với tài khoản giả lập. | 06/10/2026 | 06/10/2026 | https://fastapi.tiangolo.com/tutorial/security/ <br> https://react.dev/ |
+| Thứ 4 | - Hoàn thiện mô hình phân quyền gồm ADMIN và STUDENT. <br> - Xây dựng cơ chế kiểm tra quyền truy cập API tại Backend. <br> - Xác định các trang và chức năng chỉ ADMIN được sử dụng. <br> - Phát triển giao diện quản lý tài khoản sinh viên. <br> - Xây dựng các thao tác xem danh sách, khóa/mở khóa và đặt lại mật khẩu sinh viên. <br> - Nghiên cứu chức năng đồng bộ tài khoản từ dữ liệu sinh viên. <br> - Kiểm tra việc STUDENT không nhìn thấy và không được truy cập chức năng quản lý tài khoản sinh viên. <br> - Kiểm thử phản hồi HTTP 403 khi tài khoản không có quyền truy cập API quản trị. | 07/10/2026 | 07/10/2026 | https://fastapi.tiangolo.com/tutorial/security/ <br> Tài liệu phân quyền của dự án |
+| Thứ 5 | - Phát triển giao diện Activity Management. <br> - Kết nối Frontend với các API tạo, cập nhật và truy xuất hoạt động. <br> - Thiết kế form nhập thông tin hoạt động và hiển thị trạng thái công bố. <br> - Xây dựng giao diện xem danh sách và chi tiết hoạt động. <br> - Phát triển trang hồ sơ cá nhân và các chức năng cập nhật thông tin tài khoản. <br> - Nghiên cứu chức năng đổi mật khẩu và quản lý ảnh đại diện. <br> - Xây dựng cơ chế xử lý Loading, Success và Error khi gọi API. <br> - Kiểm tra khả năng cập nhật giao diện khi dữ liệu thay đổi. | 08/10/2026 | 08/10/2026 | https://react.dev/ <br> https://fastapi.tiangolo.com/ |
+| Thứ 6 | - Phát triển giao diện Attendance và Reconciliation. <br> - Thiết kế khu vực nhập MSSV hoặc dữ liệu từ thiết bị quét mã để thực hiện Check-in/Check-out. <br> - Kết nối thao tác điểm danh với FastAPI REST API. <br> - Hiển thị thông báo cho các trường hợp thành công, chưa đăng ký, thao tác trùng và dữ liệu không hợp lệ. <br> - Thiết kế giao diện theo dõi danh sách đăng ký và trạng thái tham gia. <br> - Kiểm tra hiển thị phù hợp với vai trò ADMIN/STUDENT. <br> - Kiểm thử luồng Frontend → FastAPI → dữ liệu local bằng dữ liệu giả lập. <br> - Tổng hợp các lỗi giao diện và API cần tiếp tục hoàn thiện. | 09/10/2026 | 09/10/2026 | Tài liệu FastAPI, React và Business Rules của dự án |
 
+### Kết quả đạt được tuần 5:
 
-### Kết quả dự kiến đạt được tuần 5:
+* **Xây dựng nền tảng giao diện Frontend bằng React và Vite:**
+  * Khởi tạo ứng dụng React phục vụ hệ thống quản lý hoạt động sinh viên.
+  * Thiết lập môi trường phát triển và chạy ứng dụng bằng Vite.
+  * Tổ chức mã nguồn theo hướng component-based.
+  * Phân chia các thành phần giao diện thành Page, Component và Service.
+  * Xây dựng cấu trúc điều hướng giữa các trang chức năng.
+  * Thiết kế bố cục giao diện gồm Sidebar, Header và khu vực hiển thị nội dung chính.
+  * Chuẩn bị nền tảng để mở rộng giao diện và triển khai ứng dụng Web trong những tuần tiếp theo.
 
-* Xây dựng được giao diện Web ban đầu cho hệ thống **Student Activity Management and Engagement Analytics Platform**.
+* **Xây dựng các trang chức năng chính:**
+  * Login.
+  * Dashboard.
+  * Activity Management.
+  * Student Account Management.
+  * Attendance.
+  * Reconciliation.
+  * Personal Profile.
 
-* Hoàn thiện các trang chức năng chính:
+  Các trang được thiết kế theo hướng có thể tái sử dụng component và quản lý dữ liệu thông qua REST API.
 
-  * Login
-  * Dashboard
-  * Activities
-  * Students / Registrations
-  * Attendance
-  * Reconciliation
+* **Phát triển cơ chế Authentication với FastAPI:**
+  * Sử dụng Backend để tiếp nhận và kiểm tra thông tin đăng nhập.
+  * Thiết kế cơ chế xác thực dựa trên Bearer Token.
+  * Nghiên cứu và sử dụng các endpoint:
+    * `/auth/login`.
+    * `/auth/me`.
+    * `/auth/logout`.
+    * `/auth/change-password`.
+  * Xây dựng cơ chế kiểm tra trạng thái phiên trước khi truy cập chức năng được bảo vệ.
+  * Xử lý các trường hợp đăng nhập thất bại hoặc phiên đăng nhập không còn hợp lệ.
+  * Nghiên cứu cách quản lý dữ liệu tài khoản và phiên đăng nhập bằng SQLite.
 
-* Tích hợp Amazon Cognito để xác thực người dùng.
+* **Hoàn thiện mô hình phân quyền ADMIN/STUDENT:**
 
-* Thiết lập hai nhóm người dùng chính:
+  **ADMIN:**
+  * Truy cập các chức năng quản trị.
+  * Quản lý thông tin và trạng thái hoạt động.
+  * Quản lý tài khoản sinh viên.
+  * Nhập dữ liệu đăng ký và minh chứng.
+  * Thực hiện hoặc quản lý điểm danh.
+  * Đối soát, xác nhận và xuất dữ liệu tham gia.
+  * Xem thống kê và báo cáo.
 
-  * Youth Union Staff / Organizer.
-  * Admin / Management.
+  **STUDENT:**
+  * Đăng nhập và truy cập các chức năng được cấp quyền.
+  * Xem danh sách, chi tiết hoạt động.
+  * Quản lý hồ sơ cá nhân.
+  * Theo dõi lịch sử và kết quả tham gia.
+  * Xem những thông báo liên quan.
 
-* Xây dựng được chức năng:
+* **Xây dựng chức năng quản lý tài khoản sinh viên:**
+  * Thiết kế giao diện danh sách tài khoản sinh viên.
+  * Nghiên cứu và phát triển các thao tác:
+    * Xem thông tin tài khoản.
+    * Khóa tài khoản.
+    * Mở khóa tài khoản.
+    * Đặt lại mật khẩu.
+    * Đồng bộ tài khoản sinh viên.
+  * Xác định API quản trị trong nhóm `/admin/students`.
+  * Kiểm tra quyền tại Backend, không chỉ dựa vào việc ẩn chức năng trên giao diện.
+  * Xử lý trường hợp STUDENT cố truy cập API chỉ dành cho ADMIN.
 
-  * Đăng nhập.
-  * Đăng xuất.
-  * Lưu và sử dụng JWT Token.
-  * Kiểm tra trạng thái xác thực người dùng.
-  * Hạn chế quyền truy cập vào các chức năng theo vai trò người dùng.
+* **Phát triển giao diện quản lý hoạt động:**
+  * Hiển thị danh sách hoạt động.
+  * Hiển thị thông tin chi tiết.
+  * Thiết kế form tạo và cập nhật hoạt động.
+  * Hiển thị trạng thái hoạt động.
+  * Nghiên cứu quy trình gửi duyệt, công bố và hủy hoạt động.
+  * Kết nối dữ liệu hoạt động với FastAPI.
 
-* Kết nối thành công Frontend với Amazon API Gateway.
+* **Nghiên cứu và phát triển trang hồ sơ cá nhân:**
+  * Thiết kế chức năng xem và cập nhật thông tin tài khoản.
+  * Nghiên cứu cơ chế thay đổi mật khẩu.
+  * Tìm hiểu quy trình tải lên và hiển thị ảnh đại diện.
+  * Xác định yêu cầu giữ dữ liệu khi tải lại trang hoặc đăng nhập lại.
+  * Nghiên cứu xử lý các trường hợp thiếu thông tin và dữ liệu không hợp lệ.
 
-* Gửi được các authenticated request từ Frontend đến Backend theo luồng:
+* **Phát triển giao diện Attendance:**
+  * Xây dựng khu vực tiếp nhận MSSV.
+  * Kết nối thao tác Check-in/Check-out với REST API.
+  * Hiển thị trạng thái điểm danh theo hoạt động.
+  * Xử lý thông báo khi điểm danh thành công.
+  * Hiển thị lỗi trong trường hợp Check-in trùng hoặc dữ liệu không hợp lệ.
+  * Xác định khả năng kết nối thiết bị quét mã hoặc camera trong các giai đoạn nâng cấp tiếp theo.
 
-  * User đăng nhập.
-  * Amazon Cognito xác thực người dùng.
-  * Cognito trả về JWT Token.
-  * Frontend gửi request kèm JWT Token.
-  * API Gateway tiếp nhận request.
-  * AWS Lambda thực hiện business logic.
-  * DynamoDB được đọc hoặc cập nhật.
-  * Kết quả được trả về và hiển thị trên giao diện.
+  **Lưu ý:** Trong giai đoạn này, hệ thống tập trung vào việc ghi nhận sự kiện điểm danh thông qua API thời gian thực. Việc sử dụng camera quét QR trực tiếp trên giao diện chưa được xem là chức năng hoàn thiện.
 
-* Xây dựng được giao diện quản lý hoạt động với các chức năng cơ bản:
+* **Phát triển giao diện Reconciliation:**
+  * Hiển thị thông tin Registration và Attendance.
+  * Thiết kế khu vực theo dõi Evidence và Participation Status.
+  * Xác định các trường hợp cần kiểm tra thủ công.
+  * Chuẩn bị giao diện phục vụ ADMIN xem xét và xác nhận kết quả.
+  * Nghiên cứu cách hiển thị kết quả sau khi đối soát.
 
-  * Xem danh sách hoạt động.
-  * Xem thông tin chi tiết.
-  * Tạo hoạt động.
-  * Cập nhật thông tin hoạt động.
+* **Kết nối Frontend với Backend FastAPI:**
+  * Tìm hiểu cách sử dụng Fetch API và các hàm gọi REST API.
+  * Xây dựng Service Layer phục vụ giao tiếp giữa React và FastAPI.
+  * Sử dụng Bearer Token trong các yêu cầu cần xác thực.
+  * Nghiên cứu xử lý CORS trong môi trường phát triển local.
+  * Xử lý các trạng thái Loading, Success và Error.
+  * Kiểm tra luồng tương tác giữa giao diện và Backend.
 
-* Xây dựng được giao diện quản lý danh sách sinh viên đăng ký.
+  **Luồng xử lý trong tuần 5:**
 
-* Xây dựng được giao diện Check-in/Check-out realtime.
+  **React/Vite Frontend → FastAPI REST API → SQLite / Local Application State**
 
-* Khi Ban tổ chức thực hiện quét QR:
+* **Thực hiện kiểm thử chức năng cơ bản:**
+  * Đăng nhập bằng tài khoản ADMIN và STUDENT.
+  * Kiểm tra điều hướng theo vai trò.
+  * Kiểm tra các chức năng quản trị không được hiển thị cho STUDENT.
+  * Kiểm tra yêu cầu API quản trị phải có quyền phù hợp.
+  * Kiểm tra tạo và hiển thị dữ liệu hoạt động.
+  * Kiểm tra các thao tác quản lý tài khoản.
+  * Kiểm tra quá trình gửi request Attendance.
+  * Ghi nhận các lỗi giao diện và xử lý API cần tiếp tục khắc phục.
 
-  * Frontend gửi dữ liệu MSSV và Activity ID đến API.
-  * Backend kiểm tra Registration.
-  * CHECK_IN hoặc CHECK_OUT được ghi nhận trong DynamoDB.
-  * Kết quả được trả về và hiển thị ngay trên giao diện.
+* **Xác định đúng phạm vi triển khai của hệ thống:**
+  * Frontend sử dụng React và Vite.
+  * Backend sử dụng Python và FastAPI.
+  * Authentication được xử lý bởi FastAPI và hệ thống tài khoản local.
+  * SQLite được sử dụng cho dữ liệu xác thực và trạng thái ứng dụng trong môi trường local.
+  * DynamoDB và S3 tiếp tục được nghiên cứu hoặc kiểm thử theo phạm vi AWS Pilot.
+  * Amazon Cognito chưa được tích hợp để thay thế Authentication của FastAPI.
+  * Amazon API Gateway chưa được sử dụng làm cổng API của ứng dụng.
+  * AWS Amplify chưa được ghi nhận là đã triển khai Frontend trong tuần này.
 
-* Đảm bảo Check-in/Check-out vẫn hoạt động theo cơ chế **realtime API**, không sử dụng Excel/CSV để nhập dữ liệu Attendance.
+### Khó khăn và bài học kinh nghiệm:
 
-* Xây dựng được giao diện Reconciliation để hiển thị:
+* **Tổ chức mã nguồn React:** Khi số lượng trang tăng lên, cần tách component và service để dễ bảo trì, tránh lặp lại logic gọi API.
+* **Xử lý Authentication:** Việc quản lý Token, trạng thái đăng nhập và phiên hết hạn cần được thiết kế thống nhất giữa Frontend và Backend.
+* **Phân quyền người dùng:** Chỉ ẩn menu ADMIN trên Frontend là chưa đủ; Backend phải kiểm tra quyền trước khi xử lý request.
+* **Đồng bộ giao diện với dữ liệu:** Khi tạo, cập nhật hoặc thay đổi trạng thái tài khoản, giao diện cần phản ánh kết quả mới.
+* **Xử lý lỗi API:** Cần phân biệt lỗi xác thực, lỗi phân quyền, lỗi dữ liệu và lỗi kết nối.
+* **Giao diện điểm danh:** Cần ưu tiên độ chính xác của API Check-in/Check-out trước khi mở rộng sang camera QR.
+* **Triển khai theo giai đoạn:** Hoàn thiện hệ thống local trước khi đưa Frontend lên AWS giúp giảm số lượng vấn đề phải xử lý đồng thời.
 
-  * Registration Status.
-  * Check-in Status.
-  * Check-out Status.
-  * Evidence Status.
-  * Participation Status.
+### Định hướng tuần tiếp theo:
 
-* Hiển thị được các trường hợp cần kiểm tra như:
-
-  * `READY`
-  * `NEEDS_REVIEW: MISSING_CHECK_IN`
-  * `NEEDS_REVIEW: MISSING_CHECK_OUT`
-  * `NEEDS_REVIEW: MISSING_EVIDENCE`
-  * `NO_ATTENDANCE`
-
-* Triển khai Frontend lên AWS Amplify.
-
-* Truy cập được Web Application thông qua HTTPS.
-
-* Hoàn thành luồng tích hợp cơ bản:
-
-  **AWS Amplify → Amazon Cognito → API Gateway → AWS Lambda → Amazon DynamoDB**
-
-* Hoàn thiện phiên bản Web Application cơ bản để chuẩn bị cho việc xử lý file nâng cao, xuất báo cáo và xây dựng hệ thống Analytics trong tuần tiếp theo.
+* Tiếp tục hoàn thiện các trang chức năng trên Frontend.
+* Phát triển giao diện Registration Import và Evidence Import.
+* Xây dựng chức năng Preview, Validation và Import trên giao diện.
+* Hoàn thiện trang quản lý danh sách sinh viên tham gia.
+* Phát triển chức năng xuất dữ liệu CSV/XLSX.
+* Kết nối giao diện với các API xử lý dữ liệu của Backend.
+* Kiểm thử các trường hợp dữ liệu sai, thiếu hoặc trùng lặp.
+* Chuẩn bị dữ liệu cho chức năng Analytics và Reconciliation trong những tuần tiếp theo.

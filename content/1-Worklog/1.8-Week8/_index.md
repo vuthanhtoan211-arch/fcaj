@@ -6,112 +6,177 @@ chapter: false
 pre: "<b>1.8.</b>"
 ---
 
-
 ### Week 8 Objectives:
 
-* Perform comprehensive testing of the integrated system.
-* Identify and resolve remaining Frontend and Backend issues.
-* Test Authentication and Authorization.
-* Verify the correctness of business rules.
-* Perform basic API and realtime Check-in/Check-out performance testing.
-* Test abnormal data and system error scenarios.
-* Conduct User Acceptance Testing (UAT).
-* Improve the user interface and user experience.
-* Review AWS security configurations.
-* Review AWS resources and optimize cloud costs.
-* Prepare a stable system version for demonstration and reporting.
+* Continue improving the **Student Activity Management & Engagement Analytics Platform** after developing its core modules.
+* Perform integration testing between the React/Vite Frontend and the Python/FastAPI Backend.
+* Review Authentication, session management, and role-based authorization.
+* Verify access control for the ADMIN and STUDENT roles.
+* Test Activity Management, Registration Import, Attendance, Evidence Import, Reconciliation, Analytics, and Export.
+* Identify and address issues involving APIs, data processing, and user interfaces.
+* Review data consistency after create, update, and page reload operations.
+* Improve student account management and personal profile functionality.
+* Test invalid Login attempts, expired sessions, and unauthorized API requests.
+* Review the real-time Check-in/Check-out workflow to ensure timestamps are recorded when API requests are processed.
+* Improve UI feedback, error handling, and usability across different screen sizes.
+* Prepare source code, demo data, and environment configuration for future AWS Amplify deployment.
 
+### Tasks to Be Implemented This Week:
 
-### Tasks to be completed this week:
+| Day | Tasks | Start Date | Completion Date | References |
+| --- | --- | --- | --- | --- |
+| Monday | - Review the Frontend and Backend project structure. <br> - Verify that React/Vite and FastAPI start correctly in the local environment. <br> - Review critical API endpoints and Frontend–Backend connectivity. <br> - Test Authentication using `/auth/login`, `/auth/me`, and `/auth/logout`. <br> - Review Bearer Token storage and request handling. <br> - Identify invalid credentials, missing Tokens, and invalid session cases. <br> - Document issues requiring further investigation. | 26/10/2026 | 26/10/2026 | https://fastapi.tiangolo.com/tutorial/security/ <br> https://react.dev/ |
+| Tuesday | - Review ADMIN and STUDENT authorization in both Frontend and Backend. <br> - Test access restrictions for student account administration APIs. <br> - Verify that STUDENT users cannot access administrative functionality. <br> - Review student account activation/deactivation and password reset. <br> - Check student account synchronization. <br> - Test password changes and personal profile updates. <br> - Review profile persistence after reloads and subsequent logins. <br> - Identify and address navigation and account-state display issues. | 27/10/2026 | 27/10/2026 | Authentication/Authorization notes and Admin Students API |
+| Wednesday | - Test Activity Management and Registration Import workflows. <br> - Review activity creation, update, publication, and cancellation. <br> - Verify activity lists and detail views. <br> - Test CSV/XLSX Registration Preview and Import. <br> - Check duplicate Student IDs, missing information, and invalid formats. <br> - Review imported registration data after page reloads. <br> - Test Evidence Import and activity-related evidence mapping. <br> - Record data processing and API response issues. | 28/10/2026 | 28/10/2026 | Activity API, Registration API, and Evidence API documentation |
+| Thursday | - Test the real-time Check-in/Check-out workflow. <br> - Verify Student ID and Activity ID handling in the Attendance interface. <br> - Check student registration before attendance recording. <br> - Test valid Check-ins, duplicate Check-ins, and invalid requests. <br> - Test Check-out operations and Check-out opening/closing rules. <br> - Review Backend timestamps and attendance statuses. <br> - Test Reconciliation after Attendance data changes. <br> - Review error messages and UI refresh behavior. | 29/10/2026 | 29/10/2026 | Attendance Service and Reconciliation API documentation |
+| Friday | - Review Analytics Dashboard and Export Results. <br> - Compare aggregated metrics with Registration, Attendance, and Reconciliation data. <br> - Check empty Dashboard states and API errors. <br> - Review Final Results, Check-in, Check-out, and Absent reports. <br> - Inspect Loading, Success, and Error feedback in the UI. <br> - Review responsive layouts across device sizes. <br> - Check API Base URL configuration, environment variables, and files that must not be committed to GitHub. <br> - Prepare a plan for deploying the Frontend on AWS Amplify. | 30/10/2026 | 30/10/2026 | Analytics/Export documentation <br> https://vite.dev/guide/env-and-mode |
 
-| Day | Tasks | Start Date | Completion Date | Reference |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2 | - Review issues identified during the previous integration testing phase <br> - Classify issues related to Frontend, Backend, Data Processing, and Analytics <br> - Verify API endpoints <br> - Fix request/response, validation, and error-handling issues <br> - Verify data consistency between DynamoDB, Amazon S3, and the Web Application | 26/10/2026 | 26/10/2026 | Testing documents and AWS Documentation |
-| 3 | - Perform Authentication and Authorization testing <br> - Review the Amazon Cognito User Pool <br> - Verify JWT Tokens and Cognito Authorizer <br> - Test permissions for Youth Union Staff and Admin users <br> - Test API access without a Token or with an invalid Token <br> - Review IAM Roles and Policies according to the Least Privilege principle <br> - Verify Amazon S3 and DynamoDB permissions | 27/10/2026 | 27/10/2026 | <https://docs.aws.amazon.com/cognito/> <br> <https://docs.aws.amazon.com/iam/> |
-| 4 | - Test business rules and basic system performance <br> - Test realtime Check-in/Check-out with multiple consecutive requests <br> - Verify scenarios including: <br>&emsp; + Unregistered student <br>&emsp; + Duplicate Check-in <br>&emsp; + Check-out without Check-in <br>&emsp; + Missing Evidence <br>&emsp; + Duplicate Registration <br>&emsp; + Invalid Student ID <br> - Monitor Lambda Duration, Errors, and API response behavior using CloudWatch <br> - Optimize processing logic where necessary | 28/10/2026 | 28/10/2026 | <https://docs.aws.amazon.com/cloudwatch/> |
-| 5 | - Conduct User Acceptance Testing (UAT) <br> - Test the system from the Youth Union Staff / Organizer perspective <br> - Test functions including: <br>&emsp; + Login <br>&emsp; + Activity Management <br>&emsp; + Registration Import <br>&emsp; + Evidence Import <br>&emsp; + Realtime Check-in/Check-out <br>&emsp; + Reconciliation <br>&emsp; + Export Results <br>&emsp; + Analytics Dashboard <br> - Record UI/UX and workflow issues <br> - Improve the interface and user-facing messages | 29/10/2026 | 29/10/2026 | Project Proposal and Test Cases |
-| 6 | - Review and optimize AWS resources <br> - Review active AWS resources <br> - Remove or disable unnecessary testing resources <br> - Review CloudWatch Logs and log retention settings <br> - Review Amazon S3 storage usage <br> - Review Lambda and DynamoDB configurations <br> - Review AWS Billing / Cost Management <br> - Perform Regression Testing after bug fixes <br> - Prepare a stable system version for demonstration and documentation | 30/10/2026 | 30/10/2026 | <https://docs.aws.amazon.com/cost-management/> |
+### Week 8 Achievements:
 
+* **Reviewed Frontend–Backend integration:**
+  * Verified the React/Vite and FastAPI application structure.
+  * Identified endpoints consumed by the Frontend.
+  * Reviewed REST API request and response handling.
+  * Checked Bearer Token usage for authenticated requests.
+  * Distinguished issues originating from the Frontend, Backend, and input datasets.
+  * Prepared approaches for handling unavailable APIs and invalid responses.
 
-### Expected Outcomes for Week 8:
+* **Tested and improved Authentication:**
+  * Reviewed successful Login scenarios.
+  * Checked invalid credential handling.
+  * Examined session validation.
+  * Tested or reviewed Logout functionality.
+  * Reviewed the following API endpoints:
+    * `/auth/login`.
+    * `/auth/me`.
+    * `/auth/logout`.
+    * `/auth/change-password`.
+    * `/auth/profile`.
+    * `/auth/avatar`.
+  * Defined expected handling for expired sessions and invalid Tokens.
+  * Reviewed account information persistence and update operations.
 
-* Reviewed and resolved issues identified during the system integration testing phase.
+* **Reviewed ADMIN/STUDENT authorization:**
+  * Confirmed that ADMIN and STUDENT are the application's two current roles.
+  * Verified that administrative features should only be visible to ADMIN users.
+  * Reviewed access restrictions for student account lists.
+  * Checked Backend authorization requirements for protected operations.
+  * Distinguished hidden UI elements from actual API protection.
+  * Reviewed synchronization of Authentication and Authorization states across application pages.
 
-* Improved the stability of the Frontend and Backend components.
+* **Reviewed Student Account Management:**
+  * Checked student account listing and detail APIs.
+  * Reviewed account deactivation and reactivation.
+  * Tested or examined password reset workflows.
+  * Investigated student account synchronization.
+  * Identified missing-account and invalid-data scenarios.
+  * Reviewed success and error messages in administrative interfaces.
 
-* Successfully verified Authentication using Amazon Cognito.
+* **Reviewed Personal Profile functionality:**
+  * Examined account information update operations.
+  * Reviewed password change functionality.
+  * Investigated avatar upload and display handling.
+  * Checked profile persistence after page reloads.
+  * Identified requirements for invalid inputs and unsuccessful updates.
 
-* Confirmed the authentication workflow:
+* **Reviewed Activity Management:**
+  * Checked activity creation and update operations.
+  * Reviewed activity listing and detail views.
+  * Examined approval, publication, and cancellation states.
+  * Reviewed role-based activity visibility.
+  * Identified invalid records and missing-activity cases.
 
-  **User → Amazon Cognito → JWT Token → API Gateway → Cognito Authorizer → AWS Lambda**
+* **Tested Registration and Evidence Import:**
+  * Reviewed the Upload → Preview → Validation → Import workflow.
+  * Checked CSV/XLSX format requirements.
+  * Reviewed missing and duplicate Student IDs.
+  * Examined invalid data and validation feedback.
+  * Checked imported records after Import.
+  * Reviewed links between Evidence and Registration.
+  * Identified inconsistent records requiring manual review.
 
-* Tested access permissions for:
+* **Reviewed real-time Attendance APIs:**
+  * Checked Student ID handling in the Attendance interface.
+  * Reviewed registration verification before Attendance processing.
+  * Examined Check-in/Check-out timestamps.
+  * Reviewed duplicate attendance prevention.
+  * Examined Check-out opening and closing rules.
+  * Checked attendance records and counter updates.
+  * Prepared additional test cases for unregistered and ineligible students.
 
-  * Youth Union Staff / Organizer.
-  * Admin / Management.
+  **Note:** Check-in/Check-out continued to operate through real-time FastAPI requests. Browser-based QR camera scanning was not confirmed as a completed feature.
 
-* Tested unauthorized access scenarios including:
+* **Reviewed Reconciliation functionality:**
+  * Checked Registration, Attendance, and Evidence aggregation.
+  * Reviewed records with missing Check-ins, Check-outs, or Evidence.
+  * Examined participation decisions requiring ADMIN review.
+  * Reviewed Decision and Finalize APIs.
+  * Identified consistency requirements when source data changes.
+  * Prepared result verification steps before report generation.
 
-  * Missing JWT Token.
-  * Invalid Token.
-  * Expired Token.
-  * User without sufficient permissions.
+* **Reviewed the Analytics Dashboard:**
+  * Examined the `/analytics` API and aggregated data responses.
+  * Reviewed registration and participation metrics.
+  * Examined participation and completion rate calculations.
+  * Checked empty-data scenarios.
+  * Reviewed Dashboard refresh behavior after business operations.
+  * Identified potential UI improvements.
 
-* Reviewed IAM Roles and Policies according to the **Least Privilege** principle.
+* **Reviewed Export Results:**
+  * Examined activity-specific exports.
+  * Reviewed report categories:
+    * Final Results.
+    * Check-in Records.
+    * Check-out Records.
+    * Absent Students.
+  * Checked worksheet structure and Excel content.
+  * Investigated missing-field handling.
+  * Reviewed the Frontend download workflow.
 
-* Retested major system business rules:
+* **Improved the user interface and user experience:**
+  * Reviewed Sidebar, Header, and page layouts.
+  * Examined feedback for unavailable Backend services.
+  * Improved or identified improvements for Loading, Empty Data, and Success states.
+  * Reviewed responsive behavior across screen sizes.
+  * Identified interface components requiring usability improvements.
+  * Reviewed role-based UI visibility.
 
-  * Students must register before Check-in/Check-out.
-  * Check-in must be recorded in real time.
-  * Check-out must be recorded in real time.
-  * Invalid duplicate Check-in events are rejected.
-  * Check-in and Check-out sequence is validated.
-  * Missing Evidence is detected.
-  * Invalid data is detected.
-  * Reconciliation follows the defined business rules.
+* **Prepared for AWS Amplify deployment:**
+  * Reviewed the Frontend structure and Build commands.
+  * Studied the `VITE_API_BASE_URL` environment variable.
+  * Identified the need for a secure HTTPS Backend endpoint when hosting the Frontend publicly.
+  * Explored GitHub-based deployment workflows.
+  * Prepared the use of Cloudflare Tunnel to expose an isolated local demo Backend.
+  * Distinguished AWS Amplify Frontend hosting from a full AWS Backend deployment.
 
-* Confirmed that Check-in and Check-out continue to operate as **realtime API events** rather than imported Attendance files.
+* **Clarified the implementation scope during Week 8:**
+  * React/Vite remained the Frontend framework.
+  * FastAPI handled Authentication and core business logic.
+  * SQLite supported local application data and state.
+  * Amazon DynamoDB and S3 remained limited AWS Pilot components.
+  * AWS Amplify was not reported as successfully deployed during Week 8.
+  * AWS Lambda was not used as the application's main Backend.
+  * Cognito, API Gateway, Glue, Athena, and QuickSight were not part of the running application.
 
-* Performed basic testing with multiple consecutive realtime attendance requests.
+### Challenges and Lessons Learned:
 
-* Monitored important Amazon CloudWatch metrics:
+* **Multi-module testing:** Systems with several components require both individual module tests and end-to-end workflow verification.
+* **Authentication and Authorization:** Login testing should be combined with Backend permission verification.
+* **Frequently changing data:** After Import, Attendance, and Reconciliation operations, the interface must reflect the updated application state.
+* **Error handling:** Data, authorization, API, and network failures should be clearly distinguished.
+* **Attendance verification:** Timestamps and duplicate prevention must be validated against actual test records.
+* **Web deployment:** A public HTTPS Frontend cannot rely on a visitor's localhost HTTP Backend.
+* **Data protection:** Public demos should use synthetic accounts and records rather than exposing real student information.
+* **Cost management:** Existing infrastructure should be reused, and AWS resources should be checked before provisioning additional services.
 
-  * Lambda Invocations.
-  * Lambda Errors.
-  * Lambda Duration.
-  * API Gateway Requests.
-  * HTTP 4XX Errors.
-  * HTTP 5XX Errors.
+### Plan for Next Week:
 
-* Completed User Acceptance Testing for:
-
-  * Authentication.
-  * Activity Management.
-  * Registration Import.
-  * Evidence Import.
-  * Realtime Attendance.
-  * Reconciliation.
-  * Export Results.
-  * Analytics Dashboard.
-
-* Improved the Web Application to provide:
-
-  * Better usability.
-  * Clearer status information.
-  * More understandable error messages.
-  * Faster and simpler Check-in/Check-out operations for organizers.
-
-* Performed Regression Testing after issue resolution to ensure that existing functions continued to work correctly.
-
-* Reviewed active AWS resources.
-
-* Removed or disabled unnecessary testing resources.
-
-* Reviewed AWS Billing / Cost Management to minimize unexpected AWS costs.
-
-* Prepared a stable system version for:
-
-  * System demonstration.
-  * Workshop preparation.
-  * Technical documentation.
-  * Internship report completion.
+* Prepare the GitHub repository for application deployment.
+* Finalize React/Vite Build configuration.
+* Deploy the Frontend using AWS Amplify Hosting.
+* Prepare an isolated FastAPI and SQLite demo Backend.
+* Set up HTTPS access using Cloudflare Tunnel.
+* Configure the API Base URL for the deployed environment.
+* Test ADMIN and STUDENT Login using synthetic accounts.
+* Verify the Frontend → HTTPS Backend → Demo Data workflow.
+* Document deployment results and limitations.

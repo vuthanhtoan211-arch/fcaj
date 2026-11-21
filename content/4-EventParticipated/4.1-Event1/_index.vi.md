@@ -1,125 +1,311 @@
 ---
-title: "Event 1"
-date: 2024-01-01
+title: "AWS Cloud & AI Day Vietnam 2026 – Watch Party"
+date: 2026-09-29
 weight: 1
 chapter: false
-pre: " <b> 4.1. </b> "
+pre: "<b>4.1. </b>"
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Tổng kết sự kiện “AWS Cloud & AI Day Vietnam 2026 – Watch Party”
+### Mục đích của sự kiện
+* Cập nhật kiến thức về những xu hướng mới trong lĩnh vực **Cloud Computing và Artificial Intelligence**.
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+* Tìm hiểu cách AWS hỗ trợ doanh nghiệp và tổ chức ứng dụng công nghệ Cloud và AI vào thực tế.
 
-### Mục Đích Của Sự Kiện
+* Tìm hiểu những bước phát triển mới của **Generative AI và Agentic AI**.
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+* Khám phá các phương pháp xây dựng, triển khai và hiện đại hóa ứng dụng trên nền tảng AWS.
 
-### Danh Sách Diễn Giả
+* Tìm hiểu vai trò của Data Science, Data Engineering và Cloud Computing trong quá trình phát triển các hệ thống hiện đại.
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+* Tạo cơ hội kết nối, giao lưu và trao đổi kiến thức với cộng đồng công nghệ và những người quan tâm đến AWS tại khu vực miền Nam.
 
-### Nội Dung Nổi Bật
+* Vận dụng những kiến thức tiếp thu được vào quá trình học tập và phát triển đồ án thực tập.
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+### Danh sách diễn giả
+* **Dr. Werner Vogels** – Chief Technology Officer (CTO), Amazon.com.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+* **Eric Yeo** – Country General Manager, Malaysia, Vietnam & Indochina, Amazon Web Services.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+* Các diễn giả khác đến từ AWS và những tổ chức hoạt động trong lĩnh vực công nghệ.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+### Nội dung nổi bật của sự kiện
+#### Xu hướng Cloud Computing và Artificial Intelligence
+* Cloud Computing và AI ngày càng có mối liên hệ chặt chẽ trong quá trình phát triển các ứng dụng hiện đại.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+* AWS cung cấp nhiều nhóm dịch vụ về Compute, Storage, Database, Networking và các công nghệ hỗ trợ phát triển AI.
 
-#### Domain-Driven Design (DDD)
+* Cloud giúp doanh nghiệp triển khai các ứng dụng AI với khả năng mở rộng, tính linh hoạt và kiểm soát chi phí tốt hơn.
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+* AI không còn chỉ dừng lại ở các mô hình thử nghiệm mà đang được tích hợp vào những hệ thống và quy trình nghiệp vụ thực tế.
 
-#### Event-Driven Architecture
+* Việc lựa chọn kiến trúc Cloud cần dựa trên yêu cầu của bài toán, đặc điểm dữ liệu và nhu cầu sử dụng của người dùng.
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+#### Agentic AI
+* Tìm hiểu về sự phát triển của **Agentic AI**, một hướng tiếp cận xây dựng các hệ thống AI có khả năng thực hiện nhiều bước để đạt được mục tiêu cụ thể.
 
-#### Compute Evolution
+* Các AI Agent có thể kết hợp với Tools, API, dữ liệu và những dịch vụ khác để thực hiện các nhiệm vụ phức tạp hơn.
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+* Khác với việc chỉ sử dụng AI để trả lời câu hỏi, Agentic AI tập trung vào khả năng suy luận, lập kế hoạch và thực hiện hành động.
 
-#### Amazon Q Developer
+* Đây là một hướng phát triển tiềm năng đối với các hệ thống quản lý dữ liệu, tự động hóa quy trình và hỗ trợ ra quyết định.
 
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+* Nội dung này giúp tôi hiểu rõ hơn về khả năng kết hợp AI với các hệ thống Web và Cloud trong tương lai.
 
-### Những Gì Học Được
+#### Builders x AI
+* Các nội dung thuộc chủ đề **Builders x AI** tập trung vào việc xây dựng những ứng dụng và giải pháp AI có khả năng áp dụng vào thực tế.
 
-#### Tư Duy Thiết Kế
+* Tìm hiểu cách kết hợp AI với các dịch vụ Cloud để xây dựng ứng dụng có thể triển khai và mở rộng.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+* Việc phát triển một ứng dụng AI không chỉ liên quan đến mô hình mà còn cần xem xét dữ liệu, hạ tầng, API, bảo mật và khả năng vận hành.
 
-#### Kiến Trúc Kỹ Thuật
+* Các nội dung chia sẻ giúp tôi có cái nhìn rộng hơn về quá trình chuyển đổi một ý tưởng công nghệ từ giai đoạn thử nghiệm thành một sản phẩm hoàn chỉnh.
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+* Tôi nhận thấy việc hiểu rõ bài toán và thiết kế hệ thống phù hợp quan trọng không kém việc lựa chọn công nghệ AI.
 
-#### Chiến Lược Hiện Đại Hóa
+#### Data và Analytics
+* Tìm hiểu tầm quan trọng của nền tảng dữ liệu trong việc xây dựng các hệ thống phân tích và ứng dụng AI.
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+* Dữ liệu cần được thu thập, lưu trữ, chuẩn hóa và xử lý trước khi có thể sử dụng hiệu quả cho Analytics hoặc Machine Learning.
 
-### Ứng Dụng Vào Công Việc
+* Hiểu rõ hơn mối liên hệ giữa **Data Science, Data Engineering, Cloud Computing và AI** trong một hệ thống thực tế.
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+* Chất lượng dữ liệu có ảnh hưởng trực tiếp đến độ chính xác của kết quả phân tích.
 
-### Trải nghiệm trong event
+* Việc tập trung hóa dữ liệu từ nhiều nguồn giúp hạn chế các thao tác thủ công và tạo điều kiện xây dựng hệ thống phân tích hiệu quả hơn.
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Những kiến thức này đặc biệt phù hợp với đồ án quản lý hoạt động sinh viên của tôi, trong đó dữ liệu được thu thập từ University Portal, Attendance và Google Forms/Google Sheets trước khi thực hiện đối soát và phân tích.
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+#### Hiện đại hóa ứng dụng trên AWS
+* Tìm hiểu cách AWS hỗ trợ các tổ chức hiện đại hóa những ứng dụng và hệ thống hiện có.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+* Các phương pháp triển khai như Virtual Machines, Containers và Serverless có thể được lựa chọn tùy theo đặc điểm của từng bài toán.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+* Kiến trúc Serverless giúp giảm công việc quản trị máy chủ và hỗ trợ khả năng mở rộng theo nhu cầu.
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+* AWS cung cấp nhiều dịch vụ có thể kết hợp để xây dựng các hệ thống phục vụ người dùng thực tế.
 
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+* Không nhất thiết phải chuyển toàn bộ hệ thống sang Cloud ngay từ đầu. Có thể phát triển và kiểm thử ứng dụng theo từng giai đoạn, sau đó mở rộng phạm vi tích hợp AWS.
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+### Những kiến thức tôi học được
+#### Tư duy về Cloud và AI
+* **Cloud không chỉ là hạ tầng:** Cloud có thể đóng vai trò là nền tảng để xây dựng, triển khai và vận hành một hệ thống hoàn chỉnh.
+
+* **AI cần một hệ sinh thái đầy đủ:** Machine Learning Model chỉ là một thành phần trong hệ thống lớn hơn.
+
+* Khi phát triển một ứng dụng thực tế, cần xem xét dữ liệu, Compute, Storage, Database, API, Security và Deployment.
+
+* Việc kết hợp Cloud, Data và AI tạo ra nhiều cơ hội phát triển các sản phẩm có giá trị thực tế.
+
+* Cần lựa chọn công nghệ phù hợp với yêu cầu thay vì sử dụng nhiều dịch vụ chỉ để làm cho kiến trúc trở nên phức tạp.
+
+#### Kiến trúc kỹ thuật
+* Hiểu rõ hơn vai trò của Compute, Storage, Database và REST API trong kiến trúc hệ thống.
+
+* Nắm được những lợi ích của Serverless Architecture đối với các tác vụ xử lý dữ liệu và workload không hoạt động liên tục.
+
+* Hiểu rằng Frontend, Backend, Database và các dịch vụ Cloud có thể đảm nhiệm những trách nhiệm khác nhau trong cùng một ứng dụng.
+
+* Nhận thức được tầm quan trọng của Security, Access Control và Monitoring trong quá trình xây dựng hệ thống.
+
+* Hiểu rằng một kiến trúc tốt cần cân bằng giữa chức năng, khả năng mở rộng, chi phí và khả năng bảo trì.
+
+#### Data Science và Data Engineering
+* Nhận thấy việc phân tích dữ liệu không chỉ tập trung vào kết quả cuối cùng mà còn phụ thuộc vào quá trình thu thập, làm sạch và xử lý dữ liệu.
+
+* Hiểu rõ hơn vòng đời dữ liệu từ nguồn dữ liệu ban đầu đến hệ thống lưu trữ, xử lý và trực quan hóa.
+
+* Nhận thức được tầm quan trọng của việc xây dựng Data Pipeline để xử lý dữ liệu từ nhiều nguồn.
+
+* Hiểu rằng các chỉ số phân tích chỉ có giá trị khi được xây dựng dựa trên dữ liệu chính xác và các quy tắc nghiệp vụ nhất quán.
+
+* Có thêm động lực phát triển kiến thức theo định hướng **Cloud Computing, Data Engineering và Cloud & Data Engineering**.
+
+### Ứng dụng vào công việc thực tập
+Những kiến thức tiếp thu từ sự kiện có thể được liên hệ trực tiếp với đồ án **Student Activity Management & Engagement Analytics Platform** mà tôi thực hiện trong chương trình thực tập tại First Cloud AI Journey (FCAJ).
+
+Đồ án hướng đến việc xây dựng một hệ thống tập trung để quản lý, đối soát và phân tích dữ liệu tham gia hoạt động của sinh viên.
+
+#### Xây dựng kiến trúc ứng dụng
+* Sử dụng React/Vite để phát triển giao diện Web Application.
+
+* Sử dụng Python/FastAPI để xây dựng Backend và REST API.
+
+* Phân chia trách nhiệm giữa Frontend, Backend, Database và các dịch vụ AWS.
+
+* Xây dựng hệ thống Authentication và Authorization cho hai nhóm người dùng ADMIN và STUDENT.
+
+* Phát triển ứng dụng theo từng giai đoạn để có thể kiểm thử và điều chỉnh kiến trúc phù hợp với tiến độ thực tập.
+
+#### Thu thập và xử lý dữ liệu
+Vận dụng kiến thức về Data Engineering để xây dựng quy trình:
+
+1. Nhập dữ liệu đăng ký từ University Portal.
+
+2. Ghi nhận Check-in/Check-out theo thời gian thực.
+
+3. Nhập minh chứng tham gia từ Google Forms hoặc Google Sheets.
+
+4. Chuẩn hóa MSSV và kiểm tra tính hợp lệ của dữ liệu.
+
+5. Đối soát dữ liệu giữa Registration, Attendance và Evidence.
+
+6. Hỗ trợ ADMIN xác nhận kết quả tham gia.
+
+7. Tổng hợp dữ liệu phục vụ Analytics Dashboard và Export.
+
+Quy trình này giúp giảm bớt sự phụ thuộc vào việc tổng hợp nhiều file Excel thủ công.
+
+#### Tích hợp các dịch vụ AWS
+Các kiến thức về Cloud Architecture tại sự kiện được vận dụng vào quá trình nghiên cứu, lựa chọn và tích hợp các dịch vụ AWS trong đồ án.
+
+| Dịch vụ AWS | Ứng dụng trong đồ án |
+
+| --- | --- |
+
+| AWS Amplify | Triển khai Frontend React/Vite của Web Application |
+
+| Amazon DynamoDB | Tích hợp và kiểm thử lưu trữ dữ liệu nghiệp vụ trên AWS |
+
+| Amazon S3 | Lưu trữ file CSV đầu vào và kết quả xử lý JSON |
+
+| AWS Lambda | Xây dựng và thử nghiệm Serverless CSV Processor |
+
+| AWS IAM | Quản lý quyền truy cập và quyền thực thi tài nguyên AWS |
+
+| Amazon CloudWatch | Theo dõi log, kết quả và thời gian thực thi Lambda |
+
+Frontend được triển khai trên AWS Amplify Hosting, trong khi Backend FastAPI của phiên bản Demo chạy local và kết nối với Frontend thông qua Cloudflare Quick Tunnel.
+
+SQLite được sử dụng để hỗ trợ lưu trữ và khôi phục dữ liệu Demo. Amazon DynamoDB được tích hợp và kiểm thử để lưu trữ các nhóm dữ liệu nghiệp vụ trên AWS.
+
+![Student Activity Management & Engagement Analytics Platform Architecture](/images/2-Proposal/student_activity_architectur.drawio.png)
+
+#### Xây dựng Serverless Data Processing
+Một nội dung có thể áp dụng từ kiến thức về Serverless Architecture là xây dựng quy trình xử lý file CSV bằng Amazon S3 và AWS Lambda.
+
+Quy trình thực hiện:
+
+* Đọc file CSV từ Amazon S3.
+
+* Kiểm tra các trường dữ liệu bắt buộc.
+
+* Phát hiện bản ghi trùng lặp.
+
+* Phân loại dữ liệu không hợp lệ.
+
+* Tổng hợp kết quả xử lý.
+
+* Ghi dữ liệu JSON trở lại Amazon S3.
+
+* Theo dõi quá trình thực thi bằng Amazon CloudWatch.
+
+Quy trình Serverless CSV Processing được triển khai và kiểm thử độc lập với chức năng import của Web Application chính.
+
+Đây là một ví dụ cho việc áp dụng kiến thức Cloud Computing và Data Engineering vào đồ án thực tập.
+
+#### Phát triển Analytics Dashboard
+Kiến thức về Data và Analytics giúp tôi có thêm định hướng trong việc xây dựng Dashboard cho hệ thống.
+
+Các chỉ số có thể khai thác bao gồm:
+
+* Tổng số hoạt động.
+
+* Tổng số lượt đăng ký.
+
+* Số lượng Check-in và Check-out.
+
+* Số sinh viên được xác nhận tham gia.
+
+* Tỷ lệ tham gia hoạt động.
+
+* Các trường hợp thiếu dữ liệu điểm danh.
+
+* Các trường hợp thiếu minh chứng.
+
+* Lịch sử tham gia hoạt động của sinh viên.
+
+Dashboard hiện được phát triển trực tiếp trong Web Application bằng React/Vite và FastAPI.
+
+Trong tương lai, có thể nghiên cứu thêm những dịch vụ phân tích dữ liệu như AWS Glue, Amazon Athena và Amazon QuickSight để mở rộng khả năng phân tích dữ liệu lịch sử.
+
+#### Định hướng ứng dụng AI trong tương lai
+Những kiến thức về Generative AI và Agentic AI tại sự kiện cũng giúp tôi hình dung một số hướng phát triển cho đồ án:
+
+* Phân tích xu hướng tham gia hoạt động của sinh viên.
+
+* Xây dựng hệ thống gợi ý hoạt động phù hợp.
+
+* Hỗ trợ phát hiện các trường hợp dữ liệu bất thường.
+
+* Xây dựng AI Assistant hỗ trợ tra cứu thông tin hoạt động.
+
+* Tạo báo cáo tổng hợp bằng AI.
+
+Đây là các hướng nghiên cứu và phát triển trong tương lai, chưa phải những chức năng AI đã được triển khai trong phiên bản hiện tại của đồ án.
+
+### Trải nghiệm tại sự kiện
+Tham gia **AWS Cloud & AI Day Vietnam 2026 – Watch Party** là một trải nghiệm có ý nghĩa trong quá trình thực tập của tôi.
+
+Sự kiện giúp tôi mở rộng góc nhìn về Cloud Computing và AI, đồng thời hiểu rõ hơn cách các kiến thức AWS có thể được áp dụng vào những hệ thống công nghệ thực tế.
+
+#### Học hỏi từ các diễn giả có kinh nghiệm
+* Có cơ hội theo dõi những nội dung keynote và chia sẻ từ các chuyên gia trong lĩnh vực Cloud và AI.
+
+* Dr. Werner Vogels, CTO của Amazon.com, là một trong những diễn giả nổi bật được giới thiệu tại sự kiện.
+
+* Tôi cũng quan tâm đến những nội dung chia sẻ của Eric Yeo về AWS và sự phát triển của công nghệ Cloud.
+
+* Các bài trình bày giúp tôi có cái nhìn rộng hơn về quá trình phát triển ứng dụng và ứng dụng AI vào thực tế.
+
+#### Trải nghiệm kiến thức Cloud và AI
+* Tìm hiểu thêm về Agentic AI, Cloud Computing, Data & Analytics và Modern Applications.
+
+* Hiểu rõ hơn cách AI đang chuyển từ giai đoạn thử nghiệm sang các ứng dụng thực tế.
+
+* Nhận thấy một hệ thống hoàn chỉnh cần kết hợp nhiều thành phần như dữ liệu, hạ tầng, Backend, API và giao diện người dùng.
+
+* Liên hệ những kiến thức tại sự kiện với đồ án Student Activity Management & Engagement Analytics Platform.
+
+* Có thêm định hướng để tiếp tục nghiên cứu AWS và cải thiện kiến trúc hệ thống trong các tuần thực tập tiếp theo.
+
+#### Networking và trao đổi kiến thức
+* Watch Party tạo cơ hội kết nối với những người quan tâm đến AWS, Cloud Computing và AI.
+
+* Có cơ hội quan sát cách cộng đồng công nghệ trao đổi kiến thức, chia sẻ kinh nghiệm và thảo luận về những xu hướng mới.
+
+* Nhận thấy việc học công nghệ không chỉ giới hạn ở tài liệu và các bài thực hành mà còn cần chủ động học hỏi từ cộng đồng.
+
+* Những trải nghiệm tại sự kiện giúp tôi có thêm động lực phát triển kỹ năng chuyên môn và định hướng nghề nghiệp.
+
+#### Những bài học quan trọng
+* Cloud, Data và AI có mối liên hệ chặt chẽ trong việc phát triển các sản phẩm công nghệ hiện đại.
+
+* Một ứng dụng thực tế cần quan tâm đến toàn bộ hệ thống, không chỉ một thuật toán hoặc một dịch vụ riêng lẻ.
+
+* Kiến thức về AWS cần được kết hợp với khả năng phân tích bài toán và thiết kế kiến trúc.
+
+* Dữ liệu chất lượng tốt là nền tảng quan trọng cho cả Analytics và AI.
+
+* Security, IAM, Monitoring và Cost Management là những nội dung không thể bỏ qua khi triển khai hệ thống trên Cloud.
+
+* Là sinh viên chuyên ngành Khoa học dữ liệu, tôi cần tiếp tục phát triển kiến thức Cloud Computing và Data Engineering để xây dựng những hệ thống dữ liệu có khả năng ứng dụng vào thực tế.
+
+* Những kiến thức tiếp thu tại sự kiện giúp tôi có thêm định hướng phát triển và hoàn thiện đồ án Student Activity Management & Engagement Analytics Platform.
+
+### Một số hình ảnh tại sự kiện
+
+Dưới đây là các hình ảnh minh chứng tham gia **AWS Cloud & AI Day Vietnam 2026 – Watch Party**.
+
+![Hình ảnh 1 - AWS Cloud & AI Day Vietnam 2026 Watch Party](/images/4-Event/Event1/hinh1.jpg)
+
+![Hình ảnh 2 - Hoạt động tại sự kiện AWS Cloud & AI Day Vietnam 2026](/images/4-Event/Event1/hinh2.jpg)
+
+![Hình ảnh 3 - Minh chứng tham gia sự kiện AWS Cloud & AI Day Vietnam 2026](/images/4-Event/Event1/hinh3.jpg)
+
+### Tổng kết
+> Nhìn chung, AWS Cloud & AI Day Vietnam 2026 – Watch Party không chỉ giúp tôi cập nhật những kiến thức mới về Cloud Computing và Artificial Intelligence mà còn giúp tôi hiểu rõ hơn vai trò của dữ liệu, kiến trúc hệ thống và các dịch vụ AWS trong quá trình xây dựng ứng dụng thực tế.
+
+Thông qua sự kiện, tôi có thêm cơ hội liên hệ kiến thức chuyên ngành Khoa học dữ liệu với Cloud Computing và Data Engineering, từ đó vận dụng vào đồ án **Student Activity Management & Engagement Analytics Platform**.
+
+Đây cũng là một trải nghiệm quan trọng giúp tôi củng cố kiến thức, mở rộng tư duy kỹ thuật và định hướng phát triển nghề nghiệp trong lĩnh vực **Cloud & Data Engineering** sau khi hoàn thành chương trình thực tập tại First Cloud AI Journey.

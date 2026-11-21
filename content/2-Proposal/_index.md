@@ -3,662 +3,410 @@ title: "Proposal"
 date: 2026-09-11
 weight: 2
 chapter: false
-pre: " <b> 2. </b> "
+pre: "<b>2.</b>"
 ---
 
+This section presents the proposal for a platform to manage, reconcile, and analyze student participation in university activities. The project is developed during the internship at First Cloud AI Journey (FCAJ), combining Web Application development with AWS services within the actual implementation scope.
 
-This section presents the proposal for developing a cloud-based platform to manage, reconcile, and analyze student participation in Youth Union activities using AWS services.
+# Student Activity Management & Engagement Analytics Platform
 
-# Cloud-Based Student & Youth Union Activity Management and Engagement Analytics Platform
-## An AWS-Based Platform for Student Activity Management, Participation Reconciliation, and Engagement Analytics
+## A Platform for Student Activity Management, Participation Reconciliation, and Engagement Analytics
 
 ### 1. Executive Summary
 
-The Cloud-Based Student & Youth Union Activity Management and Engagement Analytics Platform is proposed to support the management of student activities such as workshops, seminars, political education sessions, competitions, recreational activities, and annual programs.
+The Student Activity Management & Engagement Analytics Platform is designed to help event organizers manage activity information, track attendance, reconcile participation data, and analyze student engagement in university activities.
 
-Typical activities such as workshops, seminars, and political education sessions usually involve approximately 100–200 students. Larger annual programs such as IT Day or TechConnect may involve more than 1,000 participants. On average, approximately 3–4 activities are organized per semester.
+The system targets workshops, seminars, political education sessions, academic competitions, extracurricular activities, and annual programs such as IT Day or TechConnect. A typical activity may involve approximately 100–200 students, while larger programs may have more than 1,000 participants. These figures describe the business context of the project and are not verified load-testing results.
 
-Currently, activity-related data is managed through multiple systems and tools. Activity announcements are published through the Faculty Youth Union's communication channels, students register through the university portal, organizers perform Check-in and Check-out by scanning QR codes on student identification cards, and participation evidence and event feedback are collected through Google Forms and Google Sheets.
+Currently, activity data is generated through multiple tools. Students register through the University Portal, organizers record attendance using QR codes on student identification cards, and participation evidence is collected through Google Forms or Google Sheets. After an activity, organizers must consolidate Excel/CSV files, verify student IDs, and manually reconcile records to determine the final list of eligible participants.
 
-After each activity, organizers must collect data from multiple sources, download Excel or CSV files, filter records, verify student IDs, and manually reconcile the information to determine the final list of participants.
+The project proposes a centralized platform that supports activity management, registration data import, real-time Check-in/Check-out, evidence import, reconciliation, participation confirmation, analytics, and report export.
 
-The proposed project does not aim to replace the university portal, the existing student-card QR scanning process, or Google Forms. Instead, the system acts as a centralized data processing platform on AWS.
+The MVP uses **React/Vite** for the Frontend, **Python/FastAPI** for the Backend, and **SQLite** for state persistence and recovery in the Demo environment. **Amazon DynamoDB** has been integrated and tested for business data storage on AWS. The two main user roles are `ADMIN` and `STUDENT`.
 
-Youth Union staff export data from the existing systems and upload the files through a Web Application. The AWS platform then stores, validates, standardizes, reconciles, and classifies the data before supporting organizers in confirming the final participation list.
+The Frontend is deployed using AWS Amplify Hosting. The Demo FastAPI Backend runs on a local computer and is accessible through Cloudflare Quick Tunnel. In addition to the main application, the project includes a Serverless CSV Processing Demo using Amazon S3, AWS Lambda, AWS IAM, and Amazon CloudWatch.
 
-The proposed platform uses a serverless AWS architecture consisting of AWS Amplify, Amazon Cognito, Amazon API Gateway, AWS Lambda, Amazon S3, Amazon DynamoDB, AWS Glue, Amazon Athena, Amazon QuickSight, Amazon CloudWatch, and AWS Identity and Access Management (IAM).
+The six AWS services used within the project's implementation and experimental scope are:
 
-The primary objectives of the project are to reduce manual Excel processing, centralize student activity data, support participation reconciliation and confirmation, simplify data export, and provide analytical dashboards for evaluating student engagement across multiple activities.
+* AWS Amplify.
+* Amazon DynamoDB.
+* Amazon S3.
+* AWS Lambda.
+* AWS IAM.
+* Amazon CloudWatch.
 
+The primary objectives are to reduce manual Excel processing, improve data consistency, support participation confirmation, and provide analytical insights for student activity management. The architecture is developed incrementally and does not assume that the entire application has been migrated to an AWS Serverless Production environment.
 
 ### 2. Problem Statement
 
-*Current Situation*
+#### 2.1. Current Workflow
 
-The current student activity management process relies on multiple separate systems and tools.
+1. Organizers plan and announce a student activity.
+2. Students register through the University Portal.
+3. Organizers export the registration list in Excel/CSV format.
+4. At the venue, organizers scan student-card QR codes or record student IDs for Check-in.
+5. Students provide participation evidence or feedback through Google Forms.
+6. Organizers perform Check-out when required by the activity.
+7. After the activity, organizers consolidate, filter, and reconcile the collected data.
+8. The final participation list is submitted to the responsible organization according to the existing administrative process.
 
-The general workflow can be summarized as follows:
+The main challenges include fragmented data, invalid or duplicate student IDs, registered students without attendance records, missing Check-in/Check-out, missing evidence, and difficulty determining participation results quickly. As the number of participants increases, Excel-based reconciliation becomes more time-consuming and error-prone.
 
-1. The Faculty Youth Union plans and organizes an activity.
-2. Activity information is published through communication channels.
-3. Students access the university portal to register for the activity.
-4. At the event venue, students present their student identification cards.
-5. Organizers scan the QR code on each student card to record the student ID for Check-in.
-6. During or near the end of the activity, students complete a Google Form for participation evidence and activity feedback.
-7. At the end of the activity, organizers may scan student cards again to record Check-out.
-8. After the activity, organizers collect and reconcile data from multiple sources.
-9. Data from Google Sheets is downloaded to Excel for further filtering, checking, and manual adjustment.
-10. The final participant list is completed and submitted to the University Youth Union according to the existing administrative process.
+#### 2.2. Proposed Solution
 
-The current process generates data from several different sources:
+The Web Application provides a centralized management and reconciliation workflow. The University Portal and Google Forms/Google Sheets remain external data sources; the current version does not directly integrate with their APIs.
 
-- Registration list from the university portal.
-- Check-in list from the student-card QR scanning system.
-- Check-out list from the student-card QR scanning system.
-- Participation evidence and feedback from Google Forms and Google Sheets.
-- Excel or CSV files used for final processing and reconciliation.
+| Data Source | Data Collection Method |
+| --- | --- |
+| University Portal | ADMIN exports and imports registration lists in CSV/XLSX format. |
+| Student Card QR / Student ID | ADMIN records real-time Check-in/Check-out through APIs using student ID input or a keyboard-input scanner workflow. |
+| Google Forms / Google Sheets | ADMIN exports and imports participation evidence in CSV/XLSX format. |
 
-This fragmented process introduces several challenges:
+The FastAPI Backend handles import requests, validates file formats, required fields, student IDs, and duplicate records. Registration, attendance, and evidence data are associated with the corresponding activity for Reconciliation.
 
-- Data is distributed across multiple systems and files.
-- Organizers spend significant time comparing student IDs.
-- Students may register but not actually attend the activity.
-- Some students may have Check-in records but no Check-out records.
-- Some students may have Check-out records but no Check-in records.
-- Some students may have attendance records but no participation evidence.
-- It is difficult to quickly determine the participation status of each student.
-- Historical activity data is difficult to manage centrally.
-- Student engagement across multiple activities is difficult to analyze.
-- Large activities with more than 1,000 participants significantly increase the amount of manual processing required.
+An important distinction is that **Attendance is recorded directly at the time of Check-in/Check-out**, rather than relying on attendance files imported after the event. Full Camera QR Scanner integration still requires verification through physical-device testing.
 
-*Proposed Solution*
+After reconciliation, the system helps ADMIN users review complete records, missing attendance, missing evidence, and other cases requiring further investigation. Participation results are confirmed according to the activity's applicable rules and subsequently used for the Analytics Dashboard and Export.
 
-The proposed solution is to develop a centralized activity data management, processing, reconciliation, and analytics platform on AWS.
+#### 2.3. Project Objectives
 
-The MVP does not directly integrate with or replace the existing systems. Youth Union staff continue to use the current systems for registration, attendance collection, and participation evidence.
+* Centralize student activity and participation data.
+* Reduce manual data processing and Excel-based reconciliation.
+* Support real-time Check-in/Check-out recording.
+* Standardize and validate Registration and Evidence data.
+* Reconcile records using Activity ID and Student ID.
+* Support ADMIN participation confirmation and student access to personal results.
+* Develop an Analytics Dashboard and data export functionality.
+* Apply Web Development, REST API, data processing, and Cloud Computing knowledge.
+* Integrate and test business data storage on Amazon DynamoDB.
+* Experiment with Serverless CSV processing on AWS.
 
-The exported datasets are uploaded to the Web Application in Excel or CSV format.
+#### 2.4. Project Scope
 
-The input datasets include:
+**Within the MVP scope:**
 
-- Registration File exported from the University Portal.
-- Check-in File.
-- Check-out File.
-- Evidence File exported from Google Forms or Google Sheets.
+* Authentication, Authorization, and ADMIN/STUDENT account management.
+* Activity management and authorized personal profile management.
+* Registration Import and Evidence Import from CSV/XLSX files.
+* Real-time Check-in/Check-out APIs.
+* Reconciliation, Participation Confirmation, Analytics, and Export.
+* Frontend Hosting with AWS Amplify and Demo Backend connectivity through Cloudflare Quick Tunnel.
+* SQLite Local Persistence and Amazon DynamoDB cloud data storage integration.
+* Serverless CSV Processing Demo using S3, Lambda, IAM, and CloudWatch.
 
-Amazon S3 is used to store the original uploaded files.
+**Outside the current scope or requiring further development:**
 
-After a file is uploaded to Amazon S3, an AWS Lambda function is triggered to:
+* Direct integration with the University Portal and Google Sheets APIs.
+* Full verification of the Camera QR Scanner on physical devices.
+* Automatic official conduct-point updates in university student accounts.
+* Deployment of the Backend on stable Production Cloud infrastructure.
+* Complete migration of all persistence and data retrieval workflows to DynamoDB.
+* Full import pipeline automation through S3 Event Notifications and Lambda.
+* Amazon Cognito, API Gateway, AWS Glue, Amazon Athena, and Amazon QuickSight.
+* Large-scale Production load testing and advanced Machine Learning analytics.
 
-- Read the uploaded file.
-- Validate the file structure.
-- Check required fields.
-- Standardize student IDs.
-- Detect duplicate records.
-- Detect invalid data.
-- Transform the data into a structured format.
-- Store structured operational data in Amazon DynamoDB.
+#### 2.5. Target Users
 
-The student ID is used as the main identifier for matching data across Registration, Check-in, Check-out, and Evidence sources.
+| Role | Main Features |
+| --- | --- |
+| ADMIN | Manage activities and student accounts, import data, record attendance, reconcile records, confirm participation, view dashboards, and export reports. |
+| STUDENT | Sign in, view or update authorized profile information, change passwords, browse activities, and track personal participation results. |
 
-The system automatically classifies records into categories such as:
-
-- Complete participation data.
-- Check-in available but Check-out missing.
-- Check-out available but Check-in missing.
-- Registered but no attendance records.
-- Attendance available but participation evidence missing.
-- Records that require additional manual review.
-
-The system does not automatically make the final participation decision using a rigid rule.
-
-Instead, the reconciliation results are displayed to organizers through a Reconciliation interface.
-
-After reviewing the results, authorized staff may confirm participation using one of the following statuses:
-
-- `CONFIRMED`
-- `REJECTED`
-
-After the final participant list is confirmed, the list is locked in the system and can be exported as Excel or CSV.
-
-*Benefits and Value*
-
-The proposed platform significantly reduces repetitive Excel-based reconciliation work.
-
-Instead of opening multiple files and manually searching for student IDs, organizers can review reconciliation results in a centralized interface.
-
-The platform also creates a historical data source that can support analysis of:
-
-- Total registrations.
-- Total confirmed participants.
-- Participation Rate.
-- No-show Rate.
-- Missing Check-in Rate.
-- Missing Check-out Rate.
-- Missing Evidence Rate.
-- Participation by activity type.
-- Participation trends by semester.
-- Student participation history.
-
-The value of the project is therefore not limited to moving files to the cloud. The platform provides centralized integration, validation, reconciliation, storage, export, and analytics capabilities for data generated from multiple existing systems.
-
+Event organizers use the ADMIN role. STAFF is not an independent business role in the current version.
 
 ### 3. Solution Architecture
 
-The platform adopts a serverless AWS architecture to reduce infrastructure management, support scalability, and optimize costs for the intermittent workload of student activities.
+#### 3.1. Architecture Overview
 
-The system receives data from three primary external sources:
+The architecture diagram below presents the components used in the project and the actual scope of AWS integration.
 
-1. **University Portal** for student registration data.
-2. **Student Card QR Scanner** for Check-in and Check-out data.
-3. **Google Forms / Google Sheets** for participation evidence.
+![Student Activity Management & Engagement Analytics Platform Architecture](/images/2-Proposal/student_activity_architectur.drawio.png)
 
-These existing systems remain outside AWS and are not replaced by the MVP.
+The architecture is divided into three main areas:
 
-Youth Union staff export data as Excel or CSV files and upload the files through the Web Application.
+**1. Web Application and Local Demo Environment**
 
-![Student Activity Management Platform Architecture](/images/2-Proposal/student_activity_architecture.png)
+* ADMIN/STUDENT users access the application through a Web Browser.
+* AWS Amplify Hosting serves the React/Vite Frontend.
+* After loading the Frontend, the browser sends REST API requests to Cloudflare Quick Tunnel, including an Access Token for protected APIs.
+* Cloudflare Quick Tunnel forwards requests to the locally running FastAPI Backend.
+* FastAPI handles Authentication, Authorization, activity management, account management, data import, attendance, reconciliation, confirmation, Analytics, and Export.
+* SQLite supports Demo application state persistence and recovery.
 
-*Overall Processing Flow*
+**2. AWS Cloud Data Storage**
 
-1. Youth Union staff export files from existing systems.
-2. Authorized users access the Web Application through HTTPS.
-3. Amazon Cognito authenticates users and provides JWT tokens.
-4. The frontend sends REST API requests to Amazon API Gateway with the JWT token.
-5. Amazon API Gateway invokes the Application Lambda to process business logic.
-6. The Application Lambda reads and writes operational data in Amazon DynamoDB.
-7. The frontend uses a pre-signed URL to upload Excel or CSV files directly to the Amazon S3 Raw Data Bucket.
-8. An S3 Object Created event triggers the File Processing Lambda.
-9. The File Processing Lambda validates, standardizes, transforms, and stores structured data in DynamoDB.
-10. Processed data and exported files are stored in the S3 Processed & Export Data area.
-11. AWS Glue catalogs the analytics dataset.
-12. Amazon Athena queries data directly from Amazon S3 and uses AWS Glue Data Catalog as metadata.
-13. Amazon QuickSight visualizes the analytical results through dashboards.
+* Amazon DynamoDB has been integrated through the AWS SDK for Python (boto3).
+* Activities, Registrations, Attendance, Evidence, and Participation are the business data groups included in the DynamoDB integration or storage testing scope.
+* The existence of AWS tables and successful read/write tests does not establish that the entire application has removed SQLite. The diagram presents both components separately to reflect the current implementation scope.
 
-*AWS Services Used*
+**3. AWS Serverless CSV Processing Demo**
 
-- *AWS Amplify*: Hosts the Web Application used by Youth Union staff and administrators.
-- *Amazon Cognito*: Provides authentication, user management, and JWT-based access.
-- *Amazon API Gateway*: Provides REST APIs for the frontend.
-- *AWS Lambda – Application Logic*: Handles activity management, reconciliation, participation confirmation, pre-signed URL generation, and export logic.
-- *AWS Lambda – File Processing*: Reads and processes uploaded Excel or CSV files.
-- *Amazon S3 – Raw Data*: Stores original Registration, Check-in, Check-out, and Evidence files.
-- *Amazon S3 – Processed & Export Data*: Stores processed data, analytical datasets, and exported files.
-- *Amazon DynamoDB*: Stores structured operational data.
-- *AWS Glue*: Provides the Data Catalog for analytics.
-- *Amazon Athena*: Queries data stored on Amazon S3 using SQL.
-- *Amazon QuickSight*: Provides analytical dashboards and visualizations.
-- *Amazon CloudWatch*: Provides logs, metrics, error monitoring, and alarms.
-- *AWS IAM*: Controls service permissions according to the Least Privilege principle.
+* Amazon S3 stores the input CSV file.
+* AWS Lambda reads, validates, and processes CSV data, distinguishing valid, duplicate, and invalid records.
+* The JSON processing result is written back to Amazon S3.
+* AWS IAM provides Lambda execution permissions, S3 access, and the required logging permissions.
+* Amazon CloudWatch monitors logs and execution metrics.
 
-*Data Design*
+The CSV Processor is tested independently of the main application's Registration Import/Evidence Import workflow. The diagram does not claim that S3 Event Notifications have been automated or that the Lambda function writes processing results directly to DynamoDB without corresponding implementation evidence.
 
-Amazon DynamoDB stores structured operational information including:
+#### 3.2. Application Connectivity
 
-- Activities.
-- Students.
-- Registrations.
-- Attendance.
-- Participation Status.
-- Reconciliation Status.
+```text
+ADMIN / STUDENT
+       |
+       v
+Web Browser (React / Vite)
+       |
+       +---- HTTPS / Load Web Application ----> AWS Amplify Hosting
+       |
+       +---- HTTPS / REST API + Access Token --> Cloudflare Quick Tunnel
+                                                        |
+                                                        v
+                                               Python / FastAPI Backend
+                                                 |               |
+                                          Local Read/Write    AWS SDK (boto3)
+                                                 |               |
+                                                 v               v
+                                               SQLite       Amazon DynamoDB
+```
 
-Amazon S3 is separated into two primary storage purposes.
+AWS Amplify serves the Frontend resources. The browser sends API requests to Cloudflare Tunnel; Amplify is not presented as an API Gateway or Backend Proxy.
 
-**Raw Data**
+#### 3.3. Technology Stack and AWS Services
 
-- Registration Files.
-- Check-in Files.
-- Check-out Files.
-- Evidence Files.
+| Component | Technology / Service | Responsibility |
+| --- | --- | --- |
+| Frontend | React/Vite | ADMIN/STUDENT interfaces and Analytics Dashboard. |
+| Backend | Python/FastAPI | REST APIs, authentication, authorization, and business logic. |
+| Local Persistence | SQLite | Demo state persistence and recovery. |
+| Cloud Database | Amazon DynamoDB | AWS business data storage integration and testing. |
+| Frontend Hosting | AWS Amplify | Web Application build and deployment. |
+| Connectivity | Cloudflare Quick Tunnel | Temporary HTTPS endpoint for the local Backend. |
+| File Storage | Amazon S3 | Input CSV and output JSON storage for the Serverless Demo. |
+| Serverless Processing | AWS Lambda | Independent CSV validation and processing. |
+| AWS Permissions | AWS IAM | Execution Role and resource access permissions. |
+| Monitoring | Amazon CloudWatch | Lambda logs, metrics, and execution duration. |
+| Version Control | Git/GitHub | Source code and development history management. |
+| Documentation | Hugo/Markdown | Internship report website and project documentation. |
 
-**Processed & Export Data**
+#### 3.4. Data Design
 
-- Processed Data.
-- Reconciliation Data.
-- Analytics Dataset.
-- Export Files.
-- Final Participation List.
+| Data Group | Description |
+| --- | --- |
+| Users / Students | Accounts, student IDs, profiles, roles, and account status. |
+| Activities | Activity IDs, names, types, schedules, locations, and status. |
+| Registrations | Student registration data associated with activities. |
+| Attendance | Check-in/Check-out timestamps and attendance status. |
+| Evidence | Participation evidence associated with students and activities. |
+| Participation | Reconciliation and participation confirmation results. |
 
-*Security*
+Student ID identifies the student, while Activity ID identifies the corresponding activity. Combining these identifiers supports record matching, duplicate reduction, data consistency, and historical retrieval.
 
-Amazon Cognito is used to authenticate authorized users.
+#### 3.5. Business Workflow
 
-The frontend includes the JWT token when sending API requests. Amazon API Gateway validates the token through a Cognito Authorizer before allowing requests to reach the backend.
+```text
+Activity Management
+        |
+        v
+Registration Import
+        |
+        v
+Real-time Check-in / Check-out
+        |
+        v
+Evidence Import
+        |
+        v
+Reconciliation
+        |
+        v
+Participation Confirmation
+        |
+        v
+Analytics Dashboard / Export
+```
 
-AWS IAM follows the Least Privilege principle.
+This workflow is handled by the React/Vite application and the FastAPI Backend. The current Analytics Dashboard does not use Glue, Athena, or QuickSight.
 
-Each Lambda function receives only the permissions required for its responsibilities, such as:
+#### 3.6. Security and Monitoring
 
-- Reading from or writing to specific S3 buckets.
-- Reading from or writing to required DynamoDB resources.
-- Writing logs to Amazon CloudWatch.
+Authentication and Authorization are implemented at the FastAPI Backend. Protected API requests use Access Tokens, and the Backend enforces ADMIN/STUDENT permissions. AWS IAM manages AWS resource access and does not replace application user authentication.
 
-*Monitoring*
+Security principles include input validation, restricting access to other users' personal data, preventing credential exposure in GitHub or report screenshots, using synthetic or anonymized data, and applying Least Privilege permissions.
 
-Amazon CloudWatch is used to monitor important system components, including:
-
-- API Gateway Logs.
-- Lambda Invocations.
-- Lambda Errors.
-- Lambda Duration.
-- File Processing Errors.
-- Application Errors.
-- CloudWatch Alarms.
-
-This architecture enables the project to address functional requirements while also demonstrating security, monitoring, scalability, and cost optimization practices.
-
+Amazon CloudWatch monitors the Lambda CSV Processor through Execution Logs, Invocation/Error Metrics, Execution Duration, and Log Retention. The recorded Demo configuration uses a seven-day log retention period. API Gateway Logs, CloudWatch Alarms, and FastAPI log forwarding to CloudWatch are not presented as implemented features without supporting evidence.
 
 ### 4. Technical Implementation
 
-*Implementation Phases*
+#### 4.1. Main Functional Requirements
 
-The project is divided into several phases, from business analysis to system design, development, testing, documentation, and resource cleanup.
+| Feature | Processing Responsibility |
+| --- | --- |
+| Authentication | Sign in, sign out, Access Token validation, and password changes. |
+| Authorization | Enforce ADMIN/STUDENT permissions in the interface and Backend. |
+| Activity Management | Create, view, update, and manage activity details and status. |
+| Student Account Management | ADMIN can view accounts, lock/unlock accounts, reset passwords, and synchronize student accounts. |
+| Personal Profile | View and update personal information within the authorized scope. |
+| Registration Import | Import CSV/XLSX files and validate structure, student IDs, missing fields, and duplicates. |
+| Attendance | Record real-time Check-in/Check-out and validate activity, time, and existing records. |
+| Evidence Import | Import and validate participation evidence from CSV/XLSX files. |
+| Reconciliation | Match Registration, Attendance, and Evidence using Activity ID and Student ID. |
+| Participation Confirmation | ADMIN reviews and confirms or rejects participation according to business rules. |
+| Analytics Dashboard | Aggregate activity, registration, attendance, and participation statistics. |
+| Export | Export data and lists for operational reporting in supported formats. |
 
-1. *Business Analysis and AWS Research*
+STUDENT users cannot access ADMIN student account management, administrative data import, or participation confirmation features. Business timestamps use the Asia/Ho_Chi_Minh time zone.
 
-   Analyze the current activity management process, identify problems, define system requirements, and research suitable AWS services.
+#### 4.2. Reconciliation Rules
 
-2. *Architecture Design*
+| Registration | Check-in | Check-out | Evidence | Example Classification |
+| --- | --- | --- | --- | --- |
+| Yes | Yes | Yes | Yes | Complete data. |
+| Yes | Yes | No | Yes | Missing Check-out. |
+| Yes | No | Yes | Yes | Missing Check-in. |
+| Yes | No | No | No | Registered but no participation records. |
+| Yes | Yes | Yes | No | Missing evidence. |
+| Yes | No | No | Yes | Evidence available but attendance missing. |
+| No | Yes | Yes | Yes | Registration requires review. |
 
-   Design the AWS Architecture Diagram, Data Flow, Security Model, and Monitoring Strategy.
+Missing data does not automatically mean that a student did not participate. ADMIN users review the records and apply the rules of the corresponding activity. Participation outcomes include `CONFIRMED`, `REJECTED`, and records awaiting confirmation, depending on the business workflow.
 
-3. *Database Design*
+#### 4.3. Serverless CSV Processing Demo
 
-   Identify the required entities and access patterns for Amazon DynamoDB.
+```text
+Amazon S3 (Input CSV)
+          |
+          v
+AWS Lambda (CSV Processor)
+          |
+          v
+Amazon S3 (Output JSON)
+```
 
-4. *API Design*
+Lambda uses its IAM Execution Role to read the CSV file from S3, validate required fields, detect duplicate and invalid records, and generate a JSON result. CloudWatch supports execution log and metric review. This workflow is tested using a Test Event; automatic invocation through S3 Event Notifications remains an extension requiring appropriate configuration and testing.
 
-   Design REST APIs for Activity Management, File Upload, Reconciliation, Confirmation, and Export.
+Recorded CSV Processor Demo test results:
 
-5. *Authentication and Authorization*
+| Metric | Result |
+| --- | --- |
+| Total Records | 4 |
+| Valid Records | 2 |
+| Duplicate Records | 1 |
+| Invalid Records | 1 |
+| Status Code in Lambda Result | 200 |
+| Output File | registrations-result.json |
 
-   Configure Amazon Cognito and Cognito Authorizer.
+These results demonstrate CSV processing using Lambda and output storage on S3. They do not establish large-scale performance or a complete Serverless migration of the Web Application's import workflows.
 
-6. *Web Application Development*
+#### 4.4. Non-functional Requirements
 
-   Develop the user interface for Youth Union Staff and Admin users.
+* **Usability:** Provide a clear interface, role-appropriate functionality, and understandable error messages.
+* **Security:** Enforce authentication and Backend authorization, protect credentials and student data.
+* **Reliability:** Validate data before storage, handle errors, reduce duplicates, and support appropriate backups.
+* **Maintainability:** Separate Frontend and Backend, organize functional modules, manage Git/GitHub, and provide technical documentation.
+* **Performance:** Support Demo requirements and future expansion; perform load testing before Production operation.
 
-7. *File Upload Pipeline*
+#### 4.5. Testing Strategy
 
-   Allow the frontend to request pre-signed URLs and upload files directly to Amazon S3.
+Testing focuses on valid/invalid login credentials, locked accounts, STUDENT access to ADMIN APIs, missing CSV/XLSX columns, duplicate student IDs, invalid or out-of-window Check-in/Check-out, missing Evidence, reconciliation, confirmation, and exported data. The project also includes Frontend/Backend integration testing, DynamoDB connectivity testing, and Lambda CSV Processor testing with S3/CloudWatch.
 
-8. *File Processing Pipeline*
-
-   Use S3 events to invoke AWS Lambda for processing Excel and CSV files.
-
-9. *Reconciliation Engine*
-
-   Match Registration, Check-in, Check-out, and Evidence records using student IDs.
-
-10. *Participation Confirmation*
-
-    Allow authorized organizers to review reconciliation results and confirm participation.
-
-11. *Export Functionality*
-
-    Generate Excel or CSV files for operational reporting.
-
-12. *Analytics*
-
-    Use Amazon S3, AWS Glue, Amazon Athena, and Amazon QuickSight to create analytical dashboards.
-
-13. *Security and Monitoring*
-
-    Configure Amazon CloudWatch, IAM Least Privilege, and required alarms.
-
-14. *Testing*
-
-    Perform functional, integration, and End-to-End testing.
-
-15. *Documentation and Cleanup*
-
-    Complete workshop documentation, project reports, and remove unused AWS resources.
-
-*Main Web Application Functions*
-
-Youth Union Staff / Organizers can:
-
-- Sign in to the system.
-- Manage activities.
-- Upload Registration Files.
-- Upload Check-in Files.
-- Upload Check-out Files.
-- Upload Evidence Files.
-- Review validation results.
-- Review reconciliation results.
-- Confirm participation.
-- Export datasets.
-- View analytical dashboards.
-
-Admin users can:
-
-- Manage accounts.
-- Manage roles and permissions.
-- Manage system configurations.
-- Monitor system activity.
-
-*Reconciliation Rules*
-
-The system automatically classifies data but does not make all final participation decisions without human review.
-
-Example classification:
-
-| Registration | Check-in | Check-out | Evidence | Classification |
-|---|---|---|---|---|
-| Yes | Yes | Yes | Yes | Complete data |
-| Yes | Yes | No | Yes | Missing Check-out |
-| Yes | No | Yes | Yes | Missing Check-in |
-| Yes | No | No | No | Registered but did not attend |
-| Yes | Yes | Yes | No | Missing evidence |
-
-In the current operational process, Check-in and Evidence are important data sources for determining actual participation.
-
-Check-out is used as additional attendance information to support reconciliation.
-
-Incomplete records are placed in a list requiring organizer review.
-
-After review, participation status can be set to:
-
-- `CONFIRMED`
-- `REJECTED`
-
-The final participant list is locked after confirmation.
-
+The Test Report should record inputs, expected results, actual results, PASS/FAIL status, and limitations that have not been tested. Planned testing objectives must not automatically be considered completed.
 
 ### 5. Roadmap & Implementation Milestones
 
-The project is planned for a 12-week internship period.
+The project follows a 12-week internship plan from September 7, 2026, to November 27, 2026. The roadmap aligns with the Worklog; final milestones must be updated according to actual results and supporting evidence.
 
-- *Weeks 1–2: Research and Analysis*
-    - Study AWS Cloud fundamentals.
-    - Research serverless AWS services.
-    - Analyze the current activity management process.
-    - Identify project requirements.
-    - Complete the project proposal.
+| Week | Activities |
+| --- | --- |
+| 1 | AWS Fundamentals, Cloud Computing, AWS CLI, and Amazon EC2. |
+| 2 | Requirements analysis, Project Proposal, and architecture design. |
+| 3 | Python/FastAPI, SQLite, and core REST API development. |
+| 4 | Amazon DynamoDB and Amazon S3 research and integration within the Data Pilot. |
+| 5 | React/Vite development, Authentication, Authorization, and ADMIN/STUDENT access control. |
+| 6 | Registration Import, Evidence Import, CSV/XLSX processing, and Export. |
+| 7 | Reconciliation, Participation Status, and Analytics Dashboard. |
+| 8 | Integration testing, bug fixing, and user interface optimization. |
+| 9 | AWS Amplify Hosting, FastAPI Demo, and Cloudflare Tunnel. |
+| 10 | S3, Lambda, IAM, CloudWatch, and evidence consolidation for six AWS services. |
+| 11 | Demo preparation, feedback collection where applicable, and technical documentation. |
+| 12 | Final report, Hugo website review, project archiving, and handover preparation. |
 
-- *Weeks 3–4: System Design*
-    - Finalize AWS Architecture.
-    - Design DynamoDB.
-    - Define access patterns.
-    - Design REST APIs.
-    - Design User Flow.
-    - Design Security and Monitoring strategies.
-
-- *Weeks 5–6: Core Backend Development*
-    - Configure Amazon Cognito.
-    - Create Amazon DynamoDB resources.
-    - Develop AWS Lambda functions.
-    - Configure Amazon API Gateway.
-    - Configure AWS IAM.
-    - Test backend APIs.
-
-- *Weeks 7–8: File Processing*
-    - Create Amazon S3 buckets.
-    - Implement pre-signed file upload.
-    - Process Registration Files.
-    - Process Check-in Files.
-    - Process Check-out Files.
-    - Process Evidence Files.
-    - Implement validation.
-    - Implement duplicate detection.
-
-- *Weeks 9–10: Reconciliation & Export*
-    - Develop the Reconciliation Engine.
-    - Develop Participation Confirmation.
-    - Implement final list locking.
-    - Generate Excel/CSV exports.
-    - Test the End-to-End workflow.
-
-- *Week 11: Analytics, Security & Monitoring*
-    - Configure AWS Glue Data Catalog.
-    - Create Amazon Athena queries.
-    - Develop Amazon QuickSight dashboards.
-    - Configure CloudWatch Logs.
-    - Configure Metrics and Alarms.
-    - Review IAM Least Privilege.
-    - Monitor AWS costs.
-
-- *Week 12: Testing & Documentation*
-    - Perform Functional Testing.
-    - Perform Integration Testing.
-    - Perform End-to-End Testing.
-    - Test the system with large synthetic datasets.
-    - Complete Workshop documentation.
-    - Complete the internship report.
-    - Clean up unused AWS resources.
-
-*Future Enhancements*
-
-Future versions may include:
-
-- Dynamic QR Code Check-in/Check-out.
-- Student Self Check-in using mobile devices.
-- QR Token expiration.
-- Attendance time-window validation.
-- Direct integration with the University Portal if APIs are available.
-- Google Sheets API integration.
-- Notification System.
-- Email Notifications.
-- Advanced Student Engagement Analysis.
-- Machine Learning for engagement segmentation or participation prediction.
-
+**Future Enhancements:** Deploy FastAPI on stable Cloud infrastructure; complete Production data persistence and expand DynamoDB integration; verify the QR Scanner; integrate University Portal/Google Sheets APIs; automate file processing using S3/Lambda; add notifications, advanced Analytics, CI/CD, Monitoring, security testing, and performance testing.
 
 ### 6. Budget Estimation
 
-The project uses a serverless architecture to minimize infrastructure costs when the platform is not actively being used.
+The MVP is designed to keep costs appropriate for educational and Demo purposes. FastAPI currently runs locally, so the Demo does not require a continuously running AWS Backend server.
 
-The actual cost depends on:
+| AWS Service | Cost Factors |
+| --- | --- |
+| AWS Amplify | Build, Hosting, Storage, and Data Transfer. |
+| Amazon DynamoDB | Storage, Read/Write Requests, or Capacity. |
+| Amazon S3 | Storage, Requests, and Data Transfer. |
+| AWS Lambda | Invocation, Execution Duration, and Memory. |
+| Amazon CloudWatch | Log ingestion, log storage, metrics, and additional features where applicable. |
+| AWS IAM | No direct charge for IAM Roles and Policies. |
 
-- Number of users.
-- Number of activities.
-- Number of API requests.
-- Number and size of uploaded files.
-- Amazon S3 storage volume.
-- Lambda invocation count and execution duration.
-- DynamoDB requests.
-- AWS Glue usage.
-- Athena data scanned.
-- Amazon QuickSight subscription model.
-- CloudWatch log volume.
+Actual costs depend on AWS region, stored data volume, traffic, requests, resource configuration, and account credits or free usage allowances. The [AWS Pricing Calculator](https://calculator.aws/) can be used to prepare estimates and cross-check them with AWS Billing.
 
-The [AWS Pricing Calculator](https://calculator.aws/) will be used to estimate the final cost after the deployment configuration and workload assumptions are finalized.
+Cost control strategies include selecting appropriate resource configurations, considering DynamoDB On-Demand capacity for intermittent workloads, limiting experimental data and unnecessary Lambda executions, using appropriate CloudWatch Log Retention, monitoring Billing, and configuring AWS Budgets or alerts when necessary. Unused resources should be removed only after evidence has been archived and Demo or handover requirements are protected.
 
-*Expected Cost Components*
-
-- *AWS Amplify*: Web Application hosting.
-- *Amazon Cognito*: Cost based on Monthly Active Users where applicable.
-- *Amazon API Gateway*: Cost based on API requests.
-- *AWS Lambda*: Cost based on invocation count and execution duration.
-- *Amazon S3*: Storage and request costs.
-- *Amazon DynamoDB*: On-Demand capacity can be used for unpredictable workloads.
-- *AWS Glue*: Cost when Crawlers or ETL jobs are executed.
-- *Amazon Athena*: Cost based on the amount of data scanned.
-- *Amazon QuickSight*: Cost depends on account type and subscription model.
-- *Amazon CloudWatch*: Log storage, metrics, and alarms.
-- *AWS IAM*: No direct charge for roles and policies.
-
-*Cost Optimization Strategy*
-
-- Use Serverless services instead of continuously running EC2 instances.
-- Use DynamoDB On-Demand capacity for irregular workloads.
-- Run AWS Glue only when required.
-- Optimize S3 data structure to reduce Athena scan volume.
-- Configure appropriate CloudWatch Log Retention.
-- Use S3 Lifecycle policies for long-term storage when appropriate.
-- Delete unused development resources.
-- Configure AWS Budgets.
-- Configure billing alerts.
-
-*Budget Objective*
-
-The MVP is designed to maintain a low operational cost for internship, educational, and demonstration purposes.
-
-The official estimated cost will be calculated using AWS Pricing Calculator after the final architecture configuration, storage assumptions, and workload parameters are confirmed.
-
+The project does not assume zero AWS costs. A fixed total budget is not provided without complete workload parameters and actual Billing information.
 
 ### 7. Risk Assessment
 
-*Risk Matrix*
+| Risk | Expected Impact | Mitigation |
+| --- | --- | --- |
+| Invalid CSV/XLSX files or invalid/duplicate student IDs | Medium–High | Validate file structures, standardize IDs, detect duplicates, and report errors. |
+| Missing Check-in/Check-out or Evidence | High | Reconcile by Activity ID/Student ID and support ADMIN review of exceptions. |
+| Unauthorized access | High | Validate tokens, enforce Backend permissions, and test ADMIN APIs. |
+| Local FastAPI Backend becomes unavailable | High | Verify availability before demonstrations and prepare a restart/local Demo fallback. |
+| Cloudflare Quick Tunnel URL changes | High | Update the API Base URL and verify connectivity before demonstrations. |
+| Inconsistent local and DynamoDB data | High | Verify synchronization scope, read/write behavior, and the source of truth before Production expansion. |
+| Lambda CSV Processing failure or incorrect IAM permissions | Medium–High | Review the Execution Role, S3 Input/Output, and CloudWatch Logs. |
+| Student data or credential exposure | High | Use synthetic/anonymized data, protect secrets, and apply Least Privilege. |
+| AWS costs exceed expectations | Medium | Monitor Billing, limit experimental resources, and configure alerts where needed. |
+| Insufficient Production capacity | High | Perform load testing and improve infrastructure and data storage before operational deployment. |
 
-| Risk | Impact | Probability |
-|---|---|---|
-| Invalid Excel/CSV format | Medium | High |
-| Missing or incorrect student ID | High | Medium |
-| Duplicate records | Medium | Medium |
-| Different file structures across data sources | High | Medium |
-| Inconsistent data between sources | High | Medium |
-| Lambda file processing failure | High | Low |
-| Incorrect IAM permissions | High | Low |
-| Unauthorized user access | High | Low |
-| Exposure of student data | High | Low |
-| AWS cost exceeds expectations | Medium | Low |
-
-*Mitigation Strategies*
-
-- *File Format*: Define standard templates for Registration, Check-in, Check-out, and Evidence files.
-- *Validation*: Check all required fields before processing.
-- *Student ID Validation*: Standardize and validate student IDs before storage.
-- *Duplicate Detection*: Use Activity ID together with Student ID to identify duplicate records.
-- *Error Handling*: Store invalid rows in a Validation Error List instead of inserting them directly into operational data.
-- *Raw Data Backup*: Keep original files in Amazon S3.
-- *Monitoring*: Monitor Lambda Errors and Duration using CloudWatch.
-- *Authentication*: Use Amazon Cognito.
-- *Authorization*: Apply appropriate roles and permissions.
-- *Least Privilege*: Limit IAM permissions to required resources and actions.
-- *Data Protection*: Use synthetic or anonymized data during development unless permission to use real student data is granted.
-- *Cost Control*: Use AWS Budgets and billing alerts.
-- *Cleanup*: Remove unused test resources.
-
-*Contingency Plan*
-
-- Failed files can be corrected and uploaded again.
-- Original source files remain available in Amazon S3.
-- The processing pipeline can be executed again from stored raw data.
-- Export files can be regenerated from stored operational data.
-- If the Analytics Layer is unavailable, the source data remains available in Amazon S3.
-- The existing Excel-based process can remain available as a temporary fallback during the pilot stage.
-
+If a problem occurs, ADMIN users can correct and re-import files, review exceptional cases, or use the existing Excel workflow as a fallback. The Backend can be restarted locally, and the Lambda Demo can be rerun using the input file retained on S3. Backup and synchronization procedures must reflect the actual persistence mechanism rather than assuming that all application data has a complete AWS copy.
 
 ### 8. Expected Outcomes
 
-*Process Improvement*
+#### 8.1. Operational Improvement
 
-The project is expected to provide a centralized platform for student activity data.
+The system aims to establish a centralized management workflow that reduces repetitive Excel operations and manual student ID searches. Organizers can manage Registration, Attendance, Evidence, Reconciliation, and Participation within a single application, while students can access their personal information within the authorized scope.
 
-Instead of opening multiple Excel files and manually searching for individual student IDs, organizers can review reconciliation results through a unified interface.
+#### 8.2. Analytics and Export
 
-The system can identify:
+The Analytics Dashboard uses business data to support indicators such as total activities, total registrations, Check-in/Check-out records, participation results, participation rate, and missing-data cases. Indicators must be calculated using consistent definitions and actual system data.
 
-- Students with complete participation data.
-- Students missing Check-in.
-- Students missing Check-out.
-- Students missing participation evidence.
-- Students who registered but have no attendance data.
-- Students requiring manual review.
+For illustration, if 1,050 of 1,200 registered participation records are confirmed, the participation rate is 87.5%. These figures are a calculation example, not measurements from an actual event.
 
-*Reduction of Manual Work*
+The system supports exporting lists and management data in the formats provided by the corresponding features. Official conduct-point approval and updates in the University Portal remain part of the university's administrative process and are outside the MVP scope.
 
-Registration, Check-in, Check-out, and Evidence data are automatically processed and matched using student IDs.
+#### 8.3. AWS Implementation Outcomes
 
-Organizers therefore focus primarily on exceptional cases rather than manually checking every record.
+* AWS Amplify: React/Vite Frontend deployment.
+* Amazon DynamoDB: business data storage integration and testing on AWS.
+* Amazon S3: input CSV and output JSON storage.
+* AWS Lambda: Serverless CSV processing experiment.
+* AWS IAM: execution and resource access permissions.
+* Amazon CloudWatch: Lambda execution logs and metrics.
 
-*Participation List Management*
+Supporting evidence must accurately reflect the implementation scope. Services that have not been deployed must not be presented as completed outcomes.
 
-After reconciliation, authorized staff can assign:
+#### 8.4. Expected Project Deliverables
 
-- `CONFIRMED`
-- `REJECTED`
+* Frontend/Backend Source Code and GitHub Repository.
+* Web Application Demo and synthetic data.
+* Architecture Diagram and Project Proposal.
+* README, API Documentation, and User Guide.
+* Test Report, Demo Script, and AWS Configuration Notes.
+* AWS Project Evidence, Worklog, and Hugo internship report website.
 
-The final participation list is locked after confirmation.
+#### 8.5. Limitations and Future Development
 
-The platform supports exporting:
+The Demo Backend depends on a locally running computer and the temporary Cloudflare Quick Tunnel URL. SQLite remains part of the Demo persistence mechanism, while DynamoDB has been integrated without verified migration of every API to a Cloud Database. The Lambda CSV Processor remains an independent Demo. The Camera QR Scanner, direct University Portal/Google Sheets integration, large-scale load testing, and Production deployment require further development.
 
-- Registration List.
-- Check-in List.
-- Check-out List.
-- Missing Check-in List.
-- Missing Check-out List.
-- Missing Evidence List.
-- Registered but No Attendance List.
-- Reconciliation List.
-- Final Participation List.
+In the long term, the project can evolve into a scalable student activity management platform connected with university systems. It also provides practical experience in Data Science, Web Development, Cloud Computing, data processing, and future Cloud & Data Engineering development.
 
-The exported data can be generated in Excel or CSV format.
-
-*Activity Point Scope*
-
-The system can store the point value assigned to each activity.
-
-Example:
-
-```text
-Activity: AWS Cloud Workshop
-Activity Point Value: 5
-However, the system does not officially add conduct points to student accounts.
-
-The platform only records activity information and confirmed participation status.
-
-Official conduct-point processing remains part of the University Youth Union's administrative process and is outside the project scope.
-
-Analytics
-
-The analytical dashboard is expected to include:
-
-Total Activities.
-Total Registrations.
-Confirmed Participants.
-Participation Rate.
-No-show Rate.
-Missing Check-in Rate.
-Missing Check-out Rate.
-Missing Evidence Rate.
-Activities by Type.
-Participation by Semester.
-Participation Trends.
-
-Example:
-
-Total Registrations: 1,200
-Confirmed Participants: 1,050
-
-Participation Rate
-= 1,050 / 1,200 × 100
-= 87.5%
-
-Scalability
-
-The serverless architecture supports normal activities with approximately 100–200 participants while also providing the ability to handle larger programs with more than 1,000 participants without maintaining continuously running servers.
-
-Services such as AWS Lambda, Amazon S3, and Amazon DynamoDB can scale according to workload demand.
-
-Security and Monitoring
-
-The platform applies:
-
-Amazon Cognito Authentication.
-Cognito Authorizer.
-JWT Token.
-AWS IAM Least Privilege.
-Amazon CloudWatch Logs.
-CloudWatch Metrics.
-CloudWatch Alarms.
-AWS Budgets and Billing Alerts.
-
-This ensures that the project demonstrates not only functional implementation but also important AWS practices for security, monitoring, scalability, and cost control.
-
-Long-Term Value
-
-The project creates a centralized data platform that can be extended in future versions.
-
-Potential future developments include:
-
-Dynamic QR Check-in/Check-out.
-Student Self Check-in.
-University Portal Integration.
-Google Sheets Integration.
-Notification System.
-Advanced Analytics.
-Student Engagement Analysis.
-Machine Learning.
-
-The long-term objective is to transform the post-event data management process from a fragmented and highly manual Excel-based workflow into a centralized, traceable, scalable, and analytical workflow running on AWS.
+**Note:** This Proposal has been updated to reflect the current architecture diagram, development scope, and recorded test results. Uncompleted work, especially the final internship milestones, must be verified against actual evidence before being reported as completed outcomes.

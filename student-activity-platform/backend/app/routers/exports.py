@@ -2,6 +2,8 @@ from io import BytesIO
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import re
+import os
+from uuid import uuid4
 
 from fastapi import (
     APIRouter,
@@ -32,6 +34,7 @@ from app.data.store import (
     attendance,
     participation,
     registrations,
+    evidence,
 )
 
 from app.repositories.participation_read_repository import get_participation_bucket_for_read
@@ -1391,6 +1394,57 @@ def add_absent_sheet(
     )
 
 # ==========================================
+# OPTIONAL PRIVATE S3 ARCHIVE - TEST DATA ONLY
+# ==========================================
+
+def _archive_export_to_s3(activity_id, activity, export_type, filename, content):
+    """Upload a copy without changing the existing Excel download response."""
+    if os.getenv("SAP_EXPORT_S3_ARCHIVE", "0").strip() != "1":
+        return None
+    test_id = os.getenv("SAP_EXPORT_S3_TEST_ACTIVITY_ID", "").strip()
+    if not test_id:
+        raise HTTPException(status_code=503, detail="Thiếu SAP_EXPORT_S3_TEST_ACTIVITY_ID.")
+    if activity_id != test_id:
+        return None
+
+    # Safeguard: never archive real records through this pilot.
+    allowed = {"TEST000001", "TEST000002", "TEST000003"}
+    existing_ids = (
+        set(registrations.get(activity_id, {}))
+        | set(attendance.get(activity_id, {}))
+        | set(participation.get(activity_id, {}))
+        | set(evidence.get(activity_id, {}))
+    )
+    if (
+        activity.get("activity_name") != "AWS Registration Pilot Test"
+        or not existing_ids
+        or not existing_ids.issubset(allowed)
+    ):
+        raise HTTPException(status_code=409, detail="Export S3 Pilot chỉ cho phép Activity với dữ liệu TEST.")
+
+    bucket = os.getenv("SAP_S3_BUCKET", "").strip()
+    if not bucket:
+        raise HTTPException(status_code=503, detail="Thiếu SAP_S3_BUCKET.")
+    key = (f"exports/{activity_id}/"
+           f"{datetime.now(VN_TIMEZONE).strftime('%Y%m%dT%H%M%S')}-"
+           f"{uuid4().hex}-{export_type}.xlsx")
+    try:
+        import boto3
+        from botocore.exceptions import BotoCoreError, ClientError
+        boto3.client("s3", region_name=(
+            os.getenv("AWS_REGION") or os.getenv("AWS_DEFAULT_REGION") or "ap-southeast-1"
+        )).put_object(
+            Bucket=bucket, Key=key, Body=content,
+            ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            ContentDisposition=f'attachment; filename="{filename}"',
+            ServerSideEncryption="AES256",
+        )
+    except (BotoCoreError, ClientError, OSError) as error:
+        raise HTTPException(status_code=503, detail="Không lưu được báo cáo S3; chưa tải xuống.") from error
+    return f"s3://{bucket}/{key}"
+
+
+# ==========================================
 # EXPORT ENDPOINT
 # ==========================================
 
@@ -1648,6 +1702,12 @@ def export_activity_data(
         f"{safe_activity_id}_"
         f"{type_names[normalized_type]}"
         ".xlsx"
+    )
+
+    # Archive a private copy for the explicitly selected test activity.
+    # Keep the original StreamingResponse unchanged.
+    _archive_export_to_s3(
+        activity_id, activity, normalized_type, filename, buffer.getvalue()
     )
 
     # ======================================

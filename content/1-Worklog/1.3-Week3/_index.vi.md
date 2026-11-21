@@ -6,94 +6,133 @@ chapter: false
 pre: "<b>1.3.</b>"
 ---
 
-
 ### Mục tiêu tuần 3:
 
-* Bắt đầu hiện thực các chức năng cốt lõi của hệ thống trong môi trường phát triển local.
-* Xây dựng cấu trúc source code cho dự án.
-* Xây dựng chức năng đọc, kiểm tra và chuẩn hóa dữ liệu đăng ký sinh viên.
-* Xây dựng chức năng xử lý dữ liệu minh chứng tham gia.
-* Xây dựng API mô phỏng quá trình Check-in/Check-out realtime bằng QR Code.
-* Xây dựng các quy tắc đối soát dữ liệu giữa Registration, Attendance và Evidence.
-* Kiểm thử các trường hợp dữ liệu hợp lệ, không hợp lệ và thiếu dữ liệu.
-* Chuẩn bị hệ thống để có thể ánh xạ sang các dịch vụ AWS trong giai đoạn triển khai sau.
-
+* Bắt đầu phát triển các chức năng Backend cốt lõi của **Student Activity Management & Engagement Analytics Platform** trong môi trường local.
+* Xây dựng cấu trúc source code bằng ngôn ngữ Python và framework FastAPI.
+* Thiết kế REST API phục vụ quản lý hoạt động, dữ liệu sinh viên, đăng ký và điểm danh.
+* Tìm hiểu cách tổ chức Backend thành các thành phần Router, Service, Repository và Data Model.
+* Xây dựng chức năng quản lý thông tin và trạng thái hoạt động.
+* Phát triển chức năng đọc, kiểm tra và chuẩn hóa dữ liệu Registration từ CSV/XLSX.
+* Xây dựng chức năng nhập minh chứng tham gia (Evidence).
+* Phát triển API Check-in/Check-out theo thời gian thực, có kiểm tra đăng ký và trạng thái điểm danh.
+* Thiết kế và xây dựng logic đối soát giữa Registration, Attendance và Evidence.
+* Sử dụng dữ liệu giả để kiểm thử các trường hợp nghiệp vụ hợp lệ và không hợp lệ.
+* Chuẩn bị cơ sở để tích hợp Amazon DynamoDB và Amazon S3 trong các giai đoạn sau.
 
 ### Các công việc cần triển khai trong tuần này:
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2 | - Khởi tạo cấu trúc source code cho dự án **Student Activity Management and Engagement Analytics Platform** <br> - Tổ chức các thư mục phục vụ xử lý API, dữ liệu và business logic <br> - Cấu hình môi trường phát triển local <br> - Kiểm tra bộ dữ liệu giả lập đã chuẩn bị từ tuần trước <br> - Xác định cấu trúc request/response chung cho các API | 21/09/2026 | 21/09/2026 | Tài liệu Proposal và tài liệu thiết kế hệ thống |
-| 3 | - Xây dựng chức năng xử lý dữ liệu đăng ký sinh viên <br>&emsp; + Đọc dữ liệu từ CSV/Excel <br>&emsp; + Kiểm tra các trường bắt buộc <br>&emsp; + Chuẩn hóa MSSV <br>&emsp; + Phát hiện và loại bỏ dữ liệu trùng lặp <br>&emsp; + Phát hiện MSSV hoặc dữ liệu không hợp lệ <br> - Xây dựng chức năng xử lý dữ liệu minh chứng từ Google Forms/Google Sheets <br> - Tạo kết quả validation cho các dòng dữ liệu lỗi | 22/09/2026 | 22/09/2026 | Tài liệu Proposal và bộ dữ liệu kiểm thử |
-| 4 | - Xây dựng API Check-in/Check-out realtime <br>&emsp; + Nhận dữ liệu từ thao tác quét QR trên thẻ sinh viên <br>&emsp; + Xác định sinh viên và hoạt động <br>&emsp; + Kiểm tra sinh viên có đăng ký hoạt động hay không <br>&emsp; + Ghi nhận loại sự kiện CHECK_IN hoặc CHECK_OUT <br>&emsp; + Ghi nhận thời gian thực hiện <br>&emsp; + Ngăn việc ghi nhận trùng lặp không hợp lệ <br> - Mô phỏng quá trình quét QR bằng dữ liệu test trong môi trường local | 23/09/2026 | 23/09/2026 | <https://docs.aws.amazon.com/apigateway/> |
-| 5 | - Xây dựng logic đối soát dữ liệu tham gia hoạt động <br> - Kết hợp dữ liệu Registration, Check-in, Check-out và Evidence <br> - Xác định các trường hợp: <br>&emsp; + Đủ dữ liệu và sẵn sàng xác nhận <br>&emsp; + Thiếu Check-in <br>&emsp; + Thiếu Check-out <br>&emsp; + Thiếu minh chứng <br>&emsp; + Không có dữ liệu điểm danh <br>&emsp; + Có nhiều lỗi cần kiểm tra <br> - Gán trạng thái Participation Status tương ứng cho từng sinh viên | 24/09/2026 | 24/09/2026 | Tài liệu Proposal và business rules của dự án |
-| 6 | - Kiểm thử toàn bộ luồng xử lý trong môi trường local <br>&emsp; + Import Registration <br>&emsp; + Import Evidence <br>&emsp; + Realtime Check-in <br>&emsp; + Realtime Check-out <br>&emsp; + Reconciliation <br> - Kiểm thử với các trường hợp dữ liệu lỗi và dữ liệu thiếu <br> - Kiểm tra kết quả API và xử lý lỗi <br> - Hoàn thiện tài liệu mô tả API và luồng xử lý <br> - Chuẩn bị ánh xạ các module local sang API Gateway, Lambda, DynamoDB và S3 trong giai đoạn AWS | 25/09/2026 | 25/09/2026 | <https://docs.aws.amazon.com/> |
+| --- | --- | --- | --- | --- |
+| Thứ 2 | - Khởi tạo thư mục dự án **student-activity-platform** và cấu trúc Backend bằng Python/FastAPI. <br> - Thiết lập Python Virtual Environment và cài đặt các thư viện cần thiết. <br> - Tìm hiểu cấu trúc ứng dụng FastAPI và cách tổ chức các module. <br> - Phân chia source code thành Router, Service, Repository và Model. <br> - Xây dựng điểm khởi chạy ứng dụng và API Health Check. <br> - Làm quen với Uvicorn và quá trình chạy Backend trong môi trường local. | 21/09/2026 | 21/09/2026 | https://fastapi.tiangolo.com/ <br> https://www.uvicorn.org/ |
+| Thứ 3 | - Thiết kế các REST API cho chức năng Activity Management. <br> - Xây dựng cấu trúc dữ liệu Activity gồm Activity ID, tên hoạt động, thời gian, địa điểm và trạng thái. <br> - Phát triển các thao tác tạo, cập nhật và lấy danh sách hoạt động. <br> - Nghiên cứu quy trình gửi duyệt, công bố và hủy hoạt động. <br> - Thiết kế request/response bằng Pydantic. <br> - Tìm hiểu cách xử lý lỗi HTTP và kiểm tra dữ liệu đầu vào. <br> - Kiểm thử các API bằng dữ liệu hoạt động giả lập. | 22/09/2026 | 22/09/2026 | https://fastapi.tiangolo.com/ <br> https://docs.pydantic.dev/ |
+| Thứ 4 | - Xây dựng module xử lý dữ liệu Registration. <br> - Đọc danh sách đăng ký sinh viên từ CSV/XLSX. <br> - Kiểm tra các trường bắt buộc như MSSV và thông tin sinh viên. <br> - Chuẩn hóa dữ liệu và phát hiện các dòng trùng lặp. <br> - Thiết kế API Preview để người quản trị kiểm tra dữ liệu trước khi Import. <br> - Xây dựng logic Import và truy xuất danh sách đăng ký theo hoạt động. <br> - Nghiên cứu xử lý Evidence từ Google Forms/Google Sheets được xuất thành file. <br> - Tạo bộ dữ liệu thử nghiệm gồm bản ghi hợp lệ, thiếu thông tin và trùng MSSV. | 23/09/2026 | 23/09/2026 | https://pandas.pydata.org/docs/ <br> https://fastapi.tiangolo.com/tutorial/request-files/ |
+| Thứ 5 | - Xây dựng API Attendance phục vụ Check-in/Check-out thời gian thực. <br> - Thiết kế dữ liệu đầu vào gồm Activity ID và MSSV. <br> - Xây dựng chức năng kiểm tra sinh viên có trong danh sách đăng ký hay không. <br> - Thiết kế logic ghi nhận thời gian Check-in ngay khi API được gọi. <br> - Xây dựng xử lý Check-out theo trạng thái điểm danh. <br> - Phát hiện Check-in/Check-out trùng hoặc thao tác không hợp lệ. <br> - Nghiên cứu các trường hợp mở và đóng Check-out theo quy định hoạt động. <br> - Kiểm thử bằng dữ liệu MSSV giả lập, chưa phụ thuộc camera QR thực tế. | 24/09/2026 | 24/09/2026 | https://fastapi.tiangolo.com/ <br> Tài liệu nghiệp vụ Attendance |
+| Thứ 6 | - Phân tích và xây dựng logic Reconciliation giữa Registration, Attendance và Evidence. <br> - Xác định các trường hợp đủ điều kiện, thiếu Check-in, thiếu Check-out, thiếu Evidence và không có dữ liệu điểm danh. <br> - Thiết kế trạng thái kết quả tham gia và các trường hợp cần ADMIN xem xét. <br> - Xây dựng API phục vụ đối soát và truy xuất kết quả. <br> - Nghiên cứu chức năng xác nhận hoặc điều chỉnh kết quả tham gia. <br> - Kiểm thử luồng nghiệp vụ với dữ liệu sinh viên giả. <br> - Tổng hợp những phần đã xây dựng và những vấn đề cần tiếp tục hoàn thiện ở tuần sau. | 25/09/2026 | 25/09/2026 | Tài liệu Proposal, Business Rules và FastAPI Documentation |
 
+### Kết quả đạt được tuần 3:
 
-### Kết quả dự kiến đạt được tuần 3:
+* **Xây dựng nền tảng Backend bằng FastAPI:**
+  * Khởi tạo cấu trúc dự án Python.
+  * Thiết lập môi trường phát triển local và các thư viện cần thiết.
+  * Tìm hiểu cách vận hành ứng dụng thông qua Uvicorn.
+  * Tổ chức các thành phần Backend theo hướng tách biệt trách nhiệm.
+  * Xây dựng nền tảng REST API để phát triển các chức năng nghiệp vụ.
 
-* Hoàn thiện cấu trúc source code ban đầu cho dự án **Student Activity Management and Engagement Analytics Platform**.
+* **Hình thành cấu trúc source code Backend:**
+  * `app/main.py`: Điểm khởi chạy ứng dụng và khai báo Router.
+  * `app/routers/`: Tiếp nhận các HTTP request.
+  * `app/services/`: Xử lý quy tắc nghiệp vụ.
+  * `app/repositories/`: Truy cập dữ liệu và chuẩn bị cho việc tích hợp nguồn lưu trữ.
+  * Các module xác thực, xử lý lỗi và lưu trữ dữ liệu được tổ chức theo nhu cầu phát triển.
 
-* Xây dựng được module xử lý dữ liệu đăng ký sinh viên có khả năng:
+  Việc tách các lớp giúp hạn chế phụ thuộc giữa giao diện API, xử lý nghiệp vụ và cơ chế lưu dữ liệu.
 
-  * Đọc dữ liệu CSV/Excel.
-  * Kiểm tra dữ liệu đầu vào.
-  * Chuẩn hóa MSSV.
-  * Phát hiện dữ liệu trùng lặp.
-  * Phát hiện dữ liệu không hợp lệ.
-  * Trả về kết quả validation.
+* **Phát triển nhóm chức năng Activity Management:**
+  * Thiết kế dữ liệu hoạt động gồm thông tin định danh, tên, mô tả, thời gian và trạng thái.
+  * Xây dựng hướng xử lý tạo và cập nhật thông tin hoạt động.
+  * Xác định các trạng thái phục vụ quy trình quản lý và công bố hoạt động.
+  * Thiết kế API để truy xuất danh sách và chi tiết hoạt động.
+  * Bước đầu xử lý dữ liệu đầu vào và các trường hợp lỗi nghiệp vụ.
 
-* Xây dựng được module xử lý dữ liệu minh chứng tham gia hoạt động.
+* **Xây dựng module Registration Import:**
+  * Nghiên cứu cách đọc và xử lý dữ liệu CSV/XLSX.
+  * Xác định các trường bắt buộc trong dữ liệu đăng ký.
+  * Chuẩn hóa MSSV và xử lý các trường hợp thiếu thông tin.
+  * Phát hiện dữ liệu trùng và bản ghi không hợp lệ.
+  * Thiết kế quy trình **Preview → Validate → Import → View Registrations**.
+  * Xác định yêu cầu không ghi dữ liệu chưa được kiểm tra vào danh sách chính thức.
 
-* Xây dựng được API Check-in/Check-out realtime với luồng xử lý:
+* **Nghiên cứu và phát triển xử lý Evidence:**
+  * Xác định nguồn dữ liệu minh chứng từ Google Forms/Google Sheets.
+  * Thiết kế cách tiếp nhận file CSV/XLSX.
+  * Nghiên cứu kiểm tra dữ liệu minh chứng theo MSSV và Activity ID.
+  * Xác định các trường hợp minh chứng không hợp lệ hoặc không khớp dữ liệu đăng ký.
+  * Chuẩn bị logic để kết hợp Evidence với Attendance trong quá trình đối soát.
 
-  * Ban tổ chức quét QR Code trên thẻ sinh viên.
-  * Hệ thống nhận MSSV và Activity ID.
-  * Kiểm tra sinh viên có nằm trong danh sách đăng ký hay không.
-  * Nếu hợp lệ, hệ thống ghi nhận CHECK_IN hoặc CHECK_OUT.
-  * Thời gian điểm danh được ghi nhận tại thời điểm request được gửi đến hệ thống.
-  * Nếu sinh viên không đăng ký hoặc dữ liệu không hợp lệ, hệ thống trả về thông báo lỗi.
+* **Xây dựng API Attendance theo thời gian thực:**
+  * Thiết kế API Check-in và Check-out theo Activity ID.
+  * Xác định MSSV là thông tin dùng để nhận diện sinh viên trong quá trình điểm danh.
+  * Kiểm tra đăng ký trước khi thực hiện nghiệp vụ điểm danh.
+  * Ghi nhận thời điểm Check-in/Check-out khi Backend xử lý yêu cầu.
+  * Xác định cách ngăn chặn thao tác trùng lặp.
+  * Xử lý các trường hợp điểm danh không hợp lệ.
+  * Chuẩn bị cơ chế quản lý thời điểm mở và đóng Check-out.
 
-* Đảm bảo Check-in/Check-out được thiết kế dưới dạng **realtime API event**, không sử dụng file Excel/CSV để import dữ liệu điểm danh.
+  **Nguyên tắc quan trọng:** Check-in/Check-out được ghi nhận bằng API ngay khi có thao tác. Dữ liệu điểm danh không được thiết kế để chủ yếu nhập hàng loạt từ Excel.
 
-* Xây dựng được logic đối soát giữa các nguồn dữ liệu:
+* **Thiết kế logic Reconciliation:**
+  * Kết hợp ba nguồn dữ liệu:
+    * Registration.
+    * Attendance.
+    * Evidence.
+  * Xác định các trạng thái nghiệp vụ:
+    * Đã đăng ký và có dữ liệu tham gia đầy đủ.
+    * Thiếu Check-in.
+    * Thiếu Check-out.
+    * Thiếu Evidence.
+    * Không có dữ liệu Attendance.
+    * Có thông tin cần ADMIN xem xét.
+  * Phân biệt kết quả hệ thống tự xác định với kết quả cần được kiểm tra và xác nhận.
+  * Chuẩn bị cơ sở cho chức năng Finalize và Export.
 
-  * Registration
-  * Check-in
-  * Check-out
-  * Evidence
+* **Thực hiện kiểm thử với dữ liệu giả lập:**
+  * Sinh viên đã đăng ký và có Check-in hợp lệ.
+  * Sinh viên chưa đăng ký nhưng gửi yêu cầu Check-in.
+  * Sinh viên thực hiện Check-in trùng.
+  * Sinh viên thực hiện Check-out không hợp lệ.
+  * Sinh viên thiếu Check-in hoặc Check-out.
+  * Sinh viên thiếu minh chứng.
+  * MSSV bị trùng hoặc thiếu thông tin trong danh sách Import.
+  * Các trường hợp dữ liệu cần đối soát thủ công.
 
-* Xác định được các trạng thái chính trong quá trình đối soát:
+* **Hiểu rõ hơn cơ chế xử lý REST API:**
+  * Phân biệt các HTTP Method như GET, POST, PUT và DELETE.
+  * Nắm được vai trò của Request Body, Path Parameter và Query Parameter.
+  * Tìm hiểu HTTP Status Code như 200, 400, 403, 404, 409 và 422.
+  * Biết cách sử dụng Pydantic để kiểm tra dữ liệu đầu vào.
+  * Hiểu tầm quan trọng của xử lý lỗi rõ ràng và thống nhất giữa các API.
 
-  * `READY`
-  * `NEEDS_REVIEW: MISSING_CHECK_IN`
-  * `NEEDS_REVIEW: MISSING_CHECK_OUT`
-  * `NEEDS_REVIEW: MISSING_EVIDENCE`
-  * `NO_ATTENDANCE`
-  * Các trường hợp có nhiều lỗi kết hợp.
+* **Chuẩn bị nền tảng tích hợp AWS:**
+  * Xác định các module có khả năng kết nối Amazon DynamoDB.
+  * Xác định những nhóm file có thể lưu trên Amazon S3.
+  * Nghiên cứu cách sử dụng Repository để thay đổi cơ chế lưu trữ mà không cần viết lại toàn bộ nghiệp vụ.
+  * Tiếp tục ưu tiên kiểm thử local và sử dụng dữ liệu giả trước khi phát sinh tài nguyên AWS.
 
-* Kiểm thử được các tình huống như:
+### Khó khăn và bài học kinh nghiệm:
 
-  * Sinh viên đăng ký và tham gia đầy đủ.
-  * Sinh viên chưa đăng ký nhưng quét QR.
-  * Check-in trùng lặp.
-  * Check-out khi chưa có Check-in.
-  * Thiếu Check-in.
-  * Thiếu Check-out.
-  * Thiếu minh chứng.
-  * Đăng ký nhưng không tham gia.
-  * MSSV không hợp lệ.
-  * Dữ liệu đăng ký bị trùng.
+* **Tổ chức kiến trúc Backend:** Việc chia Router, Service và Repository giúp code dễ kiểm tra và mở rộng hơn nhưng cần xác định trách nhiệm rõ ràng cho từng lớp.
+* **Dữ liệu nhập không đồng nhất:** Các file Registration và Evidence có thể thiếu cột, sai định dạng MSSV hoặc trùng thông tin, vì vậy cần bước Preview và Validation.
+* **Điểm danh thời gian thực:** Cần xử lý chính xác các trường hợp Check-in/Check-out trùng và đảm bảo thao tác được ghi nhận ngay khi API xử lý.
+* **Đối soát nhiều nguồn dữ liệu:** Không thể chỉ dựa vào Registration để xác định sinh viên đã tham gia; cần kết hợp Attendance và Evidence.
+* **Kiểm thử bằng dữ liệu giả:** Giúp phát hiện lỗi nghiệp vụ mà không ảnh hưởng thông tin của sinh viên thật.
+* **Chuẩn bị cho AWS:** Việc xây dựng Backend local trước giúp giảm độ phức tạp và chi phí khi bắt đầu tích hợp Cloud.
 
-* Hoàn thiện bước đầu tài liệu API, business logic và quy trình xử lý dữ liệu.
+### Định hướng tuần tiếp theo:
 
-* Xác định được cách ánh xạ các thành phần local sang kiến trúc AWS:
-
-  * Local API → Amazon API Gateway.
-  * Business Logic → AWS Lambda.
-  * Operational Data → Amazon DynamoDB.
-  * Registration/Evidence files → Amazon S3.
-  * Authentication → Amazon Cognito.
-  * Logs và monitoring → Amazon CloudWatch.
-
-* Hoàn thành phần phát triển và kiểm thử cốt lõi ở môi trường local trước khi triển khai tài nguyên thực tế trên AWS, giúp hạn chế chi phí phát sinh trong quá trình phát triển.
+* Tiếp tục hoàn thiện các chức năng Backend.
+* Hoàn thiện mô hình lưu trữ và kiểm thử dữ liệu nghiệp vụ.
+* Nghiên cứu và triển khai AWS Pilot với Amazon DynamoDB và Amazon S3 theo phạm vi giới hạn.
+* Kiểm thử thao tác đọc/ghi dữ liệu trên AWS bằng dữ liệu giả.
+* Kiểm tra việc đồng bộ dữ liệu giữa môi trường local và các luồng AWS Pilot.
+* Ghi nhận kết quả kiểm thử và chuẩn bị tài liệu kỹ thuật cho giai đoạn tích hợp tiếp theo.

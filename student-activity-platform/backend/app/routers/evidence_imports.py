@@ -7,6 +7,7 @@ from zoneinfo import ZoneInfo
 import csv
 import re
 import unicodedata
+from uuid import uuid4
 
 from fastapi import (
     APIRouter,
@@ -742,7 +743,9 @@ async def read_uploaded_file(
         )
 
 
-    content = await file.read()
+    content = await file.read(10 * 1024 * 1024 + 1)
+    if len(content) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="File Evidence tối đa 10 MB.")
 
 
     if not content:
@@ -1645,6 +1648,64 @@ def _sync_evidence_pilot(activity_id, activity, replacement_bucket):
 
 
 # ==========================================
+# OPTIONAL PRIVATE S3 ARCHIVE - TEST DATA ONLY
+# ==========================================
+
+def _archive_evidence_to_s3(activity_id, activity, all_records, valid_records, raw_file, filename):
+    """Optional raw import archive. Only safe synthetic Evidence Pilot records."""
+    if os.getenv("SAP_EVIDENCE_S3_ARCHIVE", "0").strip() != "1":
+        return None
+
+    # Do not archive real students or unrelated activities.
+    if not _evidence_pilot_is_target(activity_id, activity):
+        return None
+    if (
+        not valid_records
+        or not all_records
+        or not set(item.get("mssv", "") for item in all_records).issubset(EVIDENCE_PILOT_TEST_MSSV)
+        or not set(item["mssv"] for item in valid_records).issubset(EVIDENCE_PILOT_TEST_MSSV)
+        or not set(registrations.get(activity_id, {})).issubset(EVIDENCE_PILOT_TEST_MSSV)
+        or not set(evidence.get(activity_id, {})).issubset(EVIDENCE_PILOT_TEST_MSSV)
+    ):
+        raise HTTPException(status_code=409, detail="Chỉ được lưu Evidence giả lập trong S3 Pilot.")
+
+    bucket = os.getenv("SAP_S3_BUCKET", "").strip()
+    if not bucket:
+        raise HTTPException(status_code=503, detail="Thiếu SAP_S3_BUCKET.")
+
+    extension = Path(filename).suffix.lower()
+    key = (f"evidence/{activity_id}/"
+           f"{datetime.now(VN_TIMEZONE).strftime('%Y%m%dT%H%M%S')}-"
+           f"{uuid4().hex}{extension}")
+    try:
+        import boto3
+        from botocore.exceptions import BotoCoreError, ClientError
+        client = boto3.client("s3", region_name=(
+            os.getenv("AWS_REGION") or os.getenv("AWS_DEFAULT_REGION") or "ap-southeast-1"
+        ))
+        client.put_object(
+            Bucket=bucket, Key=key, Body=raw_file,
+            ContentType=("text/csv" if extension == ".csv" else
+                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+            ServerSideEncryption="AES256",
+        )
+    except (BotoCoreError, ClientError, OSError) as error:
+        raise HTTPException(status_code=503, detail="Không lưu được Evidence lên S3; dữ liệu chưa đổi.") from error
+    return (client, bucket, key)
+
+
+def _cleanup_s3_object(archive):
+    if archive is None:
+        return
+    client, bucket, key = archive
+    try:
+        client.delete_object(Bucket=bucket, Key=key)
+    except Exception:
+        # Best-effort cleanup only; no existing objects are touched.
+        pass
+
+
+# ==========================================
 # IMPORT EVIDENCE
 # ==========================================
 
@@ -1820,13 +1881,22 @@ async def import_evidence(
         }
 
 
-    # AWS phải ghi thành công trước khi thay danh sách local.
-    # Khi Pilot tắt / Activity khác, hàm này không gọi AWS.
-    _sync_evidence_pilot(
-        activity_id,
-        activity,
-        replacement_bucket,
+    # Preserve the exact validated input file for the optional S3 Pilot.
+    await file.seek(0)
+    raw_file = await file.read()
+    archive = _archive_evidence_to_s3(
+        activity_id, activity, records, valid_records, raw_file, filename
     )
+
+    # AWS must sync before local state changes. On sync failure,
+    # attempt to remove only the newly archived S3 object.
+    try:
+        _sync_evidence_pilot(
+            activity_id, activity, replacement_bucket
+        )
+    except Exception:
+        _cleanup_s3_object(archive)
+        raise
 
     bucket = get_activity_bucket(evidence, activity_id)
     bucket.clear()
@@ -1873,6 +1943,10 @@ async def import_evidence(
 
         "file_name":
             filename,
+
+        "s3_source": (
+            f"s3://{archive[1]}/{archive[2]}" if archive else None
+        ),
 
         "imported_at":
             imported_at,

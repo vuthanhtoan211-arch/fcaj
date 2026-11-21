@@ -4,6 +4,7 @@ import os
 import csv
 import re
 import unicodedata
+from uuid import uuid4
 
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -45,6 +46,7 @@ VN_TIMEZONE = ZoneInfo("Asia/Ho_Chi_Minh")
 ALLOWED_EXTENSIONS = {".xlsx", ".csv"}
 MSSV_PATTERN = re.compile(r"^[A-Z0-9]{6,20}$")
 PREVIEW_LIMIT = 30
+MAX_IMPORT_FILE_SIZE = 10 * 1024 * 1024  # 10 MiB
 
 
 # ==========================================
@@ -269,6 +271,81 @@ def _sync_registration_aws_pilot(activity_id, records):
             status_code=503,
             detail=message,
         ) from error
+
+
+# ==========================================
+# OPTIONAL PRIVATE S3 ARCHIVE (AWS PILOT)
+# ==========================================
+
+def _registration_s3_archive_enabled(activity_id, activity):
+    """Archive only a controlled DRAFT pilot import when explicitly enabled."""
+    if os.getenv("SAP_REGISTRATION_S3_ARCHIVE", "0").strip() != "1":
+        return False
+
+    # Never upload arbitrary real student files merely because the flag is on.
+    if not _registration_aws_pilot_enabled(activity_id, activity):
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Lưu S3 Registration chỉ áp dụng cho Activity "
+                "DRAFT được cấu hình làm AWS Pilot."
+            ),
+        )
+    return True
+
+
+def _archive_registration_file_s3(activity_id, filename, content):
+    """Store the exact source CSV/XLSX as a private S3 object."""
+    bucket = os.getenv("SAP_S3_BUCKET", "").strip()
+    if not bucket:
+        raise HTTPException(
+            status_code=503,
+            detail="Chưa cấu hình SAP_S3_BUCKET cho Registration S3 Archive.",
+        )
+
+    region = (
+        os.getenv("AWS_DEFAULT_REGION")
+        or os.getenv("AWS_REGION")
+        or "ap-southeast-1"
+    )
+    extension = Path(filename).suffix.lower()
+    safe_id = re.sub(r"[^A-Za-z0-9_-]+", "-", str(activity_id)).strip("-") or "activity"
+    now = datetime.now(VN_TIMEZONE)
+    key = (
+        f"registrations/{safe_id}/{now:%Y/%m/%d}/"
+        f"{uuid4().hex}{extension}"
+    )
+    content_type = (
+        "text/csv" if extension == ".csv"
+        else "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    try:
+        boto3.client("s3", region_name=region).put_object(
+            Bucket=bucket,
+            Key=key,
+            Body=content,
+            ContentType=content_type,
+            ServerSideEncryption="AES256",
+        )
+    except (BotoCoreError, ClientError) as error:
+        raise HTTPException(
+            status_code=503,
+            detail="Không thể lưu file Registration lên S3. Dữ liệu chưa import.",
+        ) from error
+    return bucket, key
+
+
+def _cleanup_new_registration_archive(bucket, key):
+    """Best-effort removal of a new object if subsequent AWS sync fails."""
+    if not bucket or not key:
+        return
+    try:
+        boto3.client(
+            "s3",
+            region_name=(os.getenv("AWS_DEFAULT_REGION") or os.getenv("AWS_REGION") or "ap-southeast-1"),
+        ).delete_object(Bucket=bucket, Key=key)
+    except (BotoCoreError, ClientError):
+        pass
 
 
 # ==========================================
@@ -512,7 +589,13 @@ async def read_uploaded_file(file: UploadFile):
             },
         )
 
-    content = await file.read()
+    content = await file.read(MAX_IMPORT_FILE_SIZE + 1)
+
+    if len(content) > MAX_IMPORT_FILE_SIZE:
+        raise HTTPException(
+            status_code=413,
+            detail="File import vượt quá giới hạn 10 MB.",
+        )
 
     if not content:
         raise HTTPException(
@@ -540,7 +623,7 @@ async def read_uploaded_file(file: UploadFile):
             },
         )
 
-    return filename, rows
+    return filename, rows, content
 
 
 # ==========================================
@@ -770,7 +853,7 @@ async def preview_registration_import(
 
     activity = require_activity(activity_id)
 
-    filename, rows = await read_uploaded_file(file)
+    filename, rows, _ = await read_uploaded_file(file)
 
     headers, records = build_records(rows)
     validated = validate_records(records)
@@ -851,7 +934,7 @@ async def import_registrations(
             },
         )
 
-    filename, rows = await read_uploaded_file(file)
+    filename, rows, raw_content = await read_uploaded_file(file)
 
     _, records = build_records(rows)
 
@@ -936,16 +1019,23 @@ async def import_registrations(
             },
         )
 
-    # Ghi AWS trước khi thay đổi local,
-    # nhưng chỉ khi đúng Activity AWS Pilot.
-    if _registration_aws_pilot_enabled(
-        activity_id,
-        activity,
-    ):
-        _sync_registration_aws_pilot(
-            activity_id,
-            valid_records,
+    # Archive is opt-in and limited to an authorized DRAFT AWS Pilot.
+    # It happens only after file validation and before any registration mutation.
+    archive_bucket = None
+    archive_key = None
+    if _registration_s3_archive_enabled(activity_id, activity):
+        archive_bucket, archive_key = _archive_registration_file_s3(
+            activity_id, filename, raw_content
         )
+
+    # Preserve existing DynamoDB-first pilot behavior. If AWS sync fails,
+    # attempt to clean up only the newly archived S3 object.
+    try:
+        if _registration_aws_pilot_enabled(activity_id, activity):
+            _sync_registration_aws_pilot(activity_id, valid_records)
+    except Exception:
+        _cleanup_new_registration_archive(archive_bucket, archive_key)
+        raise
 
     # ======================================
     # REPLACE REGISTRATION LIST
@@ -1007,6 +1097,11 @@ async def import_registrations(
         "valid_rows": len(valid_records),
         "invalid_rows": len(invalid_records),
     }
+    if archive_bucket and archive_key:
+        # Store only an S3 reference, never a public/presigned URL.
+        activity["registration_import"]["s3_source"] = (
+            f"s3://{archive_bucket}/{archive_key}"
+        )
 
     return {
         "success": True,

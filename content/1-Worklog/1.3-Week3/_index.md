@@ -6,94 +6,133 @@ chapter: false
 pre: "<b>1.3.</b>"
 ---
 
-
 ### Week 3 Objectives:
 
-* Begin implementing the core functions of the system in the local development environment.
-* Establish the initial project source code structure.
-* Implement student registration data validation and normalization.
-* Implement participation evidence processing.
-* Develop a realtime API for QR-based Check-in and Check-out.
-* Implement reconciliation rules between Registration, Attendance, and Evidence data.
-* Test valid, invalid, duplicate, and missing-data scenarios.
-* Prepare the application for mapping to AWS services in later deployment phases.
+* Begin developing the core Backend functionality of the **Student Activity Management & Engagement Analytics Platform** in a local environment.
+* Establish the Python and FastAPI project structure.
+* Design REST APIs for activity management, student data, registration, and attendance.
+* Understand how to organize Backend code using Routers, Services, Repositories, and Data Models.
+* Implement the initial activity management functionality.
+* Develop CSV/XLSX registration data reading, validation, and normalization.
+* Build the foundation for Evidence Import.
+* Develop real-time Check-in/Check-out APIs with registration and attendance status validation.
+* Design reconciliation logic combining Registration, Attendance, and Evidence.
+* Use synthetic datasets to test valid and invalid business scenarios.
+* Prepare the Backend for future Amazon DynamoDB and Amazon S3 integrations.
 
+### Tasks to Be Implemented This Week:
 
-### Tasks to be completed this week:
+| Day | Tasks | Start Date | Completion Date | References |
+| --- | --- | --- | --- | --- |
+| Monday | - Initialize the **student-activity-platform** project structure using Python and FastAPI. <br> - Configure a Python Virtual Environment and install the required libraries. <br> - Explore FastAPI application structure and module organization. <br> - Separate Backend responsibilities into Router, Service, Repository, and Model components. <br> - Establish the application entry point and Health Check API. <br> - Learn how to run the local Backend using Uvicorn. | 21/09/2026 | 21/09/2026 | https://fastapi.tiangolo.com/ <br> https://www.uvicorn.org/ |
+| Tuesday | - Design REST APIs for Activity Management. <br> - Define the Activity data structure, including Activity ID, title, time, location, and status. <br> - Develop the initial activity creation, update, and retrieval operations. <br> - Research approval, publication, and cancellation workflows. <br> - Define request and response models using Pydantic. <br> - Study HTTP error handling and input validation. <br> - Test activity APIs using synthetic activity records. | 22/09/2026 | 22/09/2026 | https://fastapi.tiangolo.com/ <br> https://docs.pydantic.dev/ |
+| Wednesday | - Develop the Registration data processing module. <br> - Read student registration records from CSV/XLSX files. <br> - Validate required fields such as Student ID and student information. <br> - Normalize data and detect duplicate records. <br> - Design a Preview API that allows administrators to review data before importing. <br> - Build the Import workflow and registration retrieval functionality. <br> - Explore Evidence processing using CSV/XLSX files exported from Google Forms/Google Sheets. <br> - Prepare synthetic datasets containing valid, incomplete, and duplicate records. | 23/09/2026 | 23/09/2026 | https://pandas.pydata.org/docs/ <br> https://fastapi.tiangolo.com/tutorial/request-files/ |
+| Thursday | - Develop real-time Attendance APIs for Check-in/Check-out. <br> - Define API inputs using Activity ID and Student ID. <br> - Design registration verification before recording attendance. <br> - Implement the logic for recording Check-in timestamps when API requests are processed. <br> - Build Check-out handling based on the current attendance state. <br> - Detect duplicate or invalid attendance operations. <br> - Explore the rules for opening and closing Check-out periods. <br> - Test Attendance APIs using synthetic student identifiers without relying on a physical QR camera. | 24/09/2026 | 24/09/2026 | https://fastapi.tiangolo.com/ <br> Attendance business requirements |
+| Friday | - Analyze and develop Reconciliation logic combining Registration, Attendance, and Evidence. <br> - Define cases involving complete participation, missing Check-in, missing Check-out, missing Evidence, and missing attendance records. <br> - Design participation statuses and scenarios requiring ADMIN review. <br> - Build the initial APIs for reconciliation and result retrieval. <br> - Explore the process for confirming or adjusting participation decisions. <br> - Test the business workflow with synthetic student records. <br> - Summarize completed modules and identify improvements for the following week. | 25/09/2026 | 25/09/2026 | Project Proposal, Business Rules, and FastAPI Documentation |
 
-| Day | Tasks | Start Date | Completion Date | Reference |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2 | - Initialize the source code structure for the **Student Activity Management and Engagement Analytics Platform** <br> - Organize modules for APIs, data processing, and business logic <br> - Configure the local development environment <br> - Review the synthetic test dataset prepared during the previous week <br> - Define common API request and response structures | 21/09/2026 | 21/09/2026 | Project Proposal and system design documents |
-| 3 | - Implement student registration data processing <br>&emsp; + Read CSV/Excel input files <br>&emsp; + Validate required fields <br>&emsp; + Normalize student IDs (MSSV) <br>&emsp; + Detect and remove duplicate records <br>&emsp; + Detect invalid student IDs and invalid records <br> - Implement participation evidence processing from Google Forms/Google Sheets <br> - Generate validation results for invalid records | 22/09/2026 | 22/09/2026 | Project Proposal and synthetic test dataset |
-| 4 | - Develop the realtime Check-in/Check-out API <br>&emsp; + Receive data from Student Card QR scanning <br>&emsp; + Identify the student and activity <br>&emsp; + Verify that the student is registered for the activity <br>&emsp; + Record CHECK_IN or CHECK_OUT events <br>&emsp; + Record event timestamps <br>&emsp; + Prevent invalid duplicate attendance events <br> - Simulate QR scanning using test data in the local environment | 23/09/2026 | 23/09/2026 | <https://docs.aws.amazon.com/apigateway/> |
-| 5 | - Implement participation reconciliation logic <br> - Combine Registration, Check-in, Check-out, and Evidence data <br> - Identify reconciliation scenarios: <br>&emsp; + Complete data and ready for confirmation <br>&emsp; + Missing Check-in <br>&emsp; + Missing Check-out <br>&emsp; + Missing evidence <br>&emsp; + No attendance records <br>&emsp; + Multiple validation issues <br> - Assign an appropriate Participation Status to each student | 24/09/2026 | 24/09/2026 | Project Proposal and project business rules |
-| 6 | - Perform end-to-end testing in the local environment <br>&emsp; + Registration import <br>&emsp; + Evidence import <br>&emsp; + Realtime Check-in <br>&emsp; + Realtime Check-out <br>&emsp; + Reconciliation <br> - Test invalid and incomplete data scenarios <br> - Verify API responses and error handling <br> - Complete initial API and processing-flow documentation <br> - Prepare the mapping from local modules to API Gateway, Lambda, DynamoDB, and S3 | 25/09/2026 | 25/09/2026 | <https://docs.aws.amazon.com/> |
+### Week 3 Achievements:
 
+* **Established the FastAPI Backend foundation:**
+  * Initialized the Python project structure.
+  * Configured the local development environment and required dependencies.
+  * Learned how to run the Backend using Uvicorn.
+  * Organized Backend components using a separation-of-concerns approach.
+  * Established the REST API foundation for implementing business features.
 
-### Expected Outcomes for Week 3:
+* **Developed the initial Backend code structure:**
+  * `app/main.py`: Application entry point and Router registration.
+  * `app/routers/`: HTTP request handling.
+  * `app/services/`: Business logic implementation.
+  * `app/repositories/`: Data access and preparation for additional storage integrations.
+  * Authentication, error handling, and persistence modules were organized according to development requirements.
 
-* Established the initial source code structure for the **Student Activity Management and Engagement Analytics Platform**.
+  Separating these layers helps reduce dependencies between APIs, business logic, and data storage.
 
-* Implemented a student registration processing module capable of:
+* **Developed the Activity Management module:**
+  * Designed activity attributes, including identifiers, titles, descriptions, schedules, and statuses.
+  * Established the initial logic for creating and updating activities.
+  * Defined activity lifecycle states for approval and publication workflows.
+  * Designed APIs for listing and retrieving activity details.
+  * Introduced input validation and business error handling.
 
-  * Reading CSV/Excel input files.
-  * Validating input data.
-  * Normalizing student IDs.
-  * Detecting duplicate records.
-  * Detecting invalid records.
-  * Returning validation results.
+* **Developed the Registration Import workflow:**
+  * Studied CSV/XLSX reading and processing techniques.
+  * Identified required registration fields.
+  * Established Student ID normalization and missing-data validation.
+  * Designed duplicate and invalid record detection.
+  * Defined the workflow **Preview → Validate → Import → View Registrations**.
+  * Established the requirement to validate records before committing them to the official registration dataset.
 
-* Implemented the initial participation evidence processing module.
+* **Explored Evidence processing:**
+  * Identified Google Forms/Google Sheets as sources of evidence data.
+  * Designed the process for importing exported CSV/XLSX files.
+  * Investigated Evidence validation using Student ID and Activity ID.
+  * Defined situations involving invalid evidence or records that do not match the registration dataset.
+  * Prepared the foundation for using Evidence during participation reconciliation.
 
-* Developed a realtime Check-in/Check-out API with the following workflow:
+* **Developed real-time Attendance APIs:**
+  * Designed Check-in and Check-out APIs associated with Activity IDs.
+  * Used Student IDs to identify students during attendance processing.
+  * Established registration checks before accepting attendance events.
+  * Designed timestamp recording during Backend request processing.
+  * Introduced duplicate attendance prevention.
+  * Defined invalid attendance scenarios.
+  * Prepared the rules for opening and closing Check-out periods.
 
-  * An organizer scans the QR Code on a student's card.
-  * The system receives the Student ID and Activity ID.
-  * The system checks whether the student is registered for the activity.
-  * If valid, the system records a CHECK_IN or CHECK_OUT event.
-  * The attendance timestamp is recorded when the request is received.
-  * Invalid or unregistered students receive an appropriate error response.
+  **Important principle:** Check-in/Check-out data is recorded through APIs when attendance actions occur. Attendance is not primarily processed through batch Excel imports.
 
-* Ensured that Check-in and Check-out are implemented as **realtime API events** rather than attendance data imported later from Excel/CSV files.
+* **Designed the Reconciliation logic:**
+  * Combined three primary data sources:
+    * Registration.
+    * Attendance.
+    * Evidence.
+  * Defined participation situations:
+    * Registered students with complete attendance and evidence.
+    * Missing Check-in.
+    * Missing Check-out.
+    * Missing Evidence.
+    * No attendance records.
+    * Records requiring ADMIN review.
+  * Distinguished automatically evaluated results from cases requiring manual confirmation.
+  * Established the foundation for Finalize and Export operations.
 
-* Implemented reconciliation logic between:
-
-  * Registration
-  * Check-in
-  * Check-out
-  * Evidence
-
-* Defined major reconciliation statuses, including:
-
-  * `READY`
-  * `NEEDS_REVIEW: MISSING_CHECK_IN`
-  * `NEEDS_REVIEW: MISSING_CHECK_OUT`
-  * `NEEDS_REVIEW: MISSING_EVIDENCE`
-  * `NO_ATTENDANCE`
-  * Combined issue cases.
-
-* Tested scenarios including:
-
-  * Fully registered and attended students.
-  * QR scans from unregistered students.
-  * Duplicate Check-in events.
-  * Check-out without a valid Check-in.
-  * Missing Check-in.
-  * Missing Check-out.
+* **Tested business scenarios using synthetic datasets:**
+  * Registered students with valid Check-ins.
+  * Unregistered students attempting to Check in.
+  * Duplicate Check-in attempts.
+  * Invalid Check-out requests.
+  * Missing Check-in or Check-out information.
   * Missing participation evidence.
-  * Registered but absent students.
-  * Invalid Student IDs.
-  * Duplicate registration records.
+  * Duplicate or incomplete Student IDs in imported files.
+  * Records requiring manual reconciliation.
 
-* Completed the initial API, business logic, and data processing documentation.
+* **Improved understanding of REST API development:**
+  * Studied HTTP methods such as GET, POST, PUT, and DELETE.
+  * Learned the roles of Request Bodies, Path Parameters, and Query Parameters.
+  * Explored HTTP status codes including 200, 400, 403, 404, 409, and 422.
+  * Used Pydantic concepts for input validation.
+  * Recognized the importance of consistent and informative API error responses.
 
-* Defined the mapping between local components and the planned AWS architecture:
+* **Prepared for AWS integration:**
+  * Identified Backend modules that could integrate with Amazon DynamoDB.
+  * Identified file categories suitable for Amazon S3 storage.
+  * Explored the Repository pattern to support future changes in persistence without rewriting core business logic.
+  * Continued prioritizing local testing and synthetic data before provisioning AWS resources.
 
-  * Local API → Amazon API Gateway.
-  * Business Logic → AWS Lambda.
-  * Operational Data → Amazon DynamoDB.
-  * Registration/Evidence Files → Amazon S3.
-  * Authentication → Amazon Cognito.
-  * Logging and Monitoring → Amazon CloudWatch.
+### Challenges and Lessons Learned:
 
-* Completed the core implementation and testing in the local environment before creating actual AWS resources, helping minimize unnecessary cloud costs during development.
+* **Backend architecture:** Separating Routers, Services, and Repositories improves maintainability but requires clearly defined responsibilities.
+* **Inconsistent imported data:** Registration and Evidence files may contain missing columns, invalid Student IDs, and duplicate records, making Preview and Validation essential.
+* **Real-time attendance:** Correct handling of repeated Check-in/Check-out attempts is necessary, and attendance events must be processed immediately.
+* **Multi-source reconciliation:** Registration alone is insufficient to confirm participation; Attendance and Evidence must also be considered.
+* **Synthetic testing:** Using artificial records helps identify business logic errors without exposing real student information.
+* **AWS preparation:** Local-first Backend development reduces complexity and cloud costs during the initial implementation phase.
+
+### Plan for Next Week:
+
+* Continue improving core Backend functionality.
+* Refine data persistence and business logic testing.
+* Research and implement limited AWS Pilot integrations using Amazon DynamoDB and Amazon S3.
+* Test AWS read/write operations using synthetic data.
+* Check consistency between local application state and selected AWS Pilot workflows.
+* Document test results and prepare technical materials for the next integration phase.

@@ -16,7 +16,11 @@ import {
   LockKeyhole,
   Radio,
   CalendarDays,
+  Camera,
+  CameraOff,
 } from "lucide-react";
+
+import { Html5Qrcode } from "html5-qrcode";
 
 import {
   getAttendance,
@@ -71,6 +75,9 @@ function AttendancePage({
   ] = useState(null);
 
   const inputRef = useRef(null);
+  const [cameraEnabled, setCameraEnabled] = useState(false);
+  const submitInProgressRef = useRef(false);
+  const lastCameraScanRef = useRef({ value: "", at: 0 });
 
   // Danh sách hoạt động dùng cho bộ chọn riêng trên trang điểm danh.
   const [activityOptions, setActivityOptions] = useState(
@@ -141,6 +148,7 @@ function AttendancePage({
     }
     activeActivityIdRef.current = nextId;
     attendanceRequestRef.current += 1;
+    setCameraEnabled(false);
     setSelectedActivityId(nextId);
     setAttendance(null);
     setMssv("");
@@ -470,11 +478,12 @@ function AttendancePage({
   // =====================================================
 
   async function handleSubmit(
-    event
+    event,
+    scannedCode = null
   ) {
 
     event?.preventDefault();
-
+    if (submitInProgressRef.current) return;
 
     if (
       finalListLocked
@@ -524,10 +533,13 @@ function AttendancePage({
     }
 
 
-    const studentId =
-      mssv
-        .trim()
-        .toUpperCase();
+    // A student-card QR must contain only the student identifier.
+    // Never treat a URL, JSON or arbitrary QR payload as an MSSV.
+    const studentId = String(scannedCode ?? mssv).trim().toUpperCase();
+    if (scannedCode !== null && !/^[A-Z0-9_-]{3,30}$/.test(studentId)) {
+      setMessage({ type: "error", text: "QR không chứa MSSV hợp lệ. Hãy dùng mã QR chỉ chứa MSSV." });
+      return;
+    }
 
 
     if (!studentId) {
@@ -560,6 +572,7 @@ function AttendancePage({
     }
 
 
+    submitInProgressRef.current = true;
     try {
 
       setSubmitting(
@@ -723,7 +736,7 @@ function AttendancePage({
 
 
     } finally {
-
+      submitInProgressRef.current = false;
       setSubmitting(
         false
       );
@@ -732,6 +745,17 @@ function AttendancePage({
 
   }
 
+
+  function handleCameraCode(rawCode) {
+    if (submitInProgressRef.current || scannerDisabled || !cameraEnabled) return;
+    const code = String(rawCode || "").trim().toUpperCase();
+    const now = Date.now();
+    // Holding a QR in front of the camera must not cause rapid repeat requests.
+    if (lastCameraScanRef.current.value === code &&
+        now - lastCameraScanRef.current.at < 4000) return;
+    lastCameraScanRef.current = { value: code, at: now };
+    void handleSubmit(null, code);
+  }
 
   // =====================================================
   // NO ACTIVITY
@@ -1050,6 +1074,7 @@ function AttendancePage({
               }
               onClick={() => {
 
+                setCameraEnabled(false);
                 setMode(
                   "checkin"
                 );
@@ -1084,6 +1109,7 @@ function AttendancePage({
               }
               onClick={() => {
 
+                setCameraEnabled(false);
                 setMode(
                   "checkout"
                 );
@@ -1338,6 +1364,37 @@ function AttendancePage({
         </form>
 
 
+        <div style={styles.cameraSection}>
+          <div style={styles.cameraHeading}>
+            <div>
+              <strong>Quét QR bằng camera</strong>
+              <p style={styles.cameraHint}>
+                Dùng camera điện thoại/laptop, máy quét cầm tay hoặc nhập MSSV như trước.
+                Chỉ quét QR chứa MSSV; không quét QR của sinh viên thật khi đang dùng bản demo.
+              </p>
+            </div>
+            <button
+              type="button"
+              style={styles.cameraButton}
+              disabled={!cameraEnabled && scannerDisabled}
+              onClick={() => setCameraEnabled((value) => !value)}
+            >
+              {cameraEnabled ? <CameraOff size={17} /> : <Camera size={17} />}
+              {cameraEnabled ? "Tắt camera" : "Bật camera"}
+            </button>
+          </div>
+          {cameraEnabled && !finalListLocked && activityId &&
+            (mode !== "checkout" || checkoutOpen) && (
+            <CameraQrScanner
+              key={`${activityId}-${mode}`}
+              onScan={handleCameraCode}
+            />
+          )}
+          {cameraEnabled && (finalListLocked || (mode === "checkout" && !checkoutOpen)) && (
+            <p style={styles.cameraHint}>Camera tạm dừng vì hoạt động đang khóa hoặc Check-out chưa mở.</p>
+          )}
+        </div>
+
         {/* ================================================
             RESULT
         ================================================= */}
@@ -1509,6 +1566,64 @@ function AttendancePage({
 
 }
 
+
+// Camera starts only when the operator clicks "Bật camera".
+// On unmount, release camera tracks to avoid leaving the device recording.
+function CameraQrScanner({ onScan }) {
+  const elementIdRef = useRef(`sap-qr-reader-${Math.random().toString(36).slice(2)}`);
+  const onScanRef = useRef(onScan);
+  const [cameraError, setCameraError] = useState("");
+  const [starting, setStarting] = useState(true);
+  onScanRef.current = onScan;
+
+  useEffect(() => {
+    let cancelled = false;
+    let scanner;
+    const start = async () => {
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error("Trình duyệt không hỗ trợ camera hoặc trang chưa dùng HTTPS.");
+        }
+        scanner = new Html5Qrcode(elementIdRef.current, { verbose: false });
+        await scanner.start(
+          { facingMode: "environment" },
+          { fps: 8, qrbox: (w, h) => {
+              const side = Math.max(100, Math.min(240, w - 24, h - 24));
+              return { width: side, height: side };
+            } },
+          (decodedText) => { if (!cancelled) onScanRef.current(decodedText); },
+          () => {}
+        );
+        if (cancelled && scanner.isScanning) await scanner.stop();
+        if (!cancelled) setStarting(false);
+      } catch (error) {
+        if (!cancelled) {
+          setStarting(false);
+          setCameraError(error?.message || "Không thể mở camera. Hãy cấp quyền camera và thử lại.");
+        }
+      }
+    };
+    void start();
+    return () => {
+      cancelled = true;
+      const release = async () => {
+        if (!scanner) return;
+        try { if (scanner.isScanning) await scanner.stop(); } catch (error) { console.warn("Stop QR camera:", error); }
+        try { await scanner.clear(); } catch (error) { console.warn("Clear QR camera:", error); }
+      };
+      void release();
+    };
+  }, []);
+
+  return (
+    <div style={styles.cameraPreview}>
+      {starting && <p style={styles.cameraHint}>Đang mở camera, vui lòng cho phép truy cập...</p>}
+      <div id={elementIdRef.current} style={{ width: "100%", maxWidth: 500, margin: "0 auto" }} />
+      {cameraError && <p role="alert" style={styles.cameraError}>{cameraError}</p>}
+      <p style={styles.cameraHint}>Đưa mã QR demo vào khung camera. Hệ thống tự gửi điểm danh khi đọc được MSSV.</p>
+    </div>
+  );
+}
 
 // =====================================================
 // COUNTER
@@ -1974,6 +2089,52 @@ const styles = {
     cursor: "pointer",
   },
 
+
+  cameraSection: {
+    marginTop: "20px",
+    padding: "16px",
+    border: "1px solid #bfdbfe",
+    borderRadius: "14px",
+    background: "#f8fafc",
+  },
+  cameraHeading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "12px",
+    flexWrap: "wrap",
+  },
+  cameraHint: {
+    fontSize: "12px",
+    color: "#64748b",
+    lineHeight: 1.6,
+    margin: "7px 0",
+  },
+  cameraButton: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "7px",
+    minHeight: "40px",
+    padding: "0 14px",
+    border: "none",
+    borderRadius: "10px",
+    background: "#2563eb",
+    color: "white",
+    cursor: "pointer",
+    fontWeight: 700,
+  },
+  cameraPreview: {
+    marginTop: "16px",
+    maxWidth: "560px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textAlign: "center",
+  },
+  cameraError: {
+    color: "#b91c1c",
+    fontSize: "12px",
+    fontWeight: 600,
+  },
 
   form: {
     marginTop: "24px",

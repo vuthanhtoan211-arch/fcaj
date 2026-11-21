@@ -1,126 +1,222 @@
+
 ---
-title: "Event 2"
-date: 2024-01-01
-weight: 1
+title: "AWS First Cloud AI Journey Community Day 2026"
+date: 2026-10-31
+weight: 2
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: "<b>4.2. </b>"
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+# AWS First Cloud AI Journey Community Day 2026
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+## 1. Event Introduction
 
-### Event Objectives
+**AWS First Cloud AI Journey Community Day 2026** was an event organized as part of the First Cloud AI Journey (FCAJ) program, providing students and technology enthusiasts with opportunities to learn, exchange ideas, and explore developments in cloud computing, artificial intelligence, and modern software engineering.
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+The event featured topics related to AWS Cloud, Serverless Architecture, asynchronous systems, internship experiences, and professional development through Open Source communities.
 
-### Speakers
+For me, attending this event was an opportunity to broaden my technical knowledge beyond university coursework, learn from practical engineering experiences, and understand how AWS technologies can be applied to real-world software development.
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+The knowledge shared during the event was also relevant to my project, **Student Activity Management & Engagement Analytics Platform**, developed as part of my First Cloud AI Journey learning experience.
 
-### Key Highlights
+## 2. Event Information
 
-#### Identifying the drawbacks of legacy application architecture
+- **Event Name:** AWS First Cloud AI Journey Community Day 2026
+- **Date:** Saturday, October 31, 2026
+- **Time:** 09:00 AM – 12:00 PM
+- **Venue:** Bitexco Financial Tower
+- **Address:** 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
+- **Format:** In-person event
+- **Role:** FCAJ learner / Student attendee
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+## 3. Participation Objectives
 
-#### Transitioning to modern application architecture – Microservices
+My main objectives for attending the event were:
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+- To expand my knowledge of AWS services and modern cloud application development.
+- To learn about designing, deploying, and optimizing Serverless systems.
+- To better understand the roles of AWS Lambda and Amazon SQS in modern architectures.
+- To gain insights into internships, real-world engineering projects, and technical problem-solving.
+- To explore the skills required for careers in Cloud Computing and Data Engineering.
+- To understand the value of Open Source communities and continuous professional development.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+## 4. Sessions Attended
 
-#### Domain-Driven Design (DDD)
+During the event, I had the opportunity to attend sessions covering the following topics:
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+1. **Lessons Learned from Building Software Factories**
+2. **Education**
+3. **AWS Lambda Web Functions: Rethinking Serverless Web Architecture**
+4. **Amazon SQS: Building Asynchronous Systems**
+5. **My 3-Month AWS Internship Journey**
+6. **Start & Maintain Consistency with Open Source Contributing**
 
-#### Event-Driven Architecture
+Each session provided valuable perspectives on system architecture, data processing, internship experiences, software development practices, and long-term career growth.
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+## 5. Key Knowledge and Takeaways
 
-#### Compute Evolution
+### 5.1. Lessons Learned from Building Software Factories
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+This session provided insights into organizing software development processes in a structured, reusable, and maintainable way.
 
-#### Amazon Q Developer
+I learned that building a software application involves much more than writing code. It also requires thoughtful architecture design, development workflows, testing, deployment, and long-term maintenance.
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+**Connection to my project:**
 
-### Key Takeaways
+While developing the Student Activity Management & Engagement Analytics Platform, I organized the application into several major components:
 
-#### Design Mindset
+- A Frontend developed with React and Vite.
+- A Backend developed with Python and FastAPI.
+- A SQLite database for the local Demo environment.
+- Modules for registration, attendance, evidence processing, and reporting.
+- Selected AWS services used for cloud computing experiments.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+Separating these components helped make the application easier to test, debug, maintain, and extend.
 
-#### Technical Architecture
+### 5.2. Education – Preparing for the Technology Industry
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
+The Education session helped me better understand the knowledge and practical skills students should develop before entering the professional technology industry.
 
-#### Modernization Strategy
+In addition to academic knowledge, students need to strengthen their programming skills, problem-solving abilities, technical documentation reading, and familiarity with technologies used in real-world projects.
 
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+As a Data Science student, I recognized that gaining additional knowledge in Cloud Computing could provide a valuable foundation for a future career in Data Engineering.
 
-### Applying to Work
+Developing my project allowed me to combine database concepts, data processing, API development, and application deployment into a practical learning experience.
 
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+### 5.3. AWS Lambda Web Functions: Rethinking Serverless Web Architecture
 
-### Event Experience
+This was one of the most interesting sessions for me because it was closely related to the AWS Lambda experiments in my Workshop.
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+The session explored how AWS Lambda can support Serverless Web architectures, including:
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+- HTTP-related processing capabilities in Serverless applications.
+- Scalability and request handling.
+- Performance and cost optimization considerations.
+- Architectural trade-offs when comparing Serverless approaches with Docker-based deployments on Amazon EC2 or Amazon ECS.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+Through this session, I gained a better understanding of why architecture decisions should consider application requirements, traffic patterns, performance expectations, and operating costs.
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+**Connection to my project:**
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+As part of the Student Activity Management & Engagement Analytics Platform, I implemented a Serverless experiment that used AWS Lambda to process student registration data from a CSV file.
 
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+The workflow included:
 
-#### Some event photos
-*Add your event photos here*  
+1. Uploading a sample CSV file to Amazon S3.
+2. Executing AWS Lambda through a Test Event.
+3. Reading and validating registration data.
+4. Detecting valid, duplicate, and invalid records.
+5. Generating a JSON processing result.
+6. Writing the result to Amazon S3.
+7. Reviewing execution logs using Amazon CloudWatch.
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+This experiment allowed me to apply Serverless concepts to a specific data processing task.
+
+### 5.4. Amazon SQS: Building Asynchronous Systems
+
+The Amazon Simple Queue Service (Amazon SQS) session introduced important concepts related to asynchronous processing and message-driven system architectures.
+
+The main concepts I learned included:
+
+- The role of Message Queues in application architectures.
+- Decoupling services to reduce direct dependencies.
+- The benefits of asynchronous background processing.
+- Scaling applications to handle increasing workloads.
+- Potential integration patterns involving Amazon SQS and other AWS services.
+
+I learned that asynchronous systems can handle background operations without requiring users to wait for every processing step to complete.
+
+**Potential application to my project:**
+
+The current Student Activity Management & Engagement Analytics Platform primarily processes requests through a FastAPI Backend.
+
+In the future, Amazon SQS could be considered for:
+
+- Processing large student registration datasets.
+- Queuing background data processing tasks.
+- Separating data ingestion from processing.
+- Integrating AWS Lambda with Amazon SQS to build event-driven workflows.
+
+These are potential future improvements rather than features already implemented in the current Demo version.
+
+### 5.5. My 3-Month AWS Internship Journey
+
+This session provided valuable insights into the learning process, project development, and practical challenges associated with an AWS internship.
+
+I realized that internships require not only technical knowledge but also independent learning, effective task management, and the ability to solve unexpected problems.
+
+Some important lessons included:
+
+- Actively exploring documentation and new technologies.
+- Practicing consistently to strengthen technical knowledge.
+- Documenting tasks, progress, and results.
+- Debugging technical issues systematically.
+- Building practical projects to demonstrate skills.
+- Continuing to improve professional knowledge after completing an internship.
+
+These lessons encouraged me to continue improving my project and maintaining detailed Worklog and Workshop documentation.
+
+### 5.6. Start & Maintain Consistency with Open Source Contributing
+
+The Open Source session helped me understand the benefits of participating in open-source projects and the importance of consistent contributions.
+
+I learned that Open Source provides opportunities to explore technologies, read existing codebases, practice collaboration, and develop skills using Git and GitHub.
+
+These concepts were relevant to my own project development process, particularly in:
+
+- Managing source code using GitHub.
+- Organizing project directories.
+- Writing README documentation and architecture descriptions.
+- Tracking changes throughout development.
+- Creating documentation that helps others understand the system.
+
+In the future, I would like to learn more about Git workflows, Pull Requests, Code Reviews, and contributing to Open Source projects related to Cloud Computing and Data Engineering.
+
+## 6. Lessons Learned and Application to My Project
+
+After attending AWS First Cloud AI Journey Community Day 2026, I realized that learning AWS requires more than memorizing the features of individual services.
+
+It is equally important to understand how to select and combine services to address practical engineering problems.
+
+In particular, the sessions on AWS Lambda, Serverless Architecture, and asynchronous systems gave me new perspectives on how the Student Activity Management & Engagement Analytics Platform could be expanded.
+
+The current Demo version includes Frontend, Backend, database, and student activity management functionalities. I also practiced deploying the Frontend through AWS Amplify and experimenting with CSV processing using Amazon S3 and AWS Lambda.
+
+Based on the knowledge gained from the event, I identified several potential areas for future development:
+
+- Developing automated Serverless data processing workflows.
+- Using Amazon SQS for asynchronous background tasks.
+- Building Data Pipelines for data aggregation and analytics.
+- Improving application scalability and performance.
+- Strengthening security, monitoring, and cloud cost optimization.
+- Enhancing source code management and technical documentation practices.
+
+Beyond technical knowledge, the event reinforced the importance of self-learning, persistence, and adapting to emerging technologies.
+
+## 7. Personal Evaluation and Reflection
+
+I consider AWS First Cloud AI Journey Community Day 2026 a meaningful learning experience that provided students with opportunities to explore practical knowledge and experiences in the technology industry.
+
+The sessions introduced not only AWS Cloud technologies and system architecture concepts but also useful perspectives on professional development, internship preparation, and participation in technology communities.
+
+For me, the event helped reinforce my interest in Cloud Computing and Data Engineering while motivating me to continue developing practical, data-driven software projects.
+
+## 8. Event Participation Evidence
+
+The following photographs document my participation in AWS First Cloud AI Journey Community Day 2026.
+
+### Photo 1. Event participation
+
+![Participation in AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh1.jpg)
+
+### Photo 2. Event activities
+
+![Activities at AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh2.jpg)
+
+### Photo 3. Event documentation
+
+![AWS First Cloud AI Journey Community Day 2026 documentation](/images/4-Event/Event2/hinh3.jpg)
+
+### Photo 4. Additional event photograph
+
+![Additional photo from AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh4.jpg)
