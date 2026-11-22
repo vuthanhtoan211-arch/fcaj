@@ -3,7 +3,7 @@ title: "AWS Cloud & AI Day Vietnam 2026 – Watch Party"
 date: 2026-09-29
 weight: 1
 chapter: false
-pre: "<b>4.1. </b>"
+pre: "<b>4.1.</b>"
 ---
 
 # Tổng kết sự kiện “AWS Cloud & AI Day Vietnam 2026 – Watch Party”
@@ -160,26 +160,19 @@ Quy trình này giúp giảm bớt sự phụ thuộc vào việc tổng hợp n
 Các kiến thức về Cloud Architecture tại sự kiện được vận dụng vào quá trình nghiên cứu, lựa chọn và tích hợp các dịch vụ AWS trong đồ án.
 
 | Dịch vụ AWS | Ứng dụng trong đồ án |
-
 | --- | --- |
-
 | AWS Amplify | Triển khai Frontend React/Vite của Web Application |
-
 | Amazon DynamoDB | Tích hợp và kiểm thử lưu trữ dữ liệu nghiệp vụ trên AWS |
-
 | Amazon S3 | Lưu trữ file CSV đầu vào và kết quả xử lý JSON |
-
 | AWS Lambda | Xây dựng và thử nghiệm Serverless CSV Processor |
-
 | AWS IAM | Quản lý quyền truy cập và quyền thực thi tài nguyên AWS |
-
 | Amazon CloudWatch | Theo dõi log, kết quả và thời gian thực thi Lambda |
 
 Frontend được triển khai trên AWS Amplify Hosting, trong khi Backend FastAPI của phiên bản Demo chạy local và kết nối với Frontend thông qua Cloudflare Quick Tunnel.
 
 SQLite được sử dụng để hỗ trợ lưu trữ và khôi phục dữ liệu Demo. Amazon DynamoDB được tích hợp và kiểm thử để lưu trữ các nhóm dữ liệu nghiệp vụ trên AWS.
 
-![Student Activity Management & Engagement Analytics Platform Architecture](/images/2-Proposal/student_activity_architectur.drawio.png)
+![Student Activity Management & Engagement Analytics Platform Architecture](/fcaj/images/2-Proposal/student_activity_architectur.drawio.png)
 
 #### Xây dựng Serverless Data Processing
 Một nội dung có thể áp dụng từ kiến thức về Serverless Architecture là xây dựng quy trình xử lý file CSV bằng Amazon S3 và AWS Lambda.
@@ -294,14 +287,13 @@ Sự kiện giúp tôi mở rộng góc nhìn về Cloud Computing và AI, đồ
 * Những kiến thức tiếp thu tại sự kiện giúp tôi có thêm định hướng phát triển và hoàn thiện đồ án Student Activity Management & Engagement Analytics Platform.
 
 ### Một số hình ảnh tại sự kiện
-
 Dưới đây là các hình ảnh minh chứng tham gia **AWS Cloud & AI Day Vietnam 2026 – Watch Party**.
 
-![Hình ảnh 1 - AWS Cloud & AI Day Vietnam 2026 Watch Party](/images/4-Event/Event1/hinh1.jpg)
+![Hình ảnh 1 - AWS Cloud & AI Day Vietnam 2026 Watch Party](/fcaj/images/4-Event/Event1/hinh1.jpg)
 
-![Hình ảnh 2 - Hoạt động tại sự kiện AWS Cloud & AI Day Vietnam 2026](/images/4-Event/Event1/hinh2.jpg)
+![Hình ảnh 2 - Hoạt động tại sự kiện AWS Cloud & AI Day Vietnam 2026](/fcaj/images/4-Event/Event1/hinh2.jpg)
 
-![Hình ảnh 3 - Minh chứng tham gia sự kiện AWS Cloud & AI Day Vietnam 2026](/images/4-Event/Event1/hinh3.jpg)
+![Hình ảnh 3 - Minh chứng tham gia sự kiện AWS Cloud & AI Day Vietnam 2026](/fcaj/images/4-Event/Event1/hinh3.jpg)
 
 ### Tổng kết
 > Nhìn chung, AWS Cloud & AI Day Vietnam 2026 – Watch Party không chỉ giúp tôi cập nhật những kiến thức mới về Cloud Computing và Artificial Intelligence mà còn giúp tôi hiểu rõ hơn vai trò của dữ liệu, kiến trúc hệ thống và các dịch vụ AWS trong quá trình xây dựng ứng dụng thực tế.

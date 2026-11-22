@@ -3,649 +3,403 @@ title: "Bản đề xuất"
 date: 2026-09-11
 weight: 2
 chapter: false
-pre: " <b> 2. </b> "
+pre: "<b>2.</b>"
 ---
 
+Tại phần này, nội dung trình bày đề xuất xây dựng hệ thống quản lý, đối soát và phân tích mức độ tham gia hoạt động của sinh viên. Dự án được phát triển trong chương trình thực tập tại First Cloud AI Journey (FCAJ), kết hợp ứng dụng Web với các dịch vụ AWS theo phạm vi triển khai thực tế.
 
-
-Tại phần này, nội dung trình bày đề xuất xây dựng hệ thống quản lý, đối soát và phân tích mức độ tham gia hoạt động của đoàn viên, sinh viên trên nền tảng AWS.
-
-# Cloud-Based Student & Youth Union Activity Management and Engagement Analytics Platform
-## Hệ thống quản lý và phân tích mức độ tham gia hoạt động của đoàn viên, sinh viên trên nền tảng AWS
-
+# Student Activity Management & Engagement Analytics Platform
+## Hệ thống quản lý và phân tích mức độ tham gia hoạt động của sinh viên
 ### 1. Tóm tắt điều hành
+Student Activity Management & Engagement Analytics Platform là hệ thống được xây dựng nhằm hỗ trợ Ban Tổ chức quản lý thông tin hoạt động, theo dõi điểm danh, đối soát dữ liệu và phân tích mức độ tham gia của sinh viên tại trường đại học.
 
-Cloud-Based Student & Youth Union Activity Management and Engagement Analytics Platform là nền tảng được đề xuất nhằm hỗ trợ công tác quản lý dữ liệu các hoạt động dành cho sinh viên như workshop, hội thảo, sinh hoạt chính trị, cuộc thi, hoạt động vui chơi và các chương trình thường niên.
+Hệ thống hướng đến các hoạt động như workshop, hội thảo, sinh hoạt chính trị, cuộc thi học thuật, hoạt động ngoại khóa và các chương trình thường niên như IT Day hoặc TechConnect. Một hoạt động thông thường có thể có khoảng 100–200 sinh viên, trong khi các chương trình lớn có thể có hơn 1.000 người tham gia. Đây là bối cảnh nghiệp vụ đặt ra cho dự án, không phải kết quả kiểm thử tải đã được xác nhận.
 
-Các hoạt động thông thường như workshop, hội thảo hoặc sinh hoạt chính trị có quy mô khoảng 100–200 sinh viên. Trong khi đó, những chương trình lớn như IT Day hoặc TechConnect có thể có hơn 1.000 sinh viên tham gia. Trung bình mỗi học kỳ có khoảng 3–4 hoạt động được tổ chức.
+Hiện nay, dữ liệu hoạt động được tạo ra từ nhiều công cụ khác nhau. Sinh viên đăng ký trên University Portal, Ban Tổ chức ghi nhận điểm danh bằng mã QR trên thẻ sinh viên và thu thập minh chứng qua Google Forms hoặc Google Sheets. Sau chương trình, cán bộ phải tổng hợp các file Excel/CSV, kiểm tra MSSV và đối chiếu thủ công để xác định danh sách sinh viên được công nhận tham gia.
 
-Hiện nay, quá trình quản lý dữ liệu hoạt động được thực hiện thông qua nhiều hệ thống và công cụ khác nhau. Thông tin hoạt động được đăng tải trên các kênh truyền thông của Đoàn Khoa, sinh viên đăng ký tham gia thông qua Portal của trường, Ban Tổ chức thực hiện Check-in và Check-out bằng cách quét mã QR trên thẻ sinh viên, còn minh chứng tham gia và đánh giá chương trình được thu thập thông qua Google Forms và Google Sheets.
+Dự án đề xuất một nền tảng quản lý tập trung để kết nối các bước nghiệp vụ: quản lý hoạt động, nhập danh sách đăng ký, ghi nhận Check-in/Check-out theo thời gian thực, nhập minh chứng, đối soát, xác nhận kết quả, phân tích và xuất báo cáo.
 
-Sau khi chương trình kết thúc, Ban Tổ chức phải lấy dữ liệu từ các nguồn khác nhau, tải xuống dưới dạng Excel hoặc CSV, lọc dữ liệu, kiểm tra MSSV và thực hiện đối soát thủ công để xác định danh sách sinh viên thực tế tham gia.
+Phiên bản MVP sử dụng **React/Vite** cho Frontend, **Python/FastAPI** cho Backend và **SQLite** cho cơ chế lưu trữ trạng thái, khôi phục dữ liệu trong môi trường Demo. **Amazon DynamoDB** đã được tích hợp và kiểm thử để lưu trữ dữ liệu nghiệp vụ trên AWS. Hai vai trò người dùng chính là `ADMIN` và `STUDENT`.
 
-Dự án không nhằm thay thế Portal của trường, hệ thống quét QR thẻ sinh viên hoặc Google Forms hiện tại. Thay vào đó, hệ thống đóng vai trò là một nền tảng xử lý dữ liệu tập trung trên AWS. Ban Tổ chức xuất dữ liệu từ các hệ thống hiện có và tải chúng lên Web Application. Nền tảng AWS tiếp nhận, lưu trữ, kiểm tra, chuẩn hóa, đối chiếu và phân loại dữ liệu trước khi hỗ trợ cán bộ xác nhận danh sách cuối cùng.
+Frontend được triển khai trên AWS Amplify Hosting. Backend FastAPI trong môi trường Demo chạy trên máy tính local và được truy cập thông qua Cloudflare Quick Tunnel. Bên cạnh ứng dụng chính, dự án có một quy trình Serverless CSV Processing Demo sử dụng Amazon S3, AWS Lambda, AWS IAM và Amazon CloudWatch.
 
-Nền tảng dự kiến sử dụng kiến trúc AWS Serverless gồm AWS Amplify, Amazon Cognito, Amazon API Gateway, AWS Lambda, Amazon S3, Amazon DynamoDB, AWS Glue, Amazon Athena, Amazon QuickSight, Amazon CloudWatch và AWS IAM.
+Sáu dịch vụ AWS được sử dụng trong phạm vi triển khai và thử nghiệm của đồ án gồm:
 
-Mục tiêu chính của dự án là giảm thời gian xử lý Excel thủ công, tập trung hóa dữ liệu hoạt động, hỗ trợ quá trình đối soát và xác nhận danh sách tham gia, đồng thời cung cấp dashboard phục vụ thống kê và phân tích mức độ tham gia của sinh viên.
+* AWS Amplify.
 
+* Amazon DynamoDB.
+
+* Amazon S3.
+
+* AWS Lambda.
+
+* AWS IAM.
+
+* Amazon CloudWatch.
+
+Mục tiêu của dự án là giảm các thao tác Excel thủ công, tăng tính nhất quán của dữ liệu, hỗ trợ Ban Tổ chức xác nhận kết quả tham gia và cung cấp thông tin thống kê phục vụ quản lý hoạt động sinh viên. Kiến trúc được phát triển theo từng giai đoạn, không giả định toàn bộ ứng dụng đã chuyển sang hạ tầng AWS Serverless Production.
 
 ### 2. Tuyên bố vấn đề
+#### 2.1. Quy trình hiện tại
+1. Ban Tổ chức xây dựng và công bố thông tin hoạt động.
 
-*Vấn đề hiện tại*
+2. Sinh viên đăng ký thông qua University Portal.
 
-Quy trình quản lý hoạt động hiện nay sử dụng nhiều hệ thống và công cụ riêng biệt.
+3. Ban Tổ chức xuất danh sách đăng ký dưới dạng Excel/CSV.
 
-Quy trình tổng quát được thực hiện như sau:
+4. Khi sinh viên đến địa điểm tổ chức, Ban Tổ chức quét QR trên thẻ sinh viên hoặc ghi nhận MSSV để Check-in.
 
-1. Đoàn Khoa xây dựng và tổ chức hoạt động.
-2. Thông tin hoạt động được đăng tải trên các kênh truyền thông.
-3. Sinh viên truy cập Portal của trường để đăng ký tham gia.
-4. Khi đến địa điểm tổ chức, sinh viên xuất trình thẻ sinh viên.
-5. Ban Tổ chức quét mã QR trên thẻ để ghi nhận MSSV phục vụ Check-in.
-6. Trong hoặc gần cuối chương trình, sinh viên thực hiện Google Form để cung cấp minh chứng tham gia và đánh giá chương trình.
-7. Khi chương trình kết thúc, Ban Tổ chức có thể tiếp tục quét QR trên thẻ để ghi nhận Check-out.
-8. Sau chương trình, Ban Tổ chức tổng hợp dữ liệu từ các nguồn và thực hiện đối soát.
-9. Dữ liệu từ Google Sheets được tải xuống Excel để tiếp tục lọc, kiểm tra và chỉnh sửa.
-10. Danh sách sinh viên tham gia cuối cùng được hoàn thiện và gửi cho Đoàn Trường theo quy trình hiện hành.
+5. Sinh viên cung cấp minh chứng hoặc phản hồi qua Google Forms.
 
-Trong quy trình hiện tại, dữ liệu được tạo ra từ nhiều nguồn:
+6. Ban Tổ chức thực hiện Check-out khi có yêu cầu của hoạt động.
 
-- Danh sách đăng ký từ Portal của trường.
-- Danh sách Check-in từ hệ thống quét QR thẻ sinh viên.
-- Danh sách Check-out từ hệ thống quét QR thẻ sinh viên.
-- Dữ liệu minh chứng và đánh giá từ Google Forms/Google Sheets.
-- Các file Excel hoặc CSV được sử dụng để tổng hợp và xử lý.
+7. Sau chương trình, cán bộ tổng hợp, lọc và đối chiếu các nguồn dữ liệu.
 
-Việc sử dụng nhiều nguồn dữ liệu làm phát sinh một số vấn đề:
+8. Danh sách kết quả cuối cùng được gửi đến đơn vị phụ trách theo quy trình hiện hành.
 
-- Dữ liệu bị phân tán trên nhiều hệ thống và nhiều file.
-- Ban Tổ chức mất nhiều thời gian đối chiếu MSSV.
-- Sinh viên có thể đăng ký nhưng không thực tế tham gia.
-- Có trường hợp Check-in nhưng thiếu Check-out.
-- Có trường hợp Check-out nhưng thiếu Check-in.
-- Có trường hợp đã điểm danh nhưng chưa hoàn thành minh chứng.
-- Khó xác định nhanh trạng thái tham gia của từng sinh viên.
-- Dữ liệu lịch sử của nhiều hoạt động khó được quản lý tập trung.
-- Khó thống kê mức độ tham gia của sinh viên qua nhiều chương trình.
-- Khối lượng xử lý tăng đáng kể đối với chương trình có hơn 1.000 người tham gia.
+Các khó khăn chính gồm dữ liệu phân tán, MSSV sai hoặc trùng lặp, sinh viên đăng ký nhưng không có dữ liệu điểm danh, thiếu Check-in/Check-out, thiếu minh chứng và khó xác định kết quả tham gia nhanh chóng. Khi số lượng sinh viên tăng, việc đối soát bằng Excel trở nên tốn thời gian và dễ sai sót hơn.
 
-*Giải pháp đề xuất*
+#### 2.2. Giải pháp đề xuất
+Hệ thống Web Application cung cấp một quy trình quản lý và đối soát tập trung. University Portal và Google Forms/Google Sheets vẫn là các nguồn dữ liệu bên ngoài; phiên bản hiện tại chưa kết nối trực tiếp với các hệ thống này qua API.
 
-Giải pháp đề xuất là xây dựng một nền tảng quản lý, xử lý và phân tích dữ liệu tập trung trên AWS.
+| Nguồn dữ liệu | Cách tiếp nhận trong hệ thống |
+| --- | --- |
+| University Portal | ADMIN xuất và nhập danh sách đăng ký CSV/XLSX. |
+| Student Card QR / MSSV | ADMIN ghi nhận Check-in/Check-out theo thời gian thực thông qua API; hỗ trợ luồng nhập MSSV hoặc thiết bị quét hoạt động như bàn phím. |
+| Google Forms / Google Sheets | ADMIN xuất và nhập dữ liệu minh chứng CSV/XLSX. |
 
-Hệ thống không kết nối trực tiếp hoặc thay thế các hệ thống hiện tại trong phiên bản MVP. Ban Tổ chức vẫn sử dụng các công cụ đang có để thực hiện đăng ký, điểm danh và thu thập minh chứng.
+Backend FastAPI xử lý các yêu cầu nhập dữ liệu, kiểm tra định dạng, trường bắt buộc, MSSV và bản ghi trùng lặp. Dữ liệu đăng ký, điểm danh và minh chứng được liên kết với hoạt động tương ứng để phục vụ Reconciliation.
 
-Sau mỗi giai đoạn, dữ liệu được xuất thành Excel hoặc CSV và được cán bộ tải lên Web Application của hệ thống.
+Điểm khác biệt quan trọng là **Attendance được ghi nhận trực tiếp tại thời điểm Check-in/Check-out**, không phụ thuộc vào việc xuất và nhập file điểm danh sau chương trình. Việc tích hợp Camera QR Scanner hoàn chỉnh vẫn cần được xác nhận bằng kiểm thử trên thiết bị thực tế.
 
-Các dữ liệu đầu vào gồm:
+Sau khi đối soát, hệ thống hỗ trợ ADMIN xem các trường hợp đầy đủ dữ liệu, thiếu điểm danh, thiếu minh chứng hoặc cần xem xét thêm. Kết quả cuối cùng được xác nhận theo quy định của hoạt động, sau đó sử dụng cho Analytics Dashboard và Export.
 
-- Registration File từ University Portal.
-- Check-in File.
-- Check-out File.
-- Evidence File từ Google Forms/Google Sheets.
+#### 2.3. Mục tiêu dự án
+* Tập trung hóa dữ liệu hoạt động và thông tin tham gia của sinh viên.
 
-Amazon S3 được sử dụng để lưu các file nguồn.
+* Giảm công việc nhập liệu và đối chiếu Excel thủ công.
 
-Sau khi file được tải lên S3, AWS Lambda được kích hoạt để:
+* Hỗ trợ ghi nhận Check-in/Check-out theo thời gian thực.
 
-- Đọc file.
-- Kiểm tra cấu trúc dữ liệu.
-- Kiểm tra các trường bắt buộc.
-- Chuẩn hóa MSSV.
-- Phát hiện dữ liệu trùng lặp.
-- Phát hiện dữ liệu không hợp lệ.
-- Chuyển đổi dữ liệu.
-- Lưu dữ liệu có cấu trúc vào Amazon DynamoDB.
+* Chuẩn hóa và kiểm tra dữ liệu Registration và Evidence.
 
-MSSV được sử dụng làm thông tin chính để đối chiếu dữ liệu giữa Registration, Check-in, Check-out và Evidence.
+* Đối soát dữ liệu bằng Activity ID và MSSV.
 
-Hệ thống hỗ trợ tự động phân loại các trường hợp:
+* Hỗ trợ ADMIN xác nhận kết quả tham gia và sinh viên theo dõi dữ liệu cá nhân.
 
-- Có đầy đủ dữ liệu.
-- Có Check-in nhưng thiếu Check-out.
-- Có Check-out nhưng thiếu Check-in.
-- Đăng ký nhưng không có dữ liệu điểm danh.
-- Có điểm danh nhưng thiếu minh chứng.
-- Có dữ liệu bất thường cần kiểm tra thủ công.
+* Xây dựng Analytics Dashboard và chức năng xuất dữ liệu.
 
-Hệ thống không tự động đưa ra quyết định cuối cùng dựa trên một công thức cứng. Các kết quả được đưa vào màn hình Reconciliation để Ban Tổ chức kiểm tra trước khi xác nhận.
+* Áp dụng kiến thức phát triển Web, REST API, xử lý dữ liệu và Cloud Computing.
 
-Sau quá trình đối soát, cán bộ có thể xác nhận trạng thái:
+* Tích hợp và kiểm thử lưu trữ dữ liệu nghiệp vụ trên Amazon DynamoDB.
 
-- `CONFIRMED`
-- `REJECTED`
+* Thử nghiệm xử lý CSV theo mô hình Serverless trên AWS.
 
-Danh sách cuối sau khi được xác nhận sẽ được khóa trong hệ thống và có thể xuất dưới dạng Excel hoặc CSV.
+#### 2.4. Phạm vi dự án
+**Trong phạm vi MVP:**
 
-*Lợi ích và giá trị mang lại*
+* Authentication, Authorization và quản lý tài khoản ADMIN/STUDENT.
 
-Hệ thống giúp giảm đáng kể các thao tác Excel thủ công khi tổng hợp và đối chiếu dữ liệu.
+* Quản lý hoạt động và hồ sơ người dùng theo quyền được cấp.
 
-Thay vì mở nhiều file và tìm kiếm từng MSSV, Ban Tổ chức có thể xem trạng thái dữ liệu tập trung tại màn hình Reconciliation.
+* Registration Import và Evidence Import từ CSV/XLSX.
 
-Nền tảng đồng thời tạo ra nguồn dữ liệu lịch sử phục vụ phân tích:
+* Check-in/Check-out API theo thời gian thực.
 
-- Tổng số lượt đăng ký.
-- Tổng số người tham gia được xác nhận.
-- Participation Rate.
-- No-show Rate.
-- Missing Check-in Rate.
-- Missing Check-out Rate.
-- Missing Evidence Rate.
-- Mức độ tham gia theo loại hoạt động.
-- Xu hướng tham gia theo học kỳ.
-- Lịch sử tham gia của sinh viên.
+* Reconciliation, Participation Confirmation, Analytics và Export.
 
-Giá trị chính của dự án không chỉ nằm ở việc đưa dữ liệu lên Cloud mà còn ở khả năng tích hợp, chuẩn hóa, đối soát, lưu trữ và phân tích dữ liệu từ nhiều nguồn khác nhau.
+* Frontend Hosting bằng AWS Amplify và Backend Demo qua Cloudflare Quick Tunnel.
 
+* Local Persistence bằng SQLite và tích hợp lưu trữ dữ liệu trên Amazon DynamoDB.
+
+* Serverless CSV Processing Demo bằng S3, Lambda, IAM và CloudWatch.
+
+**Ngoài phạm vi hiện tại hoặc cần tiếp tục hoàn thiện:**
+
+* Tích hợp trực tiếp với University Portal và Google Sheets API.
+
+* Xác nhận hoàn chỉnh Camera QR Scanner trên thiết bị thực tế.
+
+* Tự động cộng điểm rèn luyện chính thức vào tài khoản sinh viên của trường.
+
+* Triển khai Backend trên hạ tầng Cloud Production ổn định.
+
+* Hoàn tất chuyển đổi tất cả các luồng lưu trữ và truy xuất dữ liệu sang DynamoDB.
+
+* Tự động hóa toàn bộ pipeline import bằng S3 Event Notifications và Lambda.
+
+* Amazon Cognito, API Gateway, AWS Glue, Amazon Athena và Amazon QuickSight.
+
+* Kiểm thử tải Production quy mô lớn và phân tích nâng cao bằng Machine Learning.
+
+#### 2.5. Đối tượng sử dụng
+| Vai trò | Chức năng chính |
+| --- | --- |
+| ADMIN | Quản lý hoạt động, quản lý tài khoản sinh viên, import dữ liệu, ghi nhận điểm danh, đối soát, xác nhận tham gia, xem Dashboard và xuất báo cáo. |
+| STUDENT | Đăng nhập, xem hoặc cập nhật hồ sơ theo quyền, thay đổi mật khẩu, xem thông tin hoạt động và theo dõi kết quả tham gia của bản thân. |
+
+Ban Tổ chức sử dụng quyền ADMIN. Hệ thống không sử dụng STAFF như một vai trò nghiệp vụ độc lập trong phiên bản hiện tại.
 
 ### 3. Kiến trúc giải pháp
+#### 3.1. Tổng quan kiến trúc
+Sơ đồ kiến trúc dưới đây thể hiện các thành phần đang được sử dụng và phạm vi tích hợp AWS của đồ án.
 
-Nền tảng áp dụng kiến trúc AWS Serverless nhằm hạn chế công việc quản trị máy chủ, hỗ trợ khả năng mở rộng theo nhu cầu sử dụng và phù hợp với đặc điểm workload không liên tục của các hoạt động sinh viên.
+![Student Activity Management & Engagement Analytics Platform Architecture](/fcaj/images/2-Proposal/student_activity_architectur.drawio.png)
 
-Dữ liệu đầu vào được tạo từ ba nhóm nguồn chính:
+Kiến trúc được chia thành ba khu vực chính:
 
-1. **University Portal** cung cấp danh sách sinh viên đăng ký.
-2. **Student Card QR Scanner** cung cấp dữ liệu Check-in và Check-out.
-3. **Google Forms/Google Sheets** cung cấp dữ liệu minh chứng tham gia.
+**1. Web Application và Local Demo Environment**
 
-Các hệ thống trên nằm ngoài AWS và không bị thay thế bởi nền tảng trong phiên bản MVP.
+* ADMIN/STUDENT truy cập ứng dụng bằng trình duyệt Web.
 
-Ban Tổ chức xuất dữ liệu dưới dạng Excel hoặc CSV, sau đó truy cập Web Application để tải dữ liệu lên hệ thống.
+* AWS Amplify Hosting phục vụ giao diện React/Vite.
 
-![Student Activity Management Platform Architecture](/images/2-Proposal/student_activity_architecture.png)
+* Sau khi tải giao diện, trình duyệt gửi REST API Request đến Cloudflare Quick Tunnel, kèm Access Token đối với các API cần xác thực.
 
-*Luồng xử lý tổng quát*
+* Cloudflare Quick Tunnel chuyển tiếp yêu cầu đến FastAPI Backend đang chạy local.
 
-1. Ban Tổ chức xuất dữ liệu từ các hệ thống hiện tại.
-2. Cán bộ truy cập Web Application thông qua HTTPS.
-3. Amazon Cognito thực hiện Authentication và cung cấp JWT Token.
-4. Frontend gửi các REST API Request đến Amazon API Gateway kèm JWT Token.
-5. API Gateway gọi Application Lambda để xử lý Business Logic.
-6. Application Lambda đọc và ghi dữ liệu trên Amazon DynamoDB.
-7. Frontend sử dụng Pre-signed URL để upload Excel/CSV lên Amazon S3 Raw Data Bucket.
-8. S3 Object Created Event kích hoạt File Processing Lambda.
-9. File Processing Lambda kiểm tra, chuẩn hóa và lưu dữ liệu có cấu trúc vào DynamoDB.
-10. Dữ liệu đã xử lý được lưu vào S3 Processed & Export Data.
-11. AWS Glue lập Data Catalog cho dữ liệu phục vụ Analytics.
-12. Amazon Athena truy vấn trực tiếp dữ liệu trên Amazon S3 và sử dụng AWS Glue Data Catalog làm metadata.
-13. Amazon QuickSight trực quan hóa kết quả phân tích dưới dạng Dashboard.
+* FastAPI thực hiện Authentication, Authorization, các nghiệp vụ quản lý hoạt động, tài khoản, nhập dữ liệu, điểm danh, đối soát, xác nhận, Analytics và Export.
 
-*Dịch vụ AWS sử dụng*
+* SQLite hỗ trợ lưu trữ và khôi phục trạng thái của ứng dụng Demo.
 
-- *AWS Amplify*: Hosting Web Application được sử dụng bởi cán bộ và Admin.
-- *Amazon Cognito*: Authentication, User Management và JWT Token.
-- *Amazon API Gateway*: Cung cấp REST API cho frontend.
-- *AWS Lambda – Application Logic*: Xử lý nghiệp vụ quản lý hoạt động, đối soát, xác nhận, tạo Pre-signed URL và tạo file export.
-- *AWS Lambda – File Processing*: Đọc và xử lý Excel/CSV được tải lên.
-- *Amazon S3 – Raw Data*: Lưu các file Registration, Check-in, Check-out và Evidence gốc.
-- *Amazon S3 – Processed & Export Data*: Lưu dữ liệu đã xử lý, Analytics Dataset và file export.
-- *Amazon DynamoDB*: Operational Database của hệ thống.
-- *AWS Glue*: Data Catalog cho Analytics.
-- *Amazon Athena*: Truy vấn dữ liệu trên S3 bằng SQL.
-- *Amazon QuickSight*: Dashboard và trực quan hóa dữ liệu.
-- *Amazon CloudWatch*: Logs, Metrics, Error Monitoring và Alarms.
-- *AWS IAM*: Roles, Policies và Service Permissions theo nguyên tắc Least Privilege.
+**2. AWS Cloud Data Storage**
 
-*Thiết kế dữ liệu*
+* Amazon DynamoDB đã được tích hợp thông qua AWS SDK for Python (boto3).
 
-Amazon DynamoDB lưu các nhóm dữ liệu chính:
+* Các nhóm dữ liệu Activities, Registrations, Attendance, Evidence và Participation đã nằm trong phạm vi tích hợp hoặc kiểm thử lưu trữ trên DynamoDB.
 
-- Activities.
-- Students.
-- Registrations.
-- Attendance.
-- Participation Status.
-- Reconciliation Status.
+* Việc tồn tại các bảng và kết quả đọc/ghi trên AWS không đồng nghĩa toàn bộ ứng dụng đã loại bỏ SQLite. Sơ đồ thể hiện riêng hai thành phần để phản ánh đúng phạm vi hiện tại.
 
-Amazon S3 được chia thành hai mục đích chính:
+**3. AWS Serverless CSV Processing Demo**
 
-**Raw Data**
+* Amazon S3 lưu file CSV đầu vào.
 
-- Registration Files.
-- Check-in Files.
-- Check-out Files.
-- Evidence Files.
+* AWS Lambda đọc, kiểm tra và xử lý CSV, phân loại bản ghi hợp lệ, trùng lặp hoặc không hợp lệ.
 
-**Processed & Export Data**
+* Kết quả JSON được ghi lại vào Amazon S3.
 
-- Processed Data.
-- Reconciliation Data.
-- Analytics Dataset.
-- Export Files.
-- Final Participation List.
+* AWS IAM cung cấp quyền thực thi Lambda, quyền truy cập S3 và quyền ghi log cần thiết.
 
-*Bảo mật*
+* Amazon CloudWatch theo dõi log và các chỉ số thực thi.
 
-Amazon Cognito được sử dụng để xác thực người dùng.
+Quy trình CSV Processor được kiểm thử độc lập với luồng Registration Import/Evidence Import của ứng dụng chính. Sơ đồ không thể hiện S3 Event Notification đã được tự động hóa, cũng không mô tả Lambda ghi kết quả trực tiếp vào DynamoDB nếu chưa có bằng chứng triển khai tương ứng.
 
-Frontend gửi JWT Token kèm theo API Request. Amazon API Gateway kiểm tra Token thông qua Cognito Authorizer trước khi cho phép Request truy cập backend.
+#### 3.2. Luồng kết nối ứng dụng
+Sơ đồ kiến trúc thực tế đã được trình bày tại mục 3.1. Trình duyệt tải Frontend React/Vite từ AWS Amplify, sau đó gửi API Request đến FastAPI chạy local thông qua Cloudflare Quick Tunnel. SQLite lưu trạng thái Demo; DynamoDB là phần tích hợp và kiểm thử lưu trữ Cloud riêng biệt.
+AWS Amplify phục vụ tài nguyên Frontend. Trình duyệt là thành phần gửi các API Request đến Cloudflare Tunnel; Amplify không được mô tả là API Gateway hay Backend Proxy.
 
-AWS IAM được áp dụng theo nguyên tắc Least Privilege. Mỗi Lambda Function chỉ được cấp những quyền thực sự cần thiết, ví dụ:
+#### 3.3. Công nghệ và dịch vụ sử dụng
+| Thành phần | Công nghệ / dịch vụ | Vai trò |
+| --- | --- | --- |
+| Frontend | React/Vite | Giao diện ADMIN/STUDENT và Analytics Dashboard. |
+| Backend | Python/FastAPI | REST API, xác thực, phân quyền và xử lý nghiệp vụ. |
+| Local Persistence | SQLite | Lưu trữ và khôi phục trạng thái Demo. |
+| Cloud Database | Amazon DynamoDB | Tích hợp và kiểm thử lưu trữ dữ liệu nghiệp vụ trên AWS. |
+| Frontend Hosting | AWS Amplify | Build và triển khai ứng dụng Web. |
+| Connectivity | Cloudflare Quick Tunnel | HTTPS endpoint tạm thời kết nối Backend local. |
+| File Storage | Amazon S3 | Lưu CSV đầu vào và JSON kết quả của Serverless Demo. |
+| Serverless Processing | AWS Lambda | Kiểm tra và xử lý CSV độc lập. |
+| AWS Permissions | AWS IAM | Execution Role và quyền truy cập tài nguyên. |
+| Monitoring | Amazon CloudWatch | Logs, metrics và thời gian thực thi Lambda. |
+| Version Control | Git/GitHub | Quản lý mã nguồn và lịch sử phát triển. |
+| Documentation | Hugo/Markdown | Website báo cáo thực tập và tài liệu dự án. |
 
-- Đọc hoặc ghi đúng S3 Bucket cần thiết.
-- Đọc hoặc ghi đúng DynamoDB Table cần thiết.
-- Ghi log vào CloudWatch.
+#### 3.4. Thiết kế dữ liệu
+| Nhóm dữ liệu | Nội dung |
+| --- | --- |
+| Users / Students | Tài khoản, MSSV, hồ sơ, quyền và trạng thái tài khoản. |
+| Activities | Mã, tên, loại, thời gian, địa điểm và trạng thái hoạt động. |
+| Registrations | Dữ liệu đăng ký của sinh viên theo hoạt động. |
+| Attendance | Thời gian và trạng thái Check-in/Check-out. |
+| Evidence | Minh chứng tham gia theo sinh viên và hoạt động. |
+| Participation | Kết quả đối soát và xác nhận tham gia. |
 
-*Monitoring*
+MSSV được dùng để nhận diện sinh viên, kết hợp Activity ID để xác định dữ liệu theo từng hoạt động. Cơ chế dữ liệu cần hạn chế trùng lặp, đảm bảo dữ liệu đúng hoạt động và hỗ trợ truy xuất lịch sử.
 
-Amazon CloudWatch được sử dụng để giám sát các thành phần quan trọng:
+#### 3.5. Luồng nghiệp vụ
+Quy trình nghiệp vụ đã triển khai được minh chứng bằng ảnh chụp giao diện thực tế, không sử dụng sơ đồ giả định:
 
-- API Gateway Logs.
-- Lambda Invocation.
-- Lambda Error.
-- Lambda Duration.
-- File Processing Error.
-- Application Error.
-- CloudWatch Alarm.
+![Giao diện danh sách hoạt động](/fcaj/images/5-Workshop/5.6-Registration-Attendance/activities-list.png)
 
-Kiến trúc này giúp hệ thống không chỉ đáp ứng chức năng nghiệp vụ mà còn thể hiện các yếu tố Security, Monitoring và Scalability cần thiết cho một dự án AWS hoàn chỉnh.
+![Giao diện Check-in thực tế](/fcaj/images/5-Workshop/5.6-Registration-Attendance/check-in.png)
 
+![Kết quả đối soát dữ liệu](/fcaj/images/5-Workshop/5.7-Evidence-Reconciliation/reconciliation-result.png)
+
+![Analytics Dashboard đã triển khai](/fcaj/images/5-Workshop/5.8-Analytics-Export/analytics-dashboard.png)
+Luồng này được xử lý bởi ứng dụng React/Vite và FastAPI. Analytics Dashboard không sử dụng Glue, Athena hoặc QuickSight trong phiên bản hiện tại.
+
+#### 3.6. Bảo mật và giám sát
+Authentication và Authorization được thực hiện tại FastAPI. Các API được bảo vệ bằng Access Token và kiểm tra quyền ADMIN/STUDENT tại Backend. AWS IAM được dùng cho quyền truy cập tài nguyên AWS, không thay thế cơ chế đăng nhập của người dùng ứng dụng.
+
+Các nguyên tắc bảo mật gồm kiểm tra dữ liệu đầu vào, hạn chế truy cập dữ liệu cá nhân của người khác, không công khai Credentials trong GitHub hoặc hình ảnh báo cáo, sử dụng dữ liệu giả lập hoặc ẩn danh và giới hạn quyền theo nguyên tắc Least Privilege.
+
+Amazon CloudWatch phục vụ giám sát Lambda CSV Processor, bao gồm Execution Logs, Invocation/Error Metrics, Execution Duration và Log Retention. Trong phạm vi minh chứng hiện có, log retention là 7 ngày. Không ghi nhận API Gateway Logs, CloudWatch Alarms hoặc việc chuyển log FastAPI lên CloudWatch như chức năng đã triển khai nếu chưa có minh chứng.
 
 ### 4. Triển khai kỹ thuật
+#### 4.1. Các chức năng chính
+| Chức năng | Nội dung xử lý |
+| --- | --- |
+| Authentication | Đăng nhập, đăng xuất, xác thực Access Token và thay đổi mật khẩu. |
+| Authorization | Kiểm soát quyền ADMIN/STUDENT ở giao diện và Backend. |
+| Activity Management | Tạo, xem, cập nhật, quản lý trạng thái và thông tin hoạt động. |
+| Student Account Management | ADMIN xem danh sách, khóa/mở khóa, reset mật khẩu và đồng bộ tài khoản sinh viên. |
+| Personal Profile | Xem và cập nhật thông tin cá nhân trong phạm vi được phép. |
+| Registration Import | Nhập CSV/XLSX, kiểm tra cấu trúc, MSSV, dữ liệu thiếu và trùng lặp. |
+| Attendance | Ghi nhận Check-in/Check-out theo thời gian thực, kiểm tra hoạt động, thời gian và bản ghi đã tồn tại. |
+| Evidence Import | Nhập và kiểm tra dữ liệu minh chứng từ CSV/XLSX. |
+| Reconciliation | Đối chiếu Registration, Attendance và Evidence theo Activity ID và MSSV. |
+| Participation Confirmation | ADMIN kiểm tra và xác nhận hoặc từ chối kết quả tham gia theo quy định nghiệp vụ. |
+| Analytics Dashboard | Tổng hợp số liệu hoạt động, đăng ký, điểm danh và kết quả tham gia. |
+| Export | Xuất dữ liệu và danh sách phục vụ quản lý theo định dạng được hỗ trợ. |
 
-*Các giai đoạn triển khai*
+STUDENT không được truy cập chức năng quản lý tài khoản sinh viên, nhập dữ liệu quản trị hoặc xác nhận tham gia của ADMIN. Thời gian nghiệp vụ được xử lý theo múi giờ Asia/Ho_Chi_Minh.
 
-Dự án được triển khai theo nhiều giai đoạn từ phân tích nghiệp vụ đến thiết kế, phát triển, kiểm thử và hoàn thiện tài liệu.
+#### 4.2. Quy tắc đối soát
+| Registration | Check-in | Check-out | Evidence | Phân loại minh họa |
+| --- | --- | --- | --- | --- |
+| Có | Có | Có | Có | Đầy đủ dữ liệu. |
+| Có | Có | Không | Có | Thiếu Check-out. |
+| Có | Không | Có | Có | Thiếu Check-in. |
+| Có | Không | Không | Không | Đăng ký nhưng chưa có dữ liệu tham gia. |
+| Có | Có | Có | Không | Thiếu minh chứng. |
+| Có | Không | Không | Có | Có minh chứng nhưng thiếu điểm danh. |
+| Không | Có | Có | Có | Cần kiểm tra dữ liệu đăng ký. |
 
-1. *Phân tích nghiệp vụ và nghiên cứu AWS*
+Các trường hợp thiếu dữ liệu không mặc định đồng nghĩa với việc sinh viên không tham gia. ADMIN xem xét kết quả và áp dụng quy định của từng hoạt động. Các trạng thái kết quả gồm `CONFIRMED`, `REJECTED` và trường hợp chưa được xác nhận, tùy luồng nghiệp vụ.
 
-   Phân tích quy trình hoạt động hiện tại, xác định vấn đề và nghiên cứu các dịch vụ AWS phù hợp.
+#### 4.3. Serverless CSV Processing Demo
+Các ảnh sau minh chứng bài thử nghiệm xử lý CSV độc lập bằng Amazon S3 và AWS Lambda:
 
-2. *Thiết kế kiến trúc*
+![Kết quả kiểm thử AWS Lambda CSV Processor](/fcaj/images/5-Workshop/5.10-Serverless-Processing/lambda-test-success.png)
 
-   Xây dựng AWS Architecture Diagram, Data Flow, Security Model và Monitoring Strategy.
+![Kết quả JSON lưu trên Amazon S3](/fcaj/images/5-Workshop/5.10-Serverless-Processing/s3-processed-result.png)
+Lambda sử dụng IAM Execution Role để đọc file CSV từ S3, kiểm tra các trường bắt buộc, phát hiện bản ghi trùng hoặc không hợp lệ và tạo kết quả JSON. CloudWatch hỗ trợ kiểm tra log và thông tin thực thi. Luồng này được chạy thử bằng Test Event; việc tự động kích hoạt bằng S3 Event Notifications là hướng mở rộng khi có cấu hình và kiểm thử phù hợp.
 
-3. *Thiết kế cơ sở dữ liệu*
+Kết quả bài kiểm thử CSV Processor được ghi nhận trong phạm vi Demo:
 
-   Xác định các thực thể và Access Pattern cho Amazon DynamoDB.
+| Chỉ số | Kết quả |
+| --- | --- |
+| Total Records | 4 |
+| Valid Records | 2 |
+| Duplicate Records | 1 |
+| Invalid Records | 1 |
+| Status Code trong kết quả Lambda | 200 |
+| Output File | registrations-result.json |
 
-4. *Thiết kế API*
+Đây là minh chứng cho việc xử lý dữ liệu bằng Lambda và lưu kết quả trên S3, không phải kết quả kiểm thử tải lớn hoặc chứng minh toàn bộ quy trình import của Website đã chuyển sang Serverless.
 
-   Xác định REST API cho Activity Management, File Upload, Reconciliation, Confirmation và Export.
+#### 4.4. Yêu cầu phi chức năng
+* **Usability:** Giao diện rõ ràng, phân chia chức năng theo vai trò và thông báo lỗi dễ hiểu.
 
-5. *Xây dựng Authentication*
+* **Security:** Kiểm tra xác thực, phân quyền Backend, bảo vệ Credentials và dữ liệu sinh viên.
 
-   Cấu hình Amazon Cognito và Cognito Authorizer.
+* **Reliability:** Kiểm tra dữ liệu trước khi lưu, xử lý lỗi, hạn chế bản ghi trùng và hỗ trợ sao lưu phù hợp.
 
-6. *Xây dựng Web Application*
+* **Maintainability:** Tách Frontend/Backend, tổ chức mã nguồn theo module, quản lý Git/GitHub và cung cấp tài liệu kỹ thuật.
 
-   Xây dựng giao diện dành cho Youth Union Staff và Admin.
+* **Performance:** Đáp ứng yêu cầu Demo và hướng đến mở rộng; cần kiểm thử tải trước khi vận hành Production.
 
-7. *Xây dựng File Upload Pipeline*
+#### 4.5. Chiến lược kiểm thử
+Kiểm thử tập trung vào đăng nhập đúng/sai, tài khoản bị khóa, STUDENT truy cập API ADMIN, import thiếu cột hoặc trùng MSSV, Check-in/Check-out không hợp lệ hoặc ngoài thời gian, thiếu Evidence, đối soát, xác nhận và xuất dữ liệu. Bên cạnh đó, dự án kiểm thử tích hợp Frontend/Backend, kết nối DynamoDB và quy trình Lambda CSV Processor với S3/CloudWatch.
 
-   Frontend yêu cầu Pre-signed URL và upload file trực tiếp lên Amazon S3.
+Test Report cần ghi rõ dữ liệu đầu vào, kết quả mong đợi, kết quả thực tế, trạng thái PASS/FAIL và những hạn chế chưa được kiểm thử. Các mục tiêu kiểm thử không tự động được xem là đã hoàn thành.
 
-8. *Xây dựng File Processing*
+### 5. Lộ trình và mốc triển khai
+Dự án được xây dựng theo kế hoạch thực tập 12 tuần, từ 07/09/2026 đến 27/11/2026. Nội dung dưới đây đồng nhất với Worklog tổng hợp; các mốc cuối kỳ được cập nhật theo kết quả và minh chứng thực tế.
 
-   S3 Event kích hoạt Lambda để đọc và xử lý Excel/CSV.
+| Tuần | Nội dung |
+| --- | --- |
+| 1 | AWS Fundamentals, Cloud Computing, AWS CLI và Amazon EC2. |
+| 2 | Phân tích yêu cầu, Project Proposal và thiết kế kiến trúc. |
+| 3 | Phát triển Python/FastAPI, SQLite và các REST API cốt lõi. |
+| 4 | Nghiên cứu và tích hợp Amazon DynamoDB, Amazon S3 trong phạm vi Data Pilot. |
+| 5 | Phát triển React/Vite, Authentication, Authorization và ADMIN/STUDENT. |
+| 6 | Registration Import, Evidence Import, CSV/XLSX và Export. |
+| 7 | Reconciliation, Participation Status và Analytics Dashboard. |
+| 8 | Kiểm thử tích hợp, sửa lỗi và tối ưu giao diện. |
+| 9 | AWS Amplify Hosting, FastAPI Demo và Cloudflare Tunnel. |
+| 10 | S3, Lambda, IAM, CloudWatch và tổng hợp minh chứng 6 dịch vụ AWS. |
+| 11 | Chuẩn bị Demo, tiếp nhận Feedback nếu có và hoàn thiện tài liệu kỹ thuật. |
+| 12 | Hoàn thiện báo cáo, kiểm tra website Hugo, lưu trữ và chuẩn bị bàn giao. |
 
-9. *Xây dựng Reconciliation Engine*
-
-   Hệ thống đối chiếu Registration, Check-in, Check-out và Evidence bằng MSSV.
-
-10. *Xây dựng Participation Confirmation*
-
-    Ban Tổ chức kiểm tra và xác nhận trạng thái tham gia.
-
-11. *Xây dựng Export*
-
-    Tạo Excel/CSV phục vụ quy trình quản lý sau hoạt động.
-
-12. *Xây dựng Analytics*
-
-    Sử dụng S3, AWS Glue, Amazon Athena và Amazon QuickSight.
-
-13. *Monitoring và Security*
-
-    Cấu hình CloudWatch, IAM Least Privilege và các Alarm cần thiết.
-
-14. *Testing*
-
-    Kiểm thử từng chức năng và toàn bộ quy trình End-to-End.
-
-15. *Documentation và Cleanup*
-
-    Hoàn thiện Workshop, báo cáo và xóa các AWS Resource không còn cần thiết.
-
-*Chức năng chính của Web Application*
-
-Youth Union Staff / Organizer có thể:
-
-- Đăng nhập.
-- Quản lý hoạt động.
-- Upload Registration File.
-- Upload Check-in File.
-- Upload Check-out File.
-- Upload Evidence File.
-- Xem kết quả Validation.
-- Xem Reconciliation.
-- Xác nhận Participation.
-- Export dữ liệu.
-- Xem Dashboard thống kê.
-
-Admin có thể:
-
-- Quản lý tài khoản.
-- Quản lý quyền.
-- Quản lý cấu hình hệ thống.
-- Theo dõi hoạt động hệ thống.
-
-*Quy tắc đối soát*
-
-Hệ thống tự động phân loại dữ liệu nhưng không tự quyết định hoàn toàn kết quả cuối cùng.
-
-Ví dụ:
-
-| Registration | Check-in | Check-out | Evidence | Phân loại |
-|---|---|---|---|---|
-| Có | Có | Có | Có | Đầy đủ dữ liệu |
-| Có | Có | Không | Có | Thiếu Check-out |
-| Có | Không | Có | Có | Thiếu Check-in |
-| Có | Không | Không | Không | Đăng ký nhưng không tham gia |
-| Có | Có | Có | Không | Thiếu minh chứng |
-
-Trong quy trình hiện tại, Check-in và Evidence là các nguồn dữ liệu quan trọng để xác định việc tham gia. Check-out được sử dụng như dữ liệu bổ sung để hỗ trợ đối soát.
-
-Các trường hợp không đầy đủ sẽ được đưa vào danh sách cần kiểm tra.
-
-Sau khi cán bộ xác nhận, sinh viên có một trong hai trạng thái:
-
-- `CONFIRMED`
-- `REJECTED`
-
-Danh sách cuối được khóa sau khi xác nhận.
-
-
-### 5. Lộ trình & Mốc triển khai
-
-Dự án dự kiến được thực hiện trong 12 tuần thực tập.
-
-- *Tuần 1–2: Nghiên cứu và phân tích*
-    - Tìm hiểu AWS Cloud.
-    - Nghiên cứu AWS Serverless.
-    - Phân tích quy trình hiện tại.
-    - Xác định yêu cầu.
-    - Hoàn thiện Proposal.
-
-- *Tuần 3–4: System Design*
-    - Hoàn thiện AWS Architecture.
-    - Thiết kế DynamoDB.
-    - Xác định Access Pattern.
-    - Thiết kế REST API.
-    - Thiết kế User Flow.
-    - Thiết kế Security và Monitoring.
-
-- *Tuần 5–6: Core Backend*
-    - Amazon Cognito.
-    - Amazon DynamoDB.
-    - AWS Lambda.
-    - Amazon API Gateway.
-    - AWS IAM.
-    - Kiểm thử API.
-
-- *Tuần 7–8: File Processing*
-    - Xây dựng S3 Bucket.
-    - Xây dựng Pre-signed Upload.
-    - Xử lý Registration File.
-    - Xử lý Check-in File.
-    - Xử lý Check-out File.
-    - Xử lý Evidence File.
-    - Validation.
-    - Duplicate Detection.
-
-- *Tuần 9–10: Reconciliation & Export*
-    - Reconciliation Engine.
-    - Participation Confirmation.
-    - Final List Locking.
-    - Export Excel/CSV.
-    - End-to-End Workflow.
-
-- *Tuần 11: Analytics, Security & Monitoring*
-    - AWS Glue Data Catalog.
-    - Amazon Athena.
-    - Amazon QuickSight.
-    - CloudWatch Logs.
-    - Metrics và Alarm.
-    - IAM Least Privilege.
-    - Cost Monitoring.
-
-- *Tuần 12: Testing & Documentation*
-    - Functional Testing.
-    - Integration Testing.
-    - End-to-End Testing.
-    - Kiểm thử dữ liệu giả lập quy mô lớn.
-    - Hoàn thiện Workshop.
-    - Hoàn thiện báo cáo.
-    - Cleanup AWS Resources.
-
-*Hướng phát triển sau MVP*
-
-- QR Code động cho Check-in/Check-out.
-- Sinh viên tự Check-in bằng điện thoại.
-- QR Token có thời gian hết hạn.
-- Kiểm soát Time Window của điểm danh.
-- Tích hợp trực tiếp với University Portal nếu được cung cấp API.
-- Tích hợp Google Sheets API.
-- Notification System.
-- Email Notification.
-- Student Engagement Analysis nâng cao.
-- Machine Learning để phân nhóm hoặc dự đoán mức độ tham gia.
-
+**Hướng phát triển:** Triển khai FastAPI trên hạ tầng Cloud ổn định; hoàn thiện cơ chế lưu trữ Production và mở rộng DynamoDB; kiểm thử QR Scanner; tích hợp University Portal/Google Sheets API; tự động hóa xử lý file bằng S3/Lambda; bổ sung thông báo, Analytics nâng cao, CI/CD, Monitoring, kiểm thử bảo mật và hiệu năng.
 
 ### 6. Ước tính ngân sách
+Phiên bản MVP hướng đến chi phí phù hợp với môi trường học tập và Demo. FastAPI đang chạy local nên chưa phát sinh yêu cầu duy trì một máy chủ Backend AWS hoạt động liên tục.
 
-Dự án sử dụng kiến trúc Serverless nhằm giảm chi phí khi hệ thống không được sử dụng.
+| Dịch vụ | Yếu tố chi phí |
+| --- | --- |
+| AWS Amplify | Build, Hosting, Storage và Data Transfer. |
+| Amazon DynamoDB | Storage, Read/Write Requests hoặc Capacity. |
+| Amazon S3 | Storage, Requests và Data Transfer. |
+| AWS Lambda | Invocation, Execution Duration và Memory. |
+| Amazon CloudWatch | Log ingestion, log storage, metrics và các tính năng bổ sung nếu sử dụng. |
+| AWS IAM | Không có chi phí trực tiếp cho IAM Roles và Policies. |
 
-Chi phí thực tế phụ thuộc vào:
+Chi phí phụ thuộc vào khu vực AWS, dung lượng dữ liệu, số lượt truy cập, số request, cấu hình tài nguyên và ưu đãi tài khoản. Có thể sử dụng [AWS Pricing Calculator](https://calculator.aws/) để lập dự toán, sau đó đối chiếu AWS Billing.
 
-- Số lượng người dùng.
-- Số lượng hoạt động.
-- Số lượng API Request.
-- Kích thước và số lượng file upload.
-- Dung lượng Amazon S3.
-- Lambda Invocation và Execution Duration.
-- DynamoDB Request.
-- AWS Glue Usage.
-- Athena Data Scanned.
-- Amazon QuickSight Plan.
-- CloudWatch Log Volume.
+Chiến lược kiểm soát chi phí gồm lựa chọn cấu hình phù hợp, xem xét DynamoDB On-Demand cho workload không liên tục, giới hạn dữ liệu thử nghiệm và lượt chạy Lambda, sử dụng CloudWatch Log Retention phù hợp, theo dõi Billing và thiết lập AWS Budgets/Alert khi cần. Chỉ xóa tài nguyên không còn cần thiết sau khi đã lưu minh chứng và đảm bảo không ảnh hưởng Demo hoặc bàn giao.
 
-Có thể sử dụng [AWS Pricing Calculator](https://calculator.aws/) để tính chi phí chính xác sau khi hoàn thiện các thông số triển khai.
-
-*Các thành phần chi phí*
-
-- *AWS Amplify*: Hosting Web Application.
-- *Amazon Cognito*: Phụ thuộc số Monthly Active Users.
-- *Amazon API Gateway*: Tính theo số API Request.
-- *AWS Lambda*: Tính theo Invocation và Execution Duration.
-- *Amazon S3*: Storage và Request.
-- *Amazon DynamoDB*: Có thể sử dụng On-Demand Capacity.
-- *AWS Glue*: Chi phí khi chạy Crawler hoặc ETL Job.
-- *Amazon Athena*: Tính theo lượng dữ liệu được quét.
-- *Amazon QuickSight*: Phụ thuộc loại tài khoản và gói sử dụng.
-- *Amazon CloudWatch*: Log Storage, Metrics và Alarm.
-- *AWS IAM*: Không phát sinh chi phí trực tiếp.
-
-*Chiến lược tối ưu chi phí*
-
-- Sử dụng Serverless thay vì EC2 chạy liên tục.
-- Sử dụng DynamoDB On-Demand cho workload không ổn định.
-- Chỉ chạy Glue khi cần.
-- Tối ưu cấu trúc dữ liệu để giảm Athena Data Scan.
-- Thiết lập CloudWatch Log Retention.
-- Sử dụng S3 Lifecycle khi cần.
-- Xóa Resource thử nghiệm sau khi hoàn thành.
-- Cấu hình AWS Budgets.
-- Thiết lập Billing Alert.
-
-*Mục tiêu ngân sách*
-
-Phiên bản MVP được thiết kế để duy trì chi phí thấp trong môi trường học tập, thực tập và demo.
-
-Chi phí chính thức sẽ được cập nhật bằng AWS Pricing Calculator sau khi hoàn thiện cấu hình triển khai thực tế.
-
+Không mặc định dự án có chi phí bằng 0. Chưa đưa ra tổng ngân sách cố định khi chưa có đầy đủ thông số và dữ liệu Billing thực tế.
 
 ### 7. Đánh giá rủi ro
+| Rủi ro | Ảnh hưởng dự kiến | Biện pháp giảm thiểu |
+| --- | --- | --- |
+| File CSV/XLSX không hợp lệ, MSSV sai hoặc trùng | Trung bình–Cao | Kiểm tra cấu trúc, chuẩn hóa MSSV, phát hiện trùng và thông báo lỗi. |
+| Thiếu Check-in/Check-out hoặc Evidence | Cao | Đối soát theo Activity ID/MSSV và ADMIN xem xét ngoại lệ. |
+| Người dùng truy cập sai quyền | Cao | Xác thực token, kiểm tra quyền tại Backend, kiểm thử API ADMIN. |
+| FastAPI local ngừng hoạt động | Cao | Kiểm tra Backend trước Demo, chuẩn bị phương án khởi động lại và Demo local. |
+| Cloudflare Quick Tunnel đổi URL | Cao | Cập nhật API Base URL và kiểm tra kết nối trước khi trình diễn. |
+| Dữ liệu local và DynamoDB không đồng nhất | Cao | Kiểm tra phạm vi đồng bộ, đọc/ghi và xác định nguồn dữ liệu trước khi mở rộng Production. |
+| Lambda CSV Processing lỗi hoặc IAM sai quyền | Trung bình–Cao | Kiểm tra Execution Role, S3 Input/Output và CloudWatch Logs. |
+| Rò rỉ dữ liệu sinh viên hoặc Credentials | Cao | Dùng dữ liệu giả/ẩn danh, không công khai bí mật và áp dụng Least Privilege. |
+| Chi phí AWS vượt dự kiến | Trung bình | Theo dõi Billing, giới hạn tài nguyên thử nghiệm và cấu hình cảnh báo khi cần. |
+| Chưa đáp ứng tải Production | Cao | Kiểm thử hiệu năng, cải thiện hạ tầng và cơ sở dữ liệu trước vận hành thực tế. |
 
-*Ma trận rủi ro*
-
-| Rủi ro | Ảnh hưởng | Xác suất |
-|---|---|---|
-| File Excel/CSV sai định dạng | Trung bình | Cao |
-| MSSV thiếu hoặc sai | Cao | Trung bình |
-| Dữ liệu trùng lặp | Trung bình | Trung bình |
-| Cấu trúc file giữa các nguồn khác nhau | Cao | Trung bình |
-| Dữ liệu không đồng nhất giữa các nguồn | Cao | Trung bình |
-| Lambda xử lý file thất bại | Cao | Thấp |
-| Quyền IAM cấu hình sai | Cao | Thấp |
-| Người dùng truy cập sai quyền | Cao | Thấp |
-| Rò rỉ dữ liệu sinh viên | Cao | Thấp |
-| Chi phí AWS vượt dự kiến | Trung bình | Thấp |
-
-*Chiến lược giảm thiểu*
-
-- *File Format*: Xây dựng Template chuẩn cho từng loại file.
-- *Validation*: Kiểm tra các trường bắt buộc trước khi xử lý.
-- *MSSV Validation*: Chuẩn hóa và kiểm tra MSSV.
-- *Duplicate Detection*: Sử dụng Activity ID kết hợp MSSV.
-- *Error Handling*: Dữ liệu lỗi được đưa vào Validation Error List.
-- *Raw Data Backup*: Giữ lại file gốc trên Amazon S3.
-- *Monitoring*: Theo dõi Lambda Error và Duration bằng CloudWatch.
-- *Authentication*: Sử dụng Amazon Cognito.
-- *Authorization*: Sử dụng Role và Permission phù hợp.
-- *Least Privilege*: Giới hạn quyền IAM theo Resource.
-- *Data Protection*: Sử dụng dữ liệu giả lập hoặc đã ẩn danh trong môi trường phát triển nếu chưa có quyền sử dụng dữ liệu thật.
-- *Cost Control*: AWS Budgets và Billing Alert.
-- *Cleanup*: Xóa Resource thử nghiệm không còn sử dụng.
-
-*Kế hoạch dự phòng*
-
-- File xử lý thất bại có thể được upload lại.
-- File gốc vẫn được giữ trên Amazon S3.
-- Pipeline có thể chạy lại từ dữ liệu nguồn.
-- Export File có thể được tạo lại từ dữ liệu trong hệ thống.
-- Nếu Analytics Layer gặp lỗi, dữ liệu nguồn vẫn còn trên S3.
-- Quy trình Excel hiện tại vẫn có thể được sử dụng trong trường hợp hệ thống thử nghiệm gặp sự cố.
-
+Khi gặp sự cố, ADMIN có thể chỉnh sửa và nhập lại file, kiểm tra các trường hợp bất thường hoặc sử dụng quy trình Excel hiện có làm phương án dự phòng. Backend có thể chạy lại trong môi trường local; Lambda Demo có thể được thực thi lại với file đầu vào còn lưu trên S3. Quy trình sao lưu và đồng bộ cần phù hợp với cơ chế lưu trữ hiện tại, không giả định mọi dữ liệu đã có bản sao hoàn chỉnh trên AWS.
 
 ### 8. Kết quả kỳ vọng
+#### 8.1. Cải tiến nghiệp vụ
+Hệ thống hướng đến một quy trình quản lý tập trung, giảm việc mở nhiều file và tìm kiếm MSSV thủ công. Ban Tổ chức có thể theo dõi Registration, Attendance, Evidence, Reconciliation và Participation trong cùng một ứng dụng; sinh viên có thể theo dõi thông tin cá nhân trong phạm vi được cấp quyền.
 
-*Cải tiến quy trình*
+#### 8.2. Phân tích và xuất dữ liệu
+Analytics Dashboard sử dụng dữ liệu nghiệp vụ của hệ thống để hỗ trợ các chỉ số như tổng hoạt động, tổng đăng ký, Check-in/Check-out, kết quả tham gia, tỷ lệ tham gia và các trường hợp thiếu dữ liệu. Các chỉ số cần được tính theo định nghĩa nhất quán và phù hợp với dữ liệu thực tế.
 
-Hệ thống tạo một nền tảng tập trung để quản lý dữ liệu liên quan đến hoạt động sinh viên.
+Ví dụ minh họa: nếu có 1.200 lượt đăng ký và 1.050 lượt đăng ký được xác nhận tham gia, tỷ lệ tham gia là 87,5%. Đây là ví dụ tính toán, không phải kết quả đo lường từ một chương trình đã tổ chức.
 
-Thay vì phải mở nhiều file Excel và tìm kiếm từng MSSV, Ban Tổ chức có thể xem kết quả đối soát trên một giao diện tập trung.
+Hệ thống hỗ trợ xuất danh sách và dữ liệu phục vụ công tác quản lý theo định dạng của chức năng tương ứng. Việc công nhận hoặc cộng điểm rèn luyện chính thức trên University Portal vẫn thuộc quy trình của nhà trường, ngoài phạm vi MVP.
 
-Hệ thống hỗ trợ nhận biết:
+#### 8.3. Kết quả ứng dụng AWS
+* AWS Amplify: triển khai Frontend React/Vite.
 
-- Sinh viên có đầy đủ dữ liệu.
-- Sinh viên thiếu Check-in.
-- Sinh viên thiếu Check-out.
-- Sinh viên thiếu minh chứng.
-- Sinh viên đăng ký nhưng không có dữ liệu điểm danh.
-- Sinh viên cần kiểm tra thủ công.
+* Amazon DynamoDB: tích hợp và kiểm thử lưu trữ các nhóm dữ liệu nghiệp vụ trên AWS.
 
-*Giảm công việc thủ công*
+* Amazon S3: lưu trữ CSV đầu vào và JSON kết quả.
 
-Registration, Check-in, Check-out và Evidence được hệ thống xử lý và đối chiếu tự động theo MSSV.
+* AWS Lambda: thử nghiệm xử lý CSV theo mô hình Serverless.
 
-Ban Tổ chức chỉ tập trung xử lý các trường hợp ngoại lệ thay vì kiểm tra thủ công toàn bộ danh sách.
+* AWS IAM: cấp quyền thực thi và truy cập tài nguyên.
 
-*Quản lý danh sách*
+* Amazon CloudWatch: theo dõi log và chỉ số thực thi Lambda.
 
-Sau đối soát, cán bộ có thể xác nhận:
+Các minh chứng cần thể hiện đúng phạm vi triển khai, không ghi nhận dịch vụ chưa sử dụng là kết quả đã hoàn thành.
 
-- `CONFIRMED`
-- `REJECTED`
+#### 8.4. Sản phẩm bàn giao dự kiến
+* Frontend/Backend Source Code và GitHub Repository.
 
-Danh sách cuối cùng được khóa sau khi xác nhận.
+* Web Application Demo và dữ liệu giả lập.
 
-Hệ thống hỗ trợ xuất:
+* Architecture Diagram và Project Proposal.
 
-- Registration List.
-- Check-in List.
-- Check-out List.
-- Missing Check-in List.
-- Missing Check-out List.
-- Missing Evidence List.
-- Registered but No Attendance List.
-- Reconciliation List.
-- Final Participation List.
+* README, API Documentation và User Guide.
 
-Các file có thể được xuất dưới dạng Excel hoặc CSV.
+* Test Report, Demo Script và AWS Configuration Notes.
 
-*Phạm vi điểm của hoạt động*
+* AWS Project Evidence, Worklog và website báo cáo Hugo.
 
-Hệ thống có thể lưu mức điểm được quy định cho từng hoạt động.
+#### 8.5. Hạn chế và hướng phát triển
+Backend Demo phụ thuộc vào máy tính local và URL tạm thời của Cloudflare Quick Tunnel. SQLite vẫn xuất hiện trong cơ chế lưu trữ Demo; DynamoDB đã được tích hợp nhưng chưa xác nhận chuyển đổi toàn bộ API sang cơ sở dữ liệu Cloud. Lambda CSV Processor là quy trình Demo độc lập. Camera QR Scanner, tích hợp trực tiếp University Portal/Google Sheets, kiểm thử tải lớn và vận hành Production vẫn cần tiếp tục hoàn thiện.
 
-Ví dụ:
+Về lâu dài, dự án có thể phát triển thành nền tảng quản lý hoạt động sinh viên có khả năng mở rộng và kết nối với hệ thống nhà trường. Đây cũng là nền tảng thực hành kiến thức Data Science, Web Development, Cloud Computing, xử lý dữ liệu và định hướng Cloud & Data Engineering.
 
-```text
-Activity: AWS Cloud Workshop
-Activity Point Value: 5
-Tuy nhiên, hệ thống không thực hiện cộng điểm rèn luyện chính thức vào tài khoản sinh viên.
-
-Nền tảng chỉ lưu thông tin hoạt động và trạng thái tham gia đã được xác nhận.
-
-Quá trình cộng điểm chính thức thuộc quy trình của Đoàn Trường và nằm ngoài phạm vi dự án.
-
-Phân tích dữ liệu
-
-Dashboard dự kiến cung cấp:
-
-Total Activities.
-Total Registrations.
-Confirmed Participants.
-Participation Rate.
-No-show Rate.
-Missing Check-in Rate.
-Missing Check-out Rate.
-Missing Evidence Rate.
-Activities by Type.
-Participation by Semester.
-Participation Trends.
-
-Ví dụ:
-
-Total Registrations: 1,200
-Confirmed Participants: 1,050
-
-Participation Rate
-= 1,050 / 1,200 × 100
-= 87.5%
-
-Khả năng mở rộng
-
-Kiến trúc Serverless cho phép hệ thống xử lý các hoạt động quy mô khoảng 100–200 sinh viên và có thể mở rộng để phục vụ những chương trình có hơn 1.000 sinh viên mà không cần duy trì máy chủ chạy liên tục.
-
-Bảo mật và giám sát
-
-Hệ thống áp dụng:
-
-Amazon Cognito Authentication.
-Cognito Authorizer.
-JWT Token.
-AWS IAM Least Privilege.
-Amazon CloudWatch Logs.
-CloudWatch Metrics.
-CloudWatch Alarms.
-AWS Budgets và Billing Alerts.
-
-Giá trị dài hạn
-
-Dự án tạo ra một nền tảng dữ liệu có thể tiếp tục được phát triển để hỗ trợ công tác tổ chức hoạt động sinh viên.
-
-Các hướng mở rộng trong tương lai gồm:
-
-QR Check-in/Check-out động.
-Student Self Check-in.
-Portal Integration.
-Google Sheets Integration.
-Notification System.
-Advanced Analytics.
-Student Engagement Analysis.
-Machine Learning.
-
-Mục tiêu cuối cùng của dự án là chuyển quá trình xử lý dữ liệu sau hoạt động từ mô hình phân tán và phụ thuộc nhiều vào Excel thủ công sang một quy trình tập trung, có khả năng kiểm tra, đối soát, lưu trữ, theo dõi và phân tích trên nền tảng AWS.
+**Ghi chú:** Proposal được cập nhật theo sơ đồ kiến trúc hiện tại, phạm vi phát triển và các kết quả kiểm thử đã được ghi nhận. Các công việc chưa hoàn thành, đặc biệt là những mốc cuối kỳ thực tập, cần tiếp tục đối chiếu với minh chứng trước khi ghi nhận thành kết quả chính thức.

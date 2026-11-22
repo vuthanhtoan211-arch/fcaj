@@ -3,7 +3,7 @@ title: "AWS Cloud & AI Day Vietnam 2026 – Watch Party"
 date: 2026-09-29
 weight: 1
 chapter: false
-pre: "<b>4.1. </b>"
+pre: "<b>4.1.</b>"
 ---
 
 # Event Report: AWS Cloud & AI Day Vietnam 2026 – Watch Party
@@ -139,7 +139,7 @@ The Frontend was deployed using AWS Amplify Hosting. For the demonstration, the 
 
 SQLite provided local Demo persistence, while DynamoDB was used in a separate Cloud practice environment. This does **not** mean that the complete production Backend and database were migrated to AWS.
 
-![Architecture of the Student Activity Management & Engagement Analytics Platform](/images/2-Proposal/student_activity_architectur.drawio.png)
+![Architecture of the Student Activity Management & Engagement Analytics Platform](/fcaj/images/2-Proposal/student_activity_architectur.drawio.png)
 
 #### Serverless Data Processing
 
@@ -226,11 +226,11 @@ Attending **AWS Cloud & AI Day Vietnam 2026 – Watch Party** was a meaningful p
 
 The following photographs document my attendance at **AWS Cloud & AI Day Vietnam 2026 – Watch Party**.
 
-![Photo 1 - AWS Cloud and AI Day Vietnam 2026 Watch Party](/images/4-Event/Event1/hinh1.jpg)
+![Photo 1 - AWS Cloud and AI Day Vietnam 2026 Watch Party](/fcaj/images/4-Event/Event1/hinh1.jpg)
 
-![Photo 2 - Activities at AWS Cloud and AI Day Vietnam 2026](/images/4-Event/Event1/hinh2.jpg)
+![Photo 2 - Activities at AWS Cloud and AI Day Vietnam 2026](/fcaj/images/4-Event/Event1/hinh2.jpg)
 
-![Photo 3 - Event participation evidence](/images/4-Event/Event1/hinh3.jpg)
+![Photo 3 - Event participation evidence](/fcaj/images/4-Event/Event1/hinh3.jpg)
 
 ### Conclusion
 

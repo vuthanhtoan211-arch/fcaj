@@ -1,48 +1,45 @@
-
 ---
 title: "AWS First Cloud AI Journey Community Day 2026"
 date: 2026-10-31
 weight: 2
 chapter: false
-pre: "<b>4.2. </b>"
+pre: "<b>4.2.</b>"
 ---
 
 # AWS First Cloud AI Journey Community Day 2026
 
 ## 1. Event Introduction
 
-**AWS First Cloud AI Journey Community Day 2026** was an event organized as part of the First Cloud AI Journey (FCAJ) program, providing students and technology enthusiasts with opportunities to learn, exchange ideas, and explore developments in cloud computing, artificial intelligence, and modern software engineering.
+**AWS First Cloud AI Journey Community Day 2026** is a community event associated with First Cloud AI Journey (FCAJ). It provides students and technology enthusiasts with opportunities to learn, exchange ideas, and explore developments in cloud computing, artificial intelligence, and software development.
 
-The event featured topics related to AWS Cloud, Serverless Architecture, asynchronous systems, internship experiences, and professional development through Open Source communities.
+The sessions covered AWS Cloud, serverless architecture, Amazon SQS, internship experiences, and the importance of consistent open-source contributions.
 
-For me, attending this event was an opportunity to broaden my technical knowledge beyond university coursework, learn from practical engineering experiences, and understand how AWS technologies can be applied to real-world software development.
-
-The knowledge shared during the event was also relevant to my project, **Student Activity Management & Engagement Analytics Platform**, developed as part of my First Cloud AI Journey learning experience.
+For me, this event was an opportunity to broaden my technical perspective and relate industry discussions to my **Student Activity Management & Engagement Analytics Platform** internship project.
 
 ## 2. Event Information
 
-- **Event Name:** AWS First Cloud AI Journey Community Day 2026
-- **Date:** Saturday, October 31, 2026
-- **Time:** 09:00 AM – 12:00 PM
-- **Venue:** Bitexco Financial Tower
-- **Address:** 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
-- **Format:** In-person event
-- **Role:** FCAJ learner / Student attendee
+| Item | Details |
+| --- | --- |
+| Event | AWS First Cloud AI Journey Community Day 2026 |
+| Date | Saturday, October 31, 2026 |
+| Time | 09:00–12:00 |
+| Venue | Bitexco Financial Tower |
+| Address | 02 Hai Trieu Street, Ho Chi Minh City, Vietnam |
+| Format | In-person |
+| Participation | Student / Attendee |
 
 ## 3. Participation Objectives
 
-My main objectives for attending the event were:
-
-- To expand my knowledge of AWS services and modern cloud application development.
-- To learn about designing, deploying, and optimizing Serverless systems.
-- To better understand the roles of AWS Lambda and Amazon SQS in modern architectures.
-- To gain insights into internships, real-world engineering projects, and technical problem-solving.
-- To explore the skills required for careers in Cloud Computing and Data Engineering.
-- To understand the value of Open Source communities and continuous professional development.
+- Keep up with AWS services and cloud application development practices.
+- Learn how serverless systems are designed and deployed.
+- Understand AWS Lambda and Amazon SQS in modern architectures.
+- Learn from AWS internship and project development experiences.
+- Identify skills relevant to cloud computing and data engineering.
+- Understand how open-source communities support continuous learning.
 
 ## 4. Sessions Attended
 
-During the event, I had the opportunity to attend sessions covering the following topics:
+The program included six main topics:
 
 1. **Lessons Learned from Building Software Factories**
 2. **Education**
@@ -51,172 +48,89 @@ During the event, I had the opportunity to attend sessions covering the followin
 5. **My 3-Month AWS Internship Journey**
 6. **Start & Maintain Consistency with Open Source Contributing**
 
-Each session provided valuable perspectives on system architecture, data processing, internship experiences, software development practices, and long-term career growth.
-
-## 5. Key Knowledge and Takeaways
+## 5. Technical Knowledge Gained
 
 ### 5.1. Lessons Learned from Building Software Factories
 
-This session provided insights into organizing software development processes in a structured, reusable, and maintainable way.
+This session emphasized that software engineering involves more than writing individual features. Good solutions require clear architecture, repeatable development practices, testing, deployment, code quality, and maintainability.
 
-I learned that building a software application involves much more than writing code. It also requires thoughtful architecture design, development workflows, testing, deployment, and long-term maintenance.
+**Connection to my project:** My platform is divided into a React/Vite frontend, a Python/FastAPI backend, a SQLite database for the local demonstration, and a distinct AWS experimental scope. Separation of responsibilities makes the project easier to test, maintain, and extend.
 
-**Connection to my project:**
+### 5.2. Education – Preparing for Technology Careers
 
-While developing the Student Activity Management & Engagement Analytics Platform, I organized the application into several major components:
-
-- A Frontend developed with React and Vite.
-- A Backend developed with Python and FastAPI.
-- A SQLite database for the local Demo environment.
-- Modules for registration, attendance, evidence processing, and reporting.
-- Selected AWS services used for cloud computing experiments.
-
-Separating these components helped make the application easier to test, debug, maintain, and extend.
-
-### 5.2. Education – Preparing for the Technology Industry
-
-The Education session helped me better understand the knowledge and practical skills students should develop before entering the professional technology industry.
-
-In addition to academic knowledge, students need to strengthen their programming skills, problem-solving abilities, technical documentation reading, and familiarity with technologies used in real-world projects.
-
-As a Data Science student, I recognized that gaining additional knowledge in Cloud Computing could provide a valuable foundation for a future career in Data Engineering.
-
-Developing my project allowed me to combine database concepts, data processing, API development, and application deployment into a practical learning experience.
+The Education session highlighted the importance of programming skills, problem-solving, technical documentation, and active independent learning. As a Data Science student, I found that studying cloud computing complements my knowledge of databases, data processing, and analytics.
 
 ### 5.3. AWS Lambda Web Functions: Rethinking Serverless Web Architecture
 
-This was one of the most interesting sessions for me because it was closely related to the AWS Lambda experiments in my Workshop.
+The discussion introduced HTTP workloads on serverless functions, scaling, performance, operational costs, and trade-offs compared with server-based or container-based applications.
 
-The session explored how AWS Lambda can support Serverless Web architectures, including:
+**Connection to my project:** I developed and tested an independent **AWS Lambda CSV Processing Demo**. The experiment was performed as follows:
 
-- HTTP-related processing capabilities in Serverless applications.
-- Scalability and request handling.
-- Performance and cost optimization considerations.
-- Architectural trade-offs when comparing Serverless approaches with Docker-based deployments on Amazon EC2 or Amazon ECS.
+1. Upload a sample CSV file to Amazon S3.
+2. Invoke Lambda through a Test Event.
+3. Read and validate registration data.
+4. Distinguish valid, duplicate, and invalid records.
+5. Save the processing result as JSON in Amazon S3.
+6. Inspect execution logs using Amazon CloudWatch.
 
-Through this session, I gained a better understanding of why architecture decisions should consider application requirements, traffic patterns, performance expectations, and operating costs.
+This experiment is separate from the primary FastAPI backend and does not represent a fully automated S3-triggered production data pipeline.
 
-**Connection to my project:**
-
-As part of the Student Activity Management & Engagement Analytics Platform, I implemented a Serverless experiment that used AWS Lambda to process student registration data from a CSV file.
-
-The workflow included:
-
-1. Uploading a sample CSV file to Amazon S3.
-2. Executing AWS Lambda through a Test Event.
-3. Reading and validating registration data.
-4. Detecting valid, duplicate, and invalid records.
-5. Generating a JSON processing result.
-6. Writing the result to Amazon S3.
-7. Reviewing execution logs using Amazon CloudWatch.
-
-This experiment allowed me to apply Serverless concepts to a specific data processing task.
+![AWS Lambda CSV processing test result](/fcaj/images/5-Workshop/5.10-Serverless-Processing/lambda-test-success.png)
 
 ### 5.4. Amazon SQS: Building Asynchronous Systems
 
-The Amazon Simple Queue Service (Amazon SQS) session introduced important concepts related to asynchronous processing and message-driven system architectures.
+The Amazon Simple Queue Service (SQS) session explained how message queues decouple components and support asynchronous background tasks. I learned that queues may help systems tolerate peaks in workloads and avoid blocking user-facing requests.
 
-The main concepts I learned included:
-
-- The role of Message Queues in application architectures.
-- Decoupling services to reduce direct dependencies.
-- The benefits of asynchronous background processing.
-- Scaling applications to handle increasing workloads.
-- Potential integration patterns involving Amazon SQS and other AWS services.
-
-I learned that asynchronous systems can handle background operations without requiring users to wait for every processing step to complete.
-
-**Potential application to my project:**
-
-The current Student Activity Management & Engagement Analytics Platform primarily processes requests through a FastAPI Backend.
-
-In the future, Amazon SQS could be considered for:
-
-- Processing large student registration datasets.
-- Queuing background data processing tasks.
-- Separating data ingestion from processing.
-- Integrating AWS Lambda with Amazon SQS to build event-driven workflows.
-
-These are potential future improvements rather than features already implemented in the current Demo version.
+**Future consideration:** SQS could potentially be used to process large registration files asynchronously or to decouple ingestion and processing. **SQS is not implemented in the current project.**
 
 ### 5.5. My 3-Month AWS Internship Journey
 
-This session provided valuable insights into the learning process, project development, and practical challenges associated with an AWS internship.
-
-I realized that internships require not only technical knowledge but also independent learning, effective task management, and the ability to solve unexpected problems.
-
-Some important lessons included:
-
-- Actively exploring documentation and new technologies.
-- Practicing consistently to strengthen technical knowledge.
-- Documenting tasks, progress, and results.
-- Debugging technical issues systematically.
-- Building practical projects to demonstrate skills.
-- Continuing to improve professional knowledge after completing an internship.
-
-These lessons encouraged me to continue improving my project and maintaining detailed Worklog and Workshop documentation.
+The internship sharing session reinforced the value of hands-on practice, systematic troubleshooting, technical documentation, time management, and regularly reviewing progress. These lessons are reflected in my worklog and workshop materials.
 
 ### 5.6. Start & Maintain Consistency with Open Source Contributing
 
-The Open Source session helped me understand the benefits of participating in open-source projects and the importance of consistent contributions.
+This session demonstrated how open-source participation can improve code-reading skills, collaboration, Git/GitHub usage, and long-term technical learning. I was particularly interested in how consistent documentation and version control help maintain software projects.
 
-I learned that Open Source provides opportunities to explore technologies, read existing codebases, practice collaboration, and develop skills using Git and GitHub.
+## 6. Lessons Learned and Project Applications
 
-These concepts were relevant to my own project development process, particularly in:
+After attending the event, I became more aware of the need to select cloud components based on the actual problem rather than on service popularity.
 
-- Managing source code using GitHub.
-- Organizing project directories.
-- Writing README documentation and architecture descriptions.
-- Tracking changes throughout development.
-- Creating documentation that helps others understand the system.
+The current project includes:
 
-In the future, I would like to learn more about Git workflows, Pull Requests, Code Reviews, and contributing to Open Source projects related to Cloud Computing and Data Engineering.
+- **Frontend:** React/Vite, deployed to AWS Amplify Hosting.
+- **Backend:** FastAPI running on a local demo computer, accessible through Cloudflare Quick Tunnel.
+- **Data persistence:** SQLite in the demo environment, with separate DynamoDB integration and testing.
+- **Core business functions:** registration import, real-time check-in/check-out, evidence import, reconciliation, participation confirmation, analytics, and export.
+- **Independent serverless experiment:** Amazon S3, AWS Lambda, AWS IAM, and CloudWatch.
 
-## 6. Lessons Learned and Application to My Project
+The event also encouraged further research into asynchronous tasks, data pipelines, observability, cost optimization, and open-source collaboration.
 
-After attending AWS First Cloud AI Journey Community Day 2026, I realized that learning AWS requires more than memorizing the features of individual services.
+## 7. Personal Reflection
 
-It is equally important to understand how to select and combine services to address practical engineering problems.
+AWS First Cloud AI Journey Community Day 2026 provided valuable perspectives on practical cloud systems and the skills needed for a technology career.
 
-In particular, the sessions on AWS Lambda, Serverless Architecture, and asynchronous systems gave me new perspectives on how the Student Activity Management & Engagement Analytics Platform could be expanded.
+I particularly appreciated the combination of architecture, implementation, internship experience, and open-source learning. The discussions motivated me to continue improving my knowledge of cloud computing and data engineering.
 
-The current Demo version includes Frontend, Backend, database, and student activity management functionalities. I also practiced deploying the Frontend through AWS Amplify and experimenting with CSV processing using Amazon S3 and AWS Lambda.
+## 8. Event Participation Photos
 
-Based on the knowledge gained from the event, I identified several potential areas for future development:
+The following are photographs documenting my attendance at the actual event:
 
-- Developing automated Serverless data processing workflows.
-- Using Amazon SQS for asynchronous background tasks.
-- Building Data Pipelines for data aggregation and analytics.
-- Improving application scalability and performance.
-- Strengthening security, monitoring, and cloud cost optimization.
-- Enhancing source code management and technical documentation practices.
+### Photo 1 – Event participation
 
-Beyond technical knowledge, the event reinforced the importance of self-learning, persistence, and adapting to emerging technologies.
+![Participation at AWS First Cloud AI Journey Community Day 2026](/fcaj/images/4-Event/Event2/hinh1.jpg)
 
-## 7. Personal Evaluation and Reflection
+### Photo 2 – Event activities
 
-I consider AWS First Cloud AI Journey Community Day 2026 a meaningful learning experience that provided students with opportunities to explore practical knowledge and experiences in the technology industry.
+![Activities during AWS First Cloud AI Journey Community Day 2026](/fcaj/images/4-Event/Event2/hinh2.jpg)
 
-The sessions introduced not only AWS Cloud technologies and system architecture concepts but also useful perspectives on professional development, internship preparation, and participation in technology communities.
+### Photo 3 – Community event moments
 
-For me, the event helped reinforce my interest in Cloud Computing and Data Engineering while motivating me to continue developing practical, data-driven software projects.
+![A moment from AWS First Cloud AI Journey Community Day 2026](/fcaj/images/4-Event/Event2/hinh3.jpg)
 
-## 8. Event Participation Evidence
+### Photo 4 – Additional event evidence
 
-The following photographs document my participation in AWS First Cloud AI Journey Community Day 2026.
+![Additional participation evidence from the community event](/fcaj/images/4-Event/Event2/hinh4.jpg)
 
-### Photo 1. Event participation
+## 9. Conclusion
 
-![Participation in AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh1.jpg)
-
-### Photo 2. Event activities
-
-![Activities at AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh2.jpg)
-
-### Photo 3. Event documentation
-
-![AWS First Cloud AI Journey Community Day 2026 documentation](/images/4-Event/Event2/hinh3.jpg)
-
-### Photo 4. Additional event photograph
-
-![Additional photo from AWS First Cloud AI Journey Community Day 2026](/images/4-Event/Event2/hinh4.jpg)
+The event strengthened my understanding of serverless architecture, asynchronous processing, practical software engineering, and the importance of maintaining a learning community. The lessons gained will support future improvements to the Student Activity Management & Engagement Analytics Platform and my professional development in cloud and data engineering.
