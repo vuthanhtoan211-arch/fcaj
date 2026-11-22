@@ -199,20 +199,6 @@ Lambda đảm nhiệm:
 * Tổng hợp kết quả.
 * Ghi kết quả JSON lên S3.
 
-Quy trình:
-
-```text
-Amazon S3
-Input CSV
-    |
-    v
-AWS Lambda
-Validate & Process
-    |
-    v
-Amazon S3
-Output JSON
-```
 
 Một bài kiểm thử của CSV Processor cho kết quả:
 
@@ -351,3 +337,8 @@ Thay vì chỉ ghi nhớ Amazon S3 là gì hoặc AWS Lambda là gì, tôi có t
 * [AWS IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
 * [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html)
 * [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+
+
+> 📌 **Chia sẻ cộng đồng:** Bài viết kỹ thuật này đã được đăng tải trên cộng đồng AWS Study Group VN nhằm chia sẻ những kiến thức, kinh nghiệm thực tế trong quá trình tìm hiểu kiến trúc AWS Cloud, đồng thời trao đổi và học hỏi thêm từ các thành viên trong cộng đồng.
+>
+> 🔗 **Bài viết gốc:** [Xem bài đăng trên Facebook](https://www.facebook.com/share/p/1FBZRfrKJZ/)

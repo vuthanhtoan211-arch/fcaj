@@ -199,21 +199,6 @@ Its responsibilities include:
 * Summarize processing results.
 * Write JSON output back to S3.
 
-Processing workflow:
-
-```text
-Amazon S3
-Input CSV
-    |
-    v
-AWS Lambda
-Validate & Process
-    |
-    v
-Amazon S3
-Output JSON
-```
-
 One CSV Processor test produced the following results:
 
 | Metric | Result |
@@ -351,3 +336,8 @@ This provides a valuable foundation for my future development in Cloud Computing
 * [AWS IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
 * [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html)
 * [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+
+
+> 📌 **Community Sharing:** This technical article has been published in the AWS Study Group VN Facebook community to share practical insights and encourage discussions about AWS Cloud Architecture.
+>
+> 🔗 **Original Post:** [Read the article on Facebook](https://www.facebook.com/share/p/1FBZRfrKJZ/)
