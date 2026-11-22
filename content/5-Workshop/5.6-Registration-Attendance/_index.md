@@ -1,4 +1,3 @@
-
 ---
 title: "Registration and Attendance Management"
 date: 2026-11-09
@@ -9,87 +8,73 @@ pre: "<b>5.6.</b>"
 
 ## Registration and Attendance Management
 
-In this section, we will explore the registration management and attendance recording workflows of the Student Activity Management & Engagement Analytics Platform.
+This section documents the registration import and real-time Check-in/Check-out functions implemented in the **Student Activity Management & Engagement Analytics Platform**.
 
-When organizing university activities, organizers need to manage student registration lists, verify participant information, and record Check-in and Check-out timestamps.
+University events often collect registrations through an external portal, while attendance is recorded at the venue. The objective of this module is to combine these records by activity and student, reduce manual spreadsheet processing, and prepare reliable data for subsequent reconciliation.
 
-Managing these processes manually using multiple Excel files can be time-consuming, especially for activities involving large numbers of students.
+### 1. Data sources and implementation scope
 
-The platform is designed to centralize student activity data and support real-time attendance recording through a Web Application.
+| Data source | Method used in the project | Purpose |
+| --- | --- | --- |
+| University Portal | ADMIN imports exported CSV/XLSX files | Build the registration list |
+| Student card QR / Student ID (MSSV) | ADMIN uses the attendance interface to submit an immediate API request | Record Check-in and Check-out |
+| Activity configuration | ADMIN manages the activity through the Web Application | Apply the correct activity and attendance conditions |
 
-#### Data Sources
+The current version **does not automatically synchronize with the University Portal API**. Registration files are imported, whereas Check-in and Check-out events are sent to the FastAPI Backend when they occur. A scanner that provides the student ID as input may be used; complete camera-based QR scanning should not be assumed without device testing.
 
-The registration and attendance workflows use two primary data sources:
+### 2. Technical implementation
 
-* University Portal: Provides student registration lists in CSV/XLSX format.
-* Student Card QR / Student ID: Provides student identification information for Check-in and Check-out during an activity.
+- **Frontend:** React/Vite provides the ADMIN interfaces for activities, registration import and attendance.
+- **Backend:** Python/FastAPI validates requests, enforces permissions and processes attendance rules.
+- **Local demo storage:** SQLite stores application data for the locally running demonstration.
+- **AWS integration test:** Amazon DynamoDB was used to test the `SAP-Registrations` and `SAP-Attendance` data groups. It is not presented as a fully migrated production database.
 
-Registration records are imported from files, while attendance records are sent directly to the Backend through REST APIs.
+Registration and attendance belong to the **main FastAPI application**, not the separate AWS Lambda CSV Processing Demo described in section 5.10.
 
-#### Processing Architecture
+### 3. Import student registration data
 
-```text
-University Portal
-        |
-        | Export CSV / XLSX
-        v
-ADMIN - React / Vite
-        |
-        | Registration Import
-        v
-FastAPI Backend
-        |
-        v
-Registration Data
+ADMIN selects an activity, uploads the registration file exported from the University Portal and reviews the import result. The Backend checks the expected fields, student IDs, missing values and duplicate records according to the implemented import rules.
 
-Student Card QR / Student ID
-        |
-        v
-ADMIN - Attendance Interface
-        |
-        | Real-time REST API
-        v
-FastAPI Backend
-        |
-        v
-Attendance Data
-```
+![Actual registration import interface](/fcaj/images/5-Workshop/5.6-Registration-Attendance/registration-import.png)
 
-The Backend uses SQLite to support local Demo persistence and application state recovery.
+*Figure 5.6.1. Registration import interface from the implemented Web Application.*
 
-Amazon DynamoDB is integrated to test cloud-based Registration and Attendance storage through the SAP-Registrations and SAP-Attendance tables.
+### 4. Record Check-in and Check-out in real time
 
-![System Architecture](/images/2-Proposal/student_activity_architectur.drawio.png)
+During an event, the organizer selects the correct activity and identifies a student using their card information or MSSV. Each valid action is submitted immediately to the attendance REST API and stored as an attendance record.
 
-#### Business Workflow
+The Backend checks whether the operation is allowed, including the activity, permitted time window and current attendance state. Check-out is recorded as a distinct operation; it is not inferred merely from a registration record.
 
-1. ADMIN creates and prepares an activity.
-2. Import student registrations from the University Portal.
-3. Validate and standardize student IDs.
-4. Prepare attendance time windows and business conditions.
-5. Record real-time Check-in.
-6. Record real-time Check-out.
-7. Inspect and verify attendance records.
-8. Prepare data for reconciliation and participation confirmation.
+![Actual Check-in interface](/fcaj/images/5-Workshop/5.6-Registration-Attendance/check-in.png)
 
-#### Contents
+*Figure 5.6.2. Check-in operation in the Web Application.*
 
-1. [Import student registration data](5.6.1-import-registration/)
-2. [Prepare activity and attendance](5.6.2-prepare-attendance/)
-3. [Record Check-in and Check-out](5.6.3-check-in-check-out/)
-4. [Verify attendance data](5.6.4-verify-attendance/)
+![Actual Check-out interface](/fcaj/images/5-Workshop/5.6-Registration-Attendance/check-out.png)
 
-#### Objectives
+*Figure 5.6.3. Check-out operation in the Web Application.*
 
-After completing this section, you will be able to:
+### 5. Validation and verification
 
-* Import student registration data from CSV/XLSX files.
-* Validate missing and duplicate records.
-* Understand the relationship between Activity ID and Student ID.
-* Prepare an activity that satisfies attendance requirements.
-* Record Check-in and Check-out through REST APIs.
-* Verify attendance business rules.
-* Inspect Backend and DynamoDB records when AWS Pilot integration is enabled.
-* Prepare data for reconciliation and participation analytics.
+The workshop verifies the following cases:
 
-This section helps learners understand how to build a student activity management workflow, starting from initial registration data and continuing through real-time attendance recording.
+1. An eligible student is included in the correct activity's registration data.
+2. A valid Check-in is recorded with its timestamp.
+3. A valid Check-out updates the corresponding attendance record.
+4. Duplicate or invalid requests are handled according to Backend rules.
+5. Student IDs remain associated with the correct Activity ID.
+6. ADMIN can review the recorded attendance data before reconciliation.
+
+The association of **Activity ID and MSSV** is essential: one student can participate in multiple activities, so attendance must not be matched using MSSV alone across the whole system.
+
+### 6. Workshop contents
+
+1. [Import registration data](5.6.1-import-registration/)
+2. [Prepare the activity and attendance conditions](5.6.2-prepare-attendance/)
+3. [Perform Check-in and Check-out](5.6.3-check-in-check-out/)
+4. [Verify attendance results](5.6.4-verify-attendance/)
+
+### 7. Expected learning outcomes
+
+After completing this section, learners can import and validate registration data, record real-time attendance through FastAPI, inspect the corresponding records and explain how these data become inputs to the reconciliation process in section 5.7.
+
+> **Implementation note:** The screenshots document the actual user interface and tests. The local FastAPI/SQLite workflow and the DynamoDB pilot have different scopes; the screenshots do not imply a fully cloud-hosted backend.
